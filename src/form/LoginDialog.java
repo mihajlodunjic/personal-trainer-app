@@ -6,6 +6,7 @@
 package form;
 
 import domain.Trener;
+import javax.swing.JOptionPane;
 import utils.JDBCUtils;
 
 /**
@@ -54,8 +55,6 @@ public class LoginDialog extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel1.setText("Prijava");
 
-        txtPassword.setText("jPasswordField1");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -68,7 +67,7 @@ public class LoginDialog extends javax.swing.JDialog {
                     .addComponent(jLabel3)
                     .addComponent(jLabel1)
                     .addComponent(btnLogin)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -96,8 +95,10 @@ public class LoginDialog extends javax.swing.JDialog {
 
         String username=txtUsername.getText();
         String pass=txtPassword.getText();
+        System.out.println(pass);
         boolean loginSuccessful=JDBCUtils.verifyLogin(username, pass);
         if(loginSuccessful){
+            System.out.println("pristupam bazi...");
             Trener trener=JDBCUtils.getTrenerByUsername(username);
             System.out.println("ulogovan!");
             MainLoggedInForm mainForm=new MainLoggedInForm(trener);
@@ -106,6 +107,8 @@ public class LoginDialog extends javax.swing.JDialog {
             rlf.dispose();
             mainForm.setVisible(true);
         }
+        else
+            JOptionPane.showMessageDialog(null, "Korisničko ime ili lozinka nisu dobri.", "Neuspešna prijava", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_btnLoginActionPerformed
 
  

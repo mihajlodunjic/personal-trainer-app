@@ -32,7 +32,7 @@
                   <Component id="jLabel3" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="btnLogin" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtPassword" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtPassword" alignment="2" min="-2" pref="105" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="28" max="32767" attributes="0"/>
           </Group>
@@ -88,9 +88,6 @@
     <Component class="javax.swing.JTextField" name="txtUsername">
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtPassword">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jPasswordField1"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>
