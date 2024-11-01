@@ -95,7 +95,6 @@ public class LoginDialog extends javax.swing.JDialog {
 
         String username=txtUsername.getText();
         String pass=txtPassword.getText();
-        System.out.println(pass);
         boolean loginSuccessful=JDBCUtils.verifyLogin(username, pass);
         if(loginSuccessful){
             System.out.println("pristupam bazi...");

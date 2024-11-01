@@ -32,15 +32,18 @@ public class JDBCUtils {
         }
     }
     
+    
     public static boolean verifyLogin(String username, String password) {
         String query = "SELECT lozinka FROM trener WHERE korisnickoime = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
+            
 
             if (resultSet.next()) {
                 String storedPassword = resultSet.getString("lozinka");
+                statement.close();
                 return storedPassword.equals(password);
             } else {
                 return false;
@@ -73,6 +76,8 @@ public class JDBCUtils {
                 trener.setPrezime(prezime);
 
             }
+            resultSet.close();
+            statement.close();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -92,6 +97,8 @@ public class JDBCUtils {
             statement.setString(4, prezime);
             statement.executeUpdate();
             connection.commit();
+            statement.close();
+
             return true;
         } catch (SQLException e) {
 //            JOptionPane.showMessageDialog(null, "Korisnik sa "+korisnickoIme+" već postoji!","Greška",JOptionPane.ERROR_MESSAGE);
