@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package utils;
-import domain.Trener;
+import domain.Trainer;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -53,8 +53,8 @@ public class JDBCUtils {
             throw new RuntimeException(e);
         }
     }
-    public static Trener getTrenerByUsername(String username) {
-        Trener trener = null;
+    public static Trainer getTrainerByUsername(String username) {
+        Trainer trener = null;
         String query = "SELECT * FROM trener WHERE korisnickoIme = ?";
 
         try {
@@ -63,17 +63,17 @@ public class JDBCUtils {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                trener=new Trener();
+                trener=new Trainer();
                 int id = resultSet.getInt(1);
                 String korisnickoIme=resultSet.getString(2);
                 String lozinka=resultSet.getString(3);
                 String ime=resultSet.getString(4);
                 String prezime=resultSet.getString(5);
-                trener.setIdTrener(id);
-                trener.setKorisnickoIme(korisnickoIme);
-                trener.setLozinka(lozinka);
-                trener.setIme(ime);
-                trener.setPrezime(prezime);
+                trener.setIdTrаiner(id);
+                trener.setUserName(korisnickoIme);
+                trener.setPassword(lozinka);
+                trener.setName(ime);
+                trener.setLastName(prezime);
 
             }
             resultSet.close();
@@ -86,7 +86,7 @@ public class JDBCUtils {
         return trener;
     }
     
-    public static boolean insertIntoTrener(String korisnickoIme,String lozinka,String ime, String prezime){
+    public static boolean insertIntoTrainer(String korisnickoIme,String lozinka,String ime, String prezime){
         String query = "insert into trener (korisnickoIme, lozinka, ime, prezime) values (?, ?, ?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(query);

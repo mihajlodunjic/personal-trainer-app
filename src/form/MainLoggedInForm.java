@@ -4,7 +4,7 @@
  */
 package form;
 
-import domain.Trener;
+import domain.Trainer;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import javax.swing.JFrame;
@@ -15,8 +15,8 @@ import javax.swing.JFrame;
  */
 public class MainLoggedInForm extends javax.swing.JFrame {
 
-    Trener trener;
-    public MainLoggedInForm(Trener trener) {
+    Trainer trener;
+    public MainLoggedInForm(Trainer trener) {
         initComponents();
         this.trener=trener;
         resizeFrame();

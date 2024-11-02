@@ -4,7 +4,7 @@
  */
 package form;
 
-import domain.Trener;
+import domain.Trainer;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -159,7 +159,7 @@ public class RegLogForm extends javax.swing.JFrame {
         boolean loginSuccessful=JDBCUtils.verifyLogin(username, pass);
         if(loginSuccessful){
             System.out.println("pristupam bazi...");
-            Trener trener=JDBCUtils.getTrenerByUsername(username);
+            Trainer trener=JDBCUtils.getTrainerByUsername(username);
             System.out.println("ulogovan!");
             MainLoggedInForm mainForm=new MainLoggedInForm(trener);
             mainForm.setLocationRelativeTo(null);
@@ -174,9 +174,6 @@ public class RegLogForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
