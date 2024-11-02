@@ -5,6 +5,9 @@
 package form;
 
 import domain.Trener;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import javax.swing.JFrame;
 
 /**
  *
@@ -16,6 +19,7 @@ public class MainLoggedInForm extends javax.swing.JFrame {
     public MainLoggedInForm(Trener trener) {
         initComponents();
         this.trener=trener;
+        resizeFrame();
     }
 
     /**
@@ -27,28 +31,18 @@ public class MainLoggedInForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 50)); // NOI18N
-        jLabel1.setText("Dobrodošli!");
+        setPreferredSize(new java.awt.Dimension(1920, 1080));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(86, 86, 86)
-                .addComponent(jLabel1)
-                .addContainerGap(88, Short.MAX_VALUE))
+            .addGap(0, 432, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(99, Short.MAX_VALUE))
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -57,6 +51,15 @@ public class MainLoggedInForm extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
+    private void resizeFrame() {
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        Rectangle bounds = env.getMaximumWindowBounds();
+
+//        this.setSize(bounds.width, bounds.height);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        this.setLocation(bounds.x, bounds.y);
+    }
 }

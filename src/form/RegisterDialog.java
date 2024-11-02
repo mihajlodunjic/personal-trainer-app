@@ -143,24 +143,27 @@ public class RegisterDialog extends javax.swing.JDialog {
         String passwordConf=txtPasswordConfirm.getText();
         String name=txtName.getText().trim();
         String lastName=txtLastName.getText().trim();
-        if(!password.equals(passwordConf)){
-            txtPassword.setText("");
-            txtPasswordConfirm.setText("");
-            
-        }
+//        if(!password.equals(passwordConf)){
+//            txtPassword.setText("");
+//            txtPasswordConfirm.setText("");
+//            
+//        }
         
         try{
+            if(username.isBlank() || password.isEmpty() || passwordConf.isEmpty() || name.isBlank() || lastName.isBlank())
+                throw new RuntimeException("Popunite sva polja!");
             if(!password.equals(passwordConf)){
-            txtPassword.setText("");
-            txtPasswordConfirm.setText("");
-            throw new RuntimeException("Lozinke se ne podudaraju!");
+                txtPassword.setText("");
+                txtPasswordConfirm.setText("");
+                throw new RuntimeException("Lozinke se ne podudaraju!");
             }
             System.out.println("ubacujemo...");
             if(JDBCUtils.insertIntoTrener(username, password, name, lastName)){
                 System.out.println("...gotovo");
-            Trener trener=JDBCUtils.getTrenerByUsername(username);
-            JOptionPane.showMessageDialog(null, "Uspešna registracija","Uspešno",JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
+//                Trener trener=JDBCUtils.getTrenerByUsername(username);
+                JOptionPane.showMessageDialog(null, "Uspešna registracija","Uspešno",JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                
             }
             else throw new RuntimeException("Korisnik sa korisnickim imenom "+username+" vec postoji");
         }
