@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package utils;
 import domain.Trainer;
 import java.sql.*;
@@ -105,4 +101,26 @@ public class JDBCUtils {
             return false;
         }
     }
+    
+    public static void updateTrainer(Trainer trainer){
+        String query="update trener set korisnickoIme=?, lozinka=?, ime=?, prezime=? where idTrener=?";
+        try{
+            if(getTrainerByUsername(trainer.getUserName())!=null){
+                throw new RuntimeException("Korisnik sa tim korisničkim imenom već postoji!");
+            }
+            PreparedStatement statement=connection.prepareStatement(query);
+            statement.setString(1,trainer.getUserName());
+            statement.setString(2, trainer.getPassword());
+            statement.setString(3, trainer.getName());
+            statement.setString(4, trainer.getLastName());
+            statement.setInt(5, trainer.getIdTrаiner());
+            statement.executeUpdate();
+            connection.commit();
+            statement.close();
+        }
+        catch(Exception e){
+            throw new RuntimeException("Nije moguće izmeniti podatke:\n"+e.getMessage());
+        }
+    }
+    
 }

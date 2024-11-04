@@ -143,12 +143,6 @@ public class RegisterDialog extends javax.swing.JDialog {
         String passwordConf=txtPasswordConfirm.getText();
         String name=txtName.getText().trim();
         String lastName=txtLastName.getText().trim();
-//        if(!password.equals(passwordConf)){
-//            txtPassword.setText("");
-//            txtPasswordConfirm.setText("");
-//            
-//        }
-        
         try{
             validateForm(username, password, passwordConf, name, lastName);
             System.out.println("ubacujemo...");

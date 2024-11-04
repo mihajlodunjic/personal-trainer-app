@@ -13,8 +13,11 @@ import java.util.List;
  */
 public class TrainerRepository {
     private List<Trainer> trainers;
-    public TrainerRepository(List<Trainer>trainers){
-        this.trainers=trainers;
+    private static TrainerRepository instance=null;
+    
+    
+    private TrainerRepository(){
+        
     }
     public List<Trainer> getAll(){
         return trainers;
