@@ -1,5 +1,6 @@
 package utils;
 import domain.Trainer;
+import interfaces.DefaultDomainObject;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class JDBCUtils {
     private static Connection connection = null;
-
+    private static Statement st=null;
     public static void connect() {
         Properties properties = new Properties();
         properties.put("user", "root");
@@ -27,8 +28,95 @@ public class JDBCUtils {
             throw new RuntimeException(e);
         }
     }
+    public static boolean insertRow(DefaultDomainObject ddo){
+        String query;
+        try{
+            st=connection.createStatement();
+            query="INSERT INTO "+ddo.returnClassName()+" VALUES("+ddo.returnAttrValues()+")";
+            st.executeUpdate(query);
+            st.close();
+        }
+        catch(SQLException esql){
+            return false;
+        }
+        return true;
+    }
+    public static boolean deleteRow(DefaultDomainObject ddo){
+        String query;
+        try{
+            st=connection.createStatement();
+            query="DELETE * FROM "+ddo.returnClassName()+"WHERE "+ddo.returnSearchCondition();
+            st.executeUpdate(query);
+            st.close();
+        }
+        catch(SQLException esql){
+            return false;
+        }
+        return true;
+    }
     
-    
+    public static boolean changeRow(DefaultDomainObject ddo){
+        String query;
+        try{
+            st=connection.createStatement();
+            query="UPDATE "+ddo.returnClassName()+
+                  " SET "+ddo.setAttrValues()+
+                  "WHERE "+ddo.returnSearchCondition();
+            st.executeUpdate(query);
+            st.close();
+        }
+        catch(SQLException esql){
+            return false;
+        }
+        
+        return true;
+    }
+    public static boolean doesExist(DefaultDomainObject ddo){
+        String query;
+        ResultSet rows;
+        try{
+            st=connection.createStatement();
+            query="SELECT *"+
+                  "FROM "+ddo.returnClassName()+
+                  "WHERE "+ddo.returnSearchCondition();
+            rows=st.executeQuery(query);
+            boolean signal=rows.next();
+            rows.close();
+            st.close();
+            return signal;
+        }
+        catch(SQLException esql){
+            return false;
+        }
+    }
+    public static boolean findRowAndReturn(DefaultDomainObject ddo){
+        ResultSet rs;
+        String nameOfObj;
+        int numOfItems;
+        String query;
+        try{
+            st=connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            query="SELECT *"+
+                  "FROM "+ddo.returnClassName()+
+                  "WHERE "+ddo.returnSearchCondition();
+            rs=st.executeQuery(query);
+            boolean signal=rs.next();
+            if(!signal){
+                return false;
+            }
+            if(ddo.setAttributes(rs)){
+                //to do
+            }
+        }
+        catch(SQLException esql){
+            return false;
+        }
+        
+        
+        
+        
+        return true;
+    }
     public static boolean verifyLogin(String username, String password) {
         String query = "SELECT lozinka FROM trener WHERE korisnickoime = ?";
         try {

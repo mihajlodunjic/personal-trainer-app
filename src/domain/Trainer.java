@@ -4,11 +4,14 @@
  */
 package domain;
 
+import interfaces.DefaultDomainObject;
+import java.sql.ResultSet;
+
 /**
  *
  * @author pc
  */
-public class Trainer {
+public class Trainer implements DefaultDomainObject{
     private int idTrаiner;
     private String userName;
     private String password;
@@ -62,6 +65,36 @@ public class Trainer {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public String returnAttrValues() {
+        //to do
+        return null;
+    }
+
+    @Override
+    public String returnClassName() {
+        //to do
+        return null;
+    }
+
+    @Override
+    public String returnSearchCondition() {
+        //to do
+        return null;
+    }
+
+    @Override
+    public String setAttrValues() {
+        //to do
+        return null;
+    }
+
+    @Override
+    public boolean setAttributes(ResultSet rs) {
+        //to do
+        return true;
     }
     
 }
