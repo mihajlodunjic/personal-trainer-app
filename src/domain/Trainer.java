@@ -4,35 +4,39 @@
  */
 package domain;
 
-import interfaces.DefaultDomainObject;
+import abstractClass.DefaultDomainObject;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author pc
  */
-public class Trainer implements DefaultDomainObject{
-    private int idTrаiner;
+public class Trainer extends DefaultDomainObject{
+    private int idTrainer;
     private String userName;
     private String password;
     private String name;
     private String lastName;
 
-    public Trainer(int idTrener, String korisnickoIme, String lozinka, String ime, String prezime) {
-        this.idTrаiner = idTrener;
-        this.userName = korisnickoIme;
-        this.password = lozinka;
-        this.name = ime;
-        this.lastName = prezime;
+    public Trainer(int idTrainer, String userName, String password, String name, String lastName) {
+        this.idTrainer = idTrainer;
+        this.userName = userName;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+        this.searchCondition="userName = '" + userName + "' AND password = '" + password + "'";
     }
     public Trainer(){}
 
     public int getIdTrаiner() {
-        return idTrаiner;
+        return idTrainer;
     }
 
     public void setIdTrаiner(int idTrаiner) {
-        this.idTrаiner = idTrаiner;
+        this.idTrainer = idTrаiner;
     }
 
     public String getUserName() {
@@ -67,34 +71,56 @@ public class Trainer implements DefaultDomainObject{
         this.lastName = lastName;
     }
 
+    public void setSearchCondition(String searchCondition){
+        this.searchCondition=searchCondition;
+    }
+    
+    
     @Override
     public String returnAttrValues() {
-        //to do
-        return null;
+        return "'"+userName+"','"+password+"','"+name+"','"+lastName+"'";
     }
 
     @Override
     public String returnClassName() {
-        //to do
-        return null;
+        return "trainer";
     }
 
     @Override
     public String returnSearchCondition() {
-        //to do
-        return null;
+        return searchCondition;
     }
 
     @Override
     public String setAttrValues() {
-        //to do
-        return null;
+        return "username="+"'"+userName+"',password='"+"'"+password+", name="+"'"+name+",lastname="+"'"+lastName;
     }
 
     @Override
     public boolean setAttributes(ResultSet rs) {
-        //to do
+        try {
+            String userName=rs.getString(2);
+            String password=rs.getString(3);
+            String name=rs.getString(4);
+            String lastName=rs.getString(5);
+            this.userName=userName;
+            this.password=password;
+            this.name=name;
+            this.lastName=lastName;
+        } catch (SQLException ex) {
+            return false;
+        }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Trainer{" + "idTrainer=" + idTrainer + ", userName=" + userName + ", password=" + password + ", name=" + name + ", lastName=" + lastName + '}';
+    }
+
+    @Override
+    public String returnInsertColumns() {
+        return "(userName, password, name, lastName)";
     }
     
 }

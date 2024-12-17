@@ -1,7 +1,8 @@
 
+import form.RegDialog;
 import form.RegLogForm;
 import javax.swing.JOptionPane;
-import utils.JDBCUtils;
+import utils.DatabaseBroker;
 
 public class MainProgram {
 
@@ -10,10 +11,12 @@ public class MainProgram {
      */
     public static void main(String[] args) {
         try {
-            JDBCUtils.connect();
+            DatabaseBroker.connect();
             RegLogForm rlf=new RegLogForm();
             rlf.setLocationRelativeTo(null);
             rlf.setVisible(true);
+//            RegDialog rd=new RegDialog(null, false);
+//            rd.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Neupešno povezivanje sa bazom!","Greška",JOptionPane.ERROR_MESSAGE);
         }

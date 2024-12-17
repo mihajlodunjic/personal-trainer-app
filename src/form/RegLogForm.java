@@ -8,7 +8,8 @@ import domain.Trainer;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import utils.JDBCUtils;
+import utils.DatabaseBroker;
+import controller.Controller;
 
 /**
  *
@@ -147,7 +148,7 @@ public class RegLogForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        RegisterDialog rd=new RegisterDialog(this,true);
+        RegDialog rd=new RegDialog(this,true);
         rd.setLocationRelativeTo(this);
         rd.setVisible(true);
     }//GEN-LAST:event_btnRegisterActionPerformed
@@ -156,18 +157,18 @@ public class RegLogForm extends javax.swing.JFrame {
 
         String username=txtUsername.getText();
         String pass=txtPassword.getText();
-        boolean loginSuccessful=JDBCUtils.verifyLogin(username, pass);
-        if(loginSuccessful){
-            System.out.println("pristupam bazi...");
-            Trainer trener=JDBCUtils.getTrainerByUsername(username);
-            System.out.println("ulogovan!");
-            MainLoggedInForm mainForm=new MainLoggedInForm(trener);
-            mainForm.setLocationRelativeTo(null);
-            this.dispose();
-            mainForm.setVisible(true);
-        }
-        else
+        Trainer trainer = Controller.getInstance().login(username, pass);
+        System.out.println(trainer);
+        if(trainer==null){
             JOptionPane.showMessageDialog(null, "Korisničko ime ili lozinka nisu dobri.", "Neuspešna prijava", JOptionPane.ERROR_MESSAGE);
+            txtUsername.setText("");
+            txtPassword.setText("");
+            return;
+        }
+        MainLoggedInForm mainForm=new MainLoggedInForm(trainer);
+        mainForm.setLocationRelativeTo(null);
+        this.dispose();
+        mainForm.setVisible(true);
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
