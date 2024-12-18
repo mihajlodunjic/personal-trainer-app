@@ -21,7 +21,7 @@ public class DatabaseBroker {
         properties.put("user", "root");
         properties.put("password", "");
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3308/personal_trainings", properties);
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/personal_trainings", properties);
             System.out.println("conn succesful");
         } catch (SQLException e) {
             System.out.println("conn unsuccesful");

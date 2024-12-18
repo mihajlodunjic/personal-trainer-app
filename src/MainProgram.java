@@ -15,8 +15,6 @@ public class MainProgram {
             RegLogForm rlf=new RegLogForm();
             rlf.setLocationRelativeTo(null);
             rlf.setVisible(true);
-//            RegDialog rd=new RegDialog(null, false);
-//            rd.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Neupešno povezivanje sa bazom!","Greška",JOptionPane.ERROR_MESSAGE);
         }
