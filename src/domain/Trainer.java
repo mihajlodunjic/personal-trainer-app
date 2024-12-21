@@ -122,5 +122,20 @@ public class Trainer extends DefaultDomainObject{
     public String returnInsertColumns() {
         return "(userName, password, name, lastName)";
     }
+
+    @Override
+    public int getNumberOfRelatedObjects() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public DefaultDomainObject getRelatedObject(int index) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean populateRelatedObject(ResultSet rs, int rowIndex, int relatedObjectIndex) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

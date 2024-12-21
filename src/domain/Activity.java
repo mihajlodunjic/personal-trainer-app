@@ -4,13 +4,18 @@
  */
 package domain;
 
+import abstractClass.DefaultDomainObject;
 import enums.Category;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author pc
  */
-public class Activity {
+public class Activity extends DefaultDomainObject{
     private int idActivity;
     private Category category;
     private String name;
@@ -45,6 +50,55 @@ public class Activity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String returnAttrValues() {
+        return "'"+category.getSerbianName()+"','"+name+"'";
+    }
+
+    @Override
+    public String returnClassName() {
+        return "activity";
+    }
+
+
+    @Override
+    public String setAttrValues() {
+        return "category= '"+category.getSerbianName()+"', name='"+name+"'";
+    }
+
+    @Override
+    public String returnInsertColumns() {
+        return "(category, name)";
+    }
+
+    @Override
+    public boolean setAttributes(ResultSet rs) {
+        try {
+            Category category=Category.fromSerbianName(rs.getString(2));
+            String name=rs.getString(3);
+            this.category=category;
+            this.name=name;
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public int getNumberOfRelatedObjects() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public DefaultDomainObject getRelatedObject(int index) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean populateRelatedObject(ResultSet rs, int rowIndex, int relatedObjectIndex) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

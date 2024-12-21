@@ -1,4 +1,4 @@
-package utils;
+package database;
 import domain.Trainer;
 import abstractClass.DefaultDomainObject;
 import java.sql.*;
@@ -91,9 +91,60 @@ public class DatabaseBroker {
             throw new RuntimeException(esql);
         }
     }
+    
+    public static boolean findAndReturn(DefaultDomainObject ddo) {
+        ResultSet rs;
+        Statement st;
+        try {
+            st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String query = "SELECT * FROM " + ddo.returnClassName() + " WHERE " + ddo.returnSearchCondition();
+            rs = st.executeQuery(query);
+            System.out.println("Query - find: " + query);
+
+            if (!rs.next()) {
+                System.out.println("No record found in database.");
+                return false;
+            }
+
+            if (!ddo.setAttributes(rs)) {
+                System.out.println("Failed to populate main object.");
+                return false;
+            }
+
+            for (int i = 0; i < ddo.getNumberOfRelatedObjects(); i++) {
+                DefaultDomainObject relatedObject = ddo.getRelatedObject(i);
+                if (relatedObject == null) {
+                    System.out.println("Related object does not exist.");
+                    return false;
+                }
+
+                String relatedQuery = "SELECT * FROM " + relatedObject.returnClassName()
+                        + " WHERE " + relatedObject.returnSearchCondition();
+                ResultSet relatedRs = st.executeQuery(relatedQuery);
+
+                int count = 0;
+                while (relatedRs.next()) {
+                    if (!ddo.populateRelatedObject(relatedRs, count, i)) {
+                        System.out.println("Failed to populate related object.");
+                        return false;
+                    }
+                    count++;
+                }
+                relatedRs.close();
+            }
+
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error reading record from database: " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
     public static boolean findRowAndReturn(DefaultDomainObject ddo){
         ResultSet rs;
-        String nameOfObj;
+        String nameOfConObj;
         int numOfItems;
         String query;
         try{
@@ -120,29 +171,11 @@ public class DatabaseBroker {
         return true;
     }
    
-    public static boolean insertIntoTrainer(String korisnickoIme,String lozinka,String ime, String prezime){
-        String query = "insert into trener (korisnickoIme, lozinka, ime, prezime) values (?, ?, ?, ?)";
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            connection.setAutoCommit(false);
-            statement.setString(1, korisnickoIme);
-            statement.setString(2, lozinka);
-            statement.setString(3, ime);
-            statement.setString(4, prezime);
-            statement.executeUpdate();
-            connection.commit();
-            statement.close();
-
-            return true;
-        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Korisnik sa "+korisnickoIme+" već postoji!","Greška",JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-    }
-    
    
-    
-    
-    
-    
+   
+   
+   
+   
+   
+   
 }

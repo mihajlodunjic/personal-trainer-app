@@ -5,7 +5,7 @@
 package controller;
 
 import domain.Trainer;
-import utils.DatabaseBroker;
+import database.DatabaseBroker;
 
 /**
  *

@@ -2,7 +2,7 @@
 import form.RegDialog;
 import form.RegLogForm;
 import javax.swing.JOptionPane;
-import utils.DatabaseBroker;
+import database.DatabaseBroker;
 
 public class MainProgram {
 

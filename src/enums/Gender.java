@@ -9,5 +9,21 @@ package enums;
  * @author pc
  */
 public enum Gender {
-    MALE, FEMALE;
+    MALE("musko"), FEMALE("zensko");
+    private String serbianName;
+    private Gender (String serbianName){
+        this.serbianName=serbianName;
+        
+    }
+    public String getSerbianName(){
+        return serbianName;
+    }
+    public static Gender fromSerbianName(String serbianName) {
+        for (Gender gender : Gender.values()) {
+            if (gender.getSerbianName().equalsIgnoreCase(serbianName)) {
+                return gender;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant for Serbian name: " + serbianName);
+    }
 }

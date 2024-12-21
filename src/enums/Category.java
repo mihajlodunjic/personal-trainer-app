@@ -9,5 +9,33 @@ package enums;
  * @author pc
  */
 public enum Category {
-    BACK, CHEST, SHOULDERS, BICEPS, TRICEPS, CORE, QUADRICEPS, HAMSTRINGS, CALVES;
+    BACK("ledja"),
+    CHEST("grudi"), 
+    SHOULDERS("ramena"),
+    BICEPS("biceps"), 
+    TRICEPS("triceps"), 
+    CORE("stomak"), 
+    QUADRICEPS("kvadriceps"), 
+    HAMSTRINGS("zadnjaloza"),
+    GLUTEUS("gluteus"),
+    CALVES("list");
+    
+    private String serbianName;
+    
+    private Category (String serbianName){
+        this.serbianName=serbianName;
+    }
+    
+    public String getSerbianName(){
+        return serbianName;
+    }
+    
+     public static Category fromSerbianName(String serbianName) {
+        for (Category category : Category.values()) {
+            if (category.getSerbianName().equalsIgnoreCase(serbianName)) {
+                return category;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant for Serbian name: " + serbianName);
+    }
 }

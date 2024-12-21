@@ -8,7 +8,7 @@ import domain.Trainer;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import utils.DatabaseBroker;
+import database.DatabaseBroker;
 import controller.Controller;
 
 /**
