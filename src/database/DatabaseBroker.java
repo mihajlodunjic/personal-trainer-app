@@ -119,7 +119,7 @@ public class DatabaseBroker {
                 }
 
                 String relatedQuery = "SELECT * FROM " + relatedObject.returnClassName()
-                        + " WHERE " + relatedObject.returnSearchCondition();
+                        + " WHERE " + ddo.returnsearchConditionForRelatedObjects();
                 ResultSet relatedRs = st.executeQuery(relatedQuery);
 
                 int count = 0;
@@ -154,6 +154,8 @@ public class DatabaseBroker {
                   " WHERE "+ddo.returnSearchCondition();
             rs=st.executeQuery(query);
             boolean signal=rs.next();
+            rs.close();
+            st.close();
             if(!signal){
                 return false;
             }

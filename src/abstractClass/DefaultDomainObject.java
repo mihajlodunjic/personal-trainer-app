@@ -15,6 +15,7 @@ import utils.cache.ObjectFactory;
  */
 public abstract class DefaultDomainObject implements Serializable{
     protected String searchCondition;
+    protected String searchConditionForRelatedObjects;
      // Generički cache
     private static final Map<Class<? extends DefaultDomainObject>, Map<Integer, DefaultDomainObject>> cache = new HashMap<>();
 
@@ -25,6 +26,9 @@ public abstract class DefaultDomainObject implements Serializable{
     public abstract boolean setAttributes(ResultSet rs);
     public String returnSearchCondition(){
         return searchCondition;
+    }
+    public String returnsearchConditionForRelatedObjects(){
+        return searchConditionForRelatedObjects;
     }
     
     public abstract int getNumberOfRelatedObjects();

@@ -24,10 +24,14 @@ public class Controller {
     }
     public Trainer login(String userName, String password){
         Trainer trainer=new Trainer();
+        trainer.setUserName(userName);
+        trainer.setPassword(password);
+        trainer.setSearchCondition("username='"+trainer.getUserName()+"' AND password='"+password+"'");
         boolean exists=DatabaseBroker.doesExist(trainer);
         
         if(exists){
             System.out.println("nadjen");
+            trainer.setSearchCondition("username='"+trainer.getUserName()+"'");
             boolean found=DatabaseBroker.findRowAndReturn(trainer);
             
             if(found){

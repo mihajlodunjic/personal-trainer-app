@@ -4,11 +4,14 @@
  */
 package domain;
 
+import abstractClass.DefaultDomainObject;
+import java.sql.ResultSet;
+
 /**
  *
  * @author pc
  */
-public class Sertificate {
+public class Sertificate extends DefaultDomainObject{
     private int idSertificate;
     private String name;
     private String publisher;
@@ -44,6 +47,52 @@ public class Sertificate {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    @Override
+    public String returnAttrValues() {
+        return "'"+name+"','"+publisher+"'";
+    }
+
+    @Override
+    public String returnClassName() {
+        return "sertificate";
+    }
+
+    @Override
+    public String setAttrValues() {
+        return "name='"+name+"',publisher='"+publisher+"'";
+    }
+
+    @Override
+    public String returnInsertColumns() {
+        return "(name,publisher)";
+    }
+
+    @Override
+    public boolean setAttributes(ResultSet rs) {
+        try {
+            name=rs.getString(2);
+            publisher=rs.getString(3);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public int getNumberOfRelatedObjects() {
+        return 0;
+    }
+
+    @Override
+    public DefaultDomainObject getRelatedObject(int index) {
+        return null;
+    }
+
+    @Override
+    public boolean populateRelatedObject(ResultSet rs, int rowIndex, int relatedObjectIndex) {
+        return false;
     }
     
 }

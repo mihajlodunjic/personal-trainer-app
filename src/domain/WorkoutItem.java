@@ -4,13 +4,15 @@
  */
 package domain;
 
+import abstractClass.DefaultDomainObject;
 import enums.Measurement;
+import java.sql.ResultSet;
 
 /**
  *
  * @author pc
  */
-public class WorkoutItem {
+public class WorkoutItem extends DefaultDomainObject{
     private WorkoutRecord workoutRecord;
     private int itemSN; //sequence number
     private Measurement intensity;
@@ -19,7 +21,7 @@ public class WorkoutItem {
     private String comment;
     private Activity activity;
 
-    public WorkoutItem() {
+    public WorkoutItem(){
     }
 
     public WorkoutItem(WorkoutRecord workoutRecord, int itemSN, Measurement intensity, int numOfSeries, double mass, String comment, Activity activity) {
@@ -86,6 +88,46 @@ public class WorkoutItem {
 
     public void setActivity(Activity activity) {
         this.activity = activity;
+    }
+
+    @Override
+    public String returnAttrValues() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String returnClassName() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String setAttrValues() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String returnInsertColumns() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean setAttributes(ResultSet rs) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public int getNumberOfRelatedObjects() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public DefaultDomainObject getRelatedObject(int index) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean populateRelatedObject(ResultSet rs, int rowIndex, int relatedObjectIndex) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

@@ -125,17 +125,17 @@ public class Trainer extends DefaultDomainObject{
 
     @Override
     public int getNumberOfRelatedObjects() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return 0;
     }
 
     @Override
     public DefaultDomainObject getRelatedObject(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return null;
     }
 
     @Override
     public boolean populateRelatedObject(ResultSet rs, int rowIndex, int relatedObjectIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return false;
     }
     
 }

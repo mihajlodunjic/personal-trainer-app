@@ -31,6 +31,8 @@ public class Client extends DefaultDomainObject{
         this.birthday = birthday;
         this.mobilePhone = mobilePhone;
         this.gym = gym;
+        searchCondition="idClient="+this.idClient;
+        searchConditionForRelatedObjects="idGym="+gym.getIdGym();
     }
 
     public Client() {
@@ -128,7 +130,12 @@ public class Client extends DefaultDomainObject{
             String mobilePhone=rs.getString(6);
             //to do
             //Gym
-            return true;
+            
+            int gymId = rs.getInt(7);
+            gym.setIdGym(gymId);
+
+        return true;
+
         } catch (Exception e) {
             return false;
         }
@@ -136,16 +143,22 @@ public class Client extends DefaultDomainObject{
 
     @Override
     public int getNumberOfRelatedObjects() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return 1;
     }
 
     @Override
     public DefaultDomainObject getRelatedObject(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(index==1)
+            return gym;
+        else return null;
     }
 
     @Override
     public boolean populateRelatedObject(ResultSet rs, int rowIndex, int relatedObjectIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        DefaultDomainObject relatedObj=getRelatedObject(relatedObjectIndex);
+        relatedObj.setAttributes(rs);
+        
+        return true;
     }
 }
