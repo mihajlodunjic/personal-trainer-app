@@ -9,5 +9,21 @@ package enums;
  * @author pc
  */
 public enum Measurement {
-    LOW, MODERATE, HIGH;
+    LOW("nizak"), MODERATE("srednji"), HIGH("visok");
+    private String serbianName;
+    
+    private Measurement(String serbianName){
+        this.serbianName=serbianName;
+    }
+    public String getSerbianName(){
+        return serbianName;
+    }
+    public static Measurement fromSerbianName(String serbianName) {
+        for (Measurement measurement : Measurement.values()) {
+            if (measurement.getSerbianName().equalsIgnoreCase(serbianName)) {
+                return measurement;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant for Serbian name: " + serbianName);
+    }
 }

@@ -92,37 +92,40 @@ public class WorkoutItem extends DefaultDomainObject{
 
     @Override
     public String returnAttrValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return workoutRecord.getIdWorkoutRecord()+","+itemSN+",'"+intensity.getSerbianName()+"',"+numOfSeries+","+mass+",'"+comment+"',"+activity.getIdActivity();
     }
 
     @Override
     public String returnClassName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "workoutitem";
     }
 
     @Override
     public String setAttrValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "intensity='"+intensity.getSerbianName()+"',numOfSeries="+numOfSeries+",mass="+mass+",comment='"+comment+"',idActivity="+activity.getIdActivity();
     }
 
     @Override
     public String returnInsertColumns() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public boolean setAttributes(ResultSet rs) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //to do slozeni objekat
+        return false;
     }
 
     @Override
     public int getNumberOfRelatedObjects() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return 1;
     }
 
     @Override
     public DefaultDomainObject getRelatedObject(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(index==1)
+            return activity;
+        else return null;
     }
 
     @Override

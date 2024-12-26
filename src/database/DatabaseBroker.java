@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
-import javax.swing.JOptionPane;
 /**
  *
  * @author pc
@@ -92,56 +91,7 @@ public class DatabaseBroker {
         }
     }
     
-    public static boolean findAndReturn(DefaultDomainObject ddo) {
-        ResultSet rs;
-        Statement st;
-        try {
-            st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String query = "SELECT * FROM " + ddo.returnClassName() + " WHERE " + ddo.returnSearchCondition();
-            rs = st.executeQuery(query);
-            System.out.println("Query - find: " + query);
-
-            if (!rs.next()) {
-                System.out.println("No record found in database.");
-                return false;
-            }
-
-            if (!ddo.setAttributes(rs)) {
-                System.out.println("Failed to populate main object.");
-                return false;
-            }
-
-            for (int i = 0; i < ddo.getNumberOfRelatedObjects(); i++) {
-                DefaultDomainObject relatedObject = ddo.getRelatedObject(i);
-                if (relatedObject == null) {
-                    System.out.println("Related object does not exist.");
-                    return false;
-                }
-
-                String relatedQuery = "SELECT * FROM " + relatedObject.returnClassName()
-                        + " WHERE " + ddo.returnsearchConditionForRelatedObjects();
-                ResultSet relatedRs = st.executeQuery(relatedQuery);
-
-                int count = 0;
-                while (relatedRs.next()) {
-                    if (!ddo.populateRelatedObject(relatedRs, count, i)) {
-                        System.out.println("Failed to populate related object.");
-                        return false;
-                    }
-                    count++;
-                }
-                relatedRs.close();
-            }
-
-            rs.close();
-            st.close();
-        } catch (SQLException e) {
-            System.out.println("Error reading record from database: " + e.getMessage());
-            return false;
-        }
-        return true;
-    }
-
+    
     public static boolean findRowAndReturn(DefaultDomainObject ddo){
         ResultSet rs;
         String nameOfConObj;
@@ -174,10 +124,58 @@ public class DatabaseBroker {
     }
    
    
-   
-   
-   
-   
-   
+//   public static boolean findRowAndReturn(DefaultDomainObject ddo) {
+//    ResultSet rs;
+//    String query;
+//
+//    try {
+//        // Priprema upita za glavni objekat
+//        Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+//        query = "SELECT * FROM " + ddo.returnClassName() + " WHERE " + ddo.returnSearchCondition();
+//        rs = st.executeQuery(query);
+//
+//        // Provera da li je pronađen rezultat
+//        if (!rs.next()) {
+//            rs.close();
+//            st.close();
+//            return false; // Nije pronađen glavni objekat
+//        }
+//
+//        // Postavljanje atributa glavnog objekta
+//        if (!ddo.setAttributes(rs)) {
+//            rs.close();
+//            st.close();
+//            return false; // Greška pri postavljanju atributa
+//        }
+//
+//        // Učitavanje povezanih objekata
+//        for (int i = 1; i <= ddo.getNumberOfRelatedObjects(); i++) {
+//            DefaultDomainObject relatedObject = ddo.getRelatedObject(i);
+//
+//            if (relatedObject != null) {
+//                // Postavljanje uslova pretrage za povezani objekat
+//                relatedObject.setSearchCondition(ddo.returnsearchConditionForRelatedObjects());
+//
+//                // Poziv findRowAndReturn za povezani objekat
+//                if (!findRowAndReturn(relatedObject)) {
+//                    System.out.println("Povezani objekat nije pronađen: " + relatedObject.returnClassName());
+//                }
+//            }
+//        }
+//
+//        rs.close();
+//        st.close();
+//        return true; // Uspešno učitan glavni i povezani objekti
+//
+//    } catch (SQLException e) {
+//        e.printStackTrace();
+//        throw new RuntimeException("Greška pri učitavanju objekta: " + e.getMessage());
+//    }
+//}
+//
+//   
+//   
+//   
+//   
    
 }
