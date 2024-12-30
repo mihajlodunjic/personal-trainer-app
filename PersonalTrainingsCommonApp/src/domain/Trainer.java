@@ -125,7 +125,7 @@ public class Trainer extends DefaultDomainObject{
 
     @Override
     public String returnInsertColumns() {
-        return "(userName, password, name, lastName)";
+        return "(userName, password, t_name, t_lastName)";
     }
 
     @Override

@@ -33,42 +33,6 @@ public class ClientController {
             instance=new ClientController();
         return instance;
     }
-    public Trainer login(String userName, String password)throws Exception{
-        Trainer trainer=new Trainer();
-        trainer.setUserName(userName);
-        trainer.setPassword(password);
-        trainer.setSearchCondition("username='"+userName+"' AND password='"+password+"'");
-        Request request=new Request(Operation.LOGIN, trainer);
-        sender.send(request);
-        
-        Response response=(Response)receiver.receive();
-        if(response.getException()==null){
-            System.out.println((Trainer)response.getResult());
-            return (Trainer)response.getResult();
-        }
-        else {
-            response.getException().printStackTrace();
-            return null;
-        }
-        
-//        trainer.setUserName(userName);
-//        trainer.setPassword(password);
-//        trainer.setSearchCondition("username='"+trainer.getUserName()+"' AND password='"+password+"'");
-//        boolean exists=DatabaseBroker.doesExist(trainer);
-//        
-//        if(exists){
-//            System.out.println("nadjen");
-//            trainer.setSearchCondition("username='"+trainer.getUserName()+"'");
-//            boolean found=DatabaseBroker.findRowAndReturn(trainer);
-//            
-//            if(found){
-//                System.out.println("vracen iz baze");
-//                return trainer;
-//            }
-//        }
-//        
-//        return null;
-    }
     
     public boolean register(String userName, String password, String name, String lastName){
         Trainer trainer=new Trainer();
@@ -82,11 +46,14 @@ public class ClientController {
         trainer.setLastName(lastName);
         return DatabaseBroker.insertRow(trainer);
     }
-    public Trainer login(Trainer trainer)throws Exception{
+    public Trainer login(Trainer trainer) throws Exception{
         return (Trainer) sendRequest(Operation.LOGIN, trainer);
         
     }
-    private Object sendRequest(Operation operation, Object arg)throws Exception{
+    public boolean register(Trainer trainer) throws Exception{
+        return (Boolean) sendRequest(Operation.REGISTER, trainer);
+    }
+    private Object sendRequest(Operation operation, Object arg) throws Exception{
         Request request=new Request(operation, arg);
         sender.send(request);
         Response response=(Response)receiver.receive();

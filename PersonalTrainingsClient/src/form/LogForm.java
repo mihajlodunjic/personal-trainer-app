@@ -18,12 +18,12 @@ import logic.ClientController;
  *
  * @author pc
  */
-public class RegLogForm extends javax.swing.JFrame {
+public class LogForm extends javax.swing.JFrame {
 
     /**
      * Creates new form RegLogForm
      */
-    public RegLogForm() {
+    public LogForm() {
         initComponents();
         scaleImage();
     }

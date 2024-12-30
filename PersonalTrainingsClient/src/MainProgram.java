@@ -1,6 +1,6 @@
 
 import form.RegDialog;
-import form.RegLogForm;
+import form.LogForm;
 import javax.swing.JOptionPane;
 import database.DatabaseBroker;
 import logic.ClientController;
@@ -13,7 +13,7 @@ public class MainProgram {
     public static void main(String[] args) {
         try {
             ClientController.getInstance();
-            RegLogForm rlf=new RegLogForm();
+            LogForm rlf=new LogForm();
             rlf.setLocationRelativeTo(null);
             rlf.setVisible(true);
         } catch (Exception e) {

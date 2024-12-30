@@ -33,6 +33,10 @@ public class ClientThread extends Thread{
                     trainer= ServerController.getInstance().login(trainer);
                     response.setResult(trainer);
                     break;
+                case Operation.REGISTER:
+                    Boolean success=ServerController.getInstance().register((Trainer)r.getArgument());
+                    response.setResult(success);
+                    break;
                 default:
                     return null;
                 

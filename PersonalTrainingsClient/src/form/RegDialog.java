@@ -4,6 +4,7 @@
  */
 package form;
 
+import domain.Trainer;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.IOException;
@@ -61,7 +62,7 @@ public class RegDialog extends javax.swing.JDialog {
         });
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel4.setText("Prijava");
+        jLabel4.setText("Registracija");
 
         txtUsername.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         txtUsername.setPreferredSize(new java.awt.Dimension(5, 20));
@@ -167,17 +168,26 @@ public class RegDialog extends javax.swing.JDialog {
         try {
             validateForm(username, password, passwordConf, name, lastName);
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
         try {
-            if (ClientController.getInstance().register(username, password, name, lastName)) {
-                JOptionPane.showMessageDialog(null, "Uspešna registracija", "Uspešno", JOptionPane.INFORMATION_MESSAGE);
+            Trainer trainer=new Trainer();
+            trainer.setUserName(username);
+            trainer.setName(name);
+            trainer.setPassword(password);
+            trainer.setLastName(lastName);
+            if (ClientController.getInstance().register(trainer)) {
+                JOptionPane.showMessageDialog(this, "Uspešna registracija", "Uspešno", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Korisnik sa takvim korisncikim imenom vec postoji!", "Neuspesno", JOptionPane.ERROR_MESSAGE);
-                txtUsername.setText("");
-            }
-        } catch (IOException iOException) {
-            iOException.printStackTrace();
+            } 
+//            else {
+//                JOptionPane.showMessageDialog(null, "Korisnik sa takvim korisncikim imenom vec postoji!", "Neuspesno", JOptionPane.ERROR_MESSAGE);
+//                txtUsername.setText("");
+//            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            txtUsername.setText("");
+            JOptionPane.showMessageDialog(this, e.getMessage(),"Greska",JOptionPane.ERROR_MESSAGE);
         }
             
         

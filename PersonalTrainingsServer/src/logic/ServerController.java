@@ -7,6 +7,7 @@ package logic;
 import domain.Trainer;
 import java.util.ArrayList;
 import so.login.SOLogin;
+import so.register.SORegister;
 
 /**
  *
@@ -31,5 +32,11 @@ public class ServerController {
         SOLogin so = new SOLogin();
         so.ExecuteSO(trainer);
         return so.getLoggedIn();
+    }
+    
+    public boolean register(Trainer trainer) throws Exception{
+        SORegister so=new SORegister();
+        so.ExecuteSO(trainer);
+        return so.isSuccess();
     }
 }
