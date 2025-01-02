@@ -8,9 +8,8 @@ import abstractClass.DefaultDomainObject;
 import enums.Measurement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.LinkedList;
+
 
 /**
  *
@@ -145,7 +144,7 @@ public class WorkoutItem extends DefaultDomainObject{
     }
 
     @Override
-    public ArrayList<DefaultDomainObject> returnList(ResultSet rs) {
+    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

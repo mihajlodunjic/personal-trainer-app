@@ -11,7 +11,9 @@ import domain.Trainer;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.LinkedList;
 import logic.ServerController;
+import so.trainer.SOUpdateTrainer;
 
 /**
  *
@@ -26,6 +28,7 @@ public class ClientThread extends Thread{
     }
     private Response handleReq(Request r){
         Response response=new Response(null, null);
+        Boolean success;
         try {
             switch(r.getOperation()){
                 case Operation.LOGIN:
@@ -34,7 +37,15 @@ public class ClientThread extends Thread{
                     response.setResult(trainer);
                     break;
                 case Operation.REGISTER:
-                    Boolean success=ServerController.getInstance().register((Trainer)r.getArgument());
+                    success=ServerController.getInstance().register((Trainer)r.getArgument());
+                    response.setResult(success);
+                    break;
+                case Operation.GET_ALL_TRAINER:
+                    LinkedList<Trainer>list=ServerController.getInstance().getAllTrainer();
+                    response.setResult(list);
+                    break;
+                case Operation.UPDATE_TRAINER:
+                    success=ServerController.getInstance().updateTrainer((Trainer)r.getArgument());
                     response.setResult(success);
                     break;
                 default:
@@ -60,6 +71,7 @@ public class ClientThread extends Thread{
                 out.writeObject(response);
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     

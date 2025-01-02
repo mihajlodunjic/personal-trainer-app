@@ -82,9 +82,9 @@
               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
               <Component id="txtLastName" min="-2" pref="25" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="btnRegister" min="-2" pref="30" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
           </Group>
           <Component id="jLabel8" alignment="1" max="32767" attributes="0"/>
       </Group>

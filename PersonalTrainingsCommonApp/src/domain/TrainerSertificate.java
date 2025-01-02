@@ -6,7 +6,7 @@ package domain;
 
 import abstractClass.DefaultDomainObject;
 import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
@@ -76,7 +76,7 @@ public class TrainerSertificate extends DefaultDomainObject{
     }
 
     @Override
-    public ArrayList<DefaultDomainObject> returnList(ResultSet rs) {
+    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

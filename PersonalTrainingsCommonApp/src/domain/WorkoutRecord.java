@@ -13,10 +13,9 @@ import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -187,7 +186,7 @@ public class WorkoutRecord extends DefaultDomainObject{
     }
 
     @Override
-    public ArrayList<DefaultDomainObject> returnList(ResultSet rs) {
+    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

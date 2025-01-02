@@ -9,7 +9,7 @@ import enums.Gender;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
@@ -157,7 +157,7 @@ public class Client extends DefaultDomainObject{
     }
 
     @Override
-    public ArrayList<DefaultDomainObject> returnList(ResultSet rs) {
+    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

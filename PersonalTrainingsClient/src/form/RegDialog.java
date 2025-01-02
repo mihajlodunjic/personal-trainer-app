@@ -150,9 +150,9 @@ public class RegDialog extends javax.swing.JDialog {
                 .addComponent(jLabel7)
                 .addGap(4, 4, 4)
                 .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addGap(22, 22, 22))
             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -169,6 +169,7 @@ public class RegDialog extends javax.swing.JDialog {
             validateForm(username, password, passwordConf, name, lastName);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+            return;
         }
         try {
             Trainer trainer=new Trainer();
@@ -180,10 +181,7 @@ public class RegDialog extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Uspešna registracija", "Uspešno", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             } 
-//            else {
-//                JOptionPane.showMessageDialog(null, "Korisnik sa takvim korisncikim imenom vec postoji!", "Neuspesno", JOptionPane.ERROR_MESSAGE);
-//                txtUsername.setText("");
-//            }
+
         } catch (Exception e) {
             e.printStackTrace();
             txtUsername.setText("");

@@ -5,9 +5,12 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author pc
@@ -134,11 +137,27 @@ public class DatabaseBroker {
             throw new RuntimeException(esql);
         }
         
-        
-        
-//        return false;
     }
    
+   public static LinkedList<DefaultDomainObject> select(DefaultDomainObject ddo) throws Exception{
+       String query="SELECT * "
+                  + "FROM "+ddo.returnClassName()+" "+ddo.alias()+" "
+                  + ddo.join()
+                  + " WHERE "+ddo.returnSearchCondition();
+       System.out.println(query);
+       st=connection.createStatement();
+       ResultSet rs=st.executeQuery(query);
+       return ddo.returnList(rs);
+        
+   }
    
+//    public static void main(String[] args) {
+//        try {
+//            connect();
+//            System.out.println(select(new Trainer()));
+//        } catch (Exception ex) {
+//            Logger.getLogger(DatabaseBroker.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
 }

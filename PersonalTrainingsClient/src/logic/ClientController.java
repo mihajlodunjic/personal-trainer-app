@@ -13,6 +13,7 @@ import domain.Trainer;
 import database.DatabaseBroker;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.LinkedList;
 
 /**
  *
@@ -34,24 +35,20 @@ public class ClientController {
         return instance;
     }
     
-    public boolean register(String userName, String password, String name, String lastName){
-        Trainer trainer=new Trainer();
-        trainer.setUserName(userName);
-        trainer.setSearchCondition("userName='"+userName+"'");
-        if(DatabaseBroker.doesExist(trainer)){
-            return false;
-        }
-        trainer.setPassword(password);
-        trainer.setName(name);
-        trainer.setLastName(lastName);
-        return DatabaseBroker.insertRow(trainer);
-    }
     public Trainer login(Trainer trainer) throws Exception{
         return (Trainer) sendRequest(Operation.LOGIN, trainer);
         
     }
     public boolean register(Trainer trainer) throws Exception{
         return (Boolean) sendRequest(Operation.REGISTER, trainer);
+    }
+    
+    public LinkedList<Trainer> getAllTrainer() throws Exception{
+        return (LinkedList<Trainer>) sendRequest(Operation.GET_ALL_TRAINER, null);
+    }
+    
+    public boolean updateTrainer(Trainer trainer) throws Exception{
+        return (Boolean)sendRequest(Operation.UPDATE_TRAINER, trainer);
     }
     private Object sendRequest(Operation operation, Object arg) throws Exception{
         Request request=new Request(operation, arg);

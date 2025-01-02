@@ -6,14 +6,14 @@ package abstractClass;
 
 import java.io.Serializable;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
  * @author pc
  */
 public abstract class DefaultDomainObject implements Serializable{
-    protected String searchCondition;
+    protected String searchCondition="1";
     protected String searchConditionForRelatedObjects;
     public abstract String alias();
     public abstract String join();
@@ -22,7 +22,7 @@ public abstract class DefaultDomainObject implements Serializable{
     public abstract String setAttrValues();
     public abstract String returnInsertColumns();
     public abstract boolean setAttributes(ResultSet rs);
-    public abstract ArrayList<DefaultDomainObject> returnList(ResultSet rs);
+    public abstract LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception;
     
     public void setSearchCondition(String searchCondition){
         this.searchCondition=searchCondition;

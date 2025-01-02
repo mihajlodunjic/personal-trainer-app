@@ -7,9 +7,7 @@ package domain;
 import abstractClass.DefaultDomainObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.LinkedList;
 
 /**
  *
@@ -130,17 +128,27 @@ public class Trainer extends DefaultDomainObject{
 
     @Override
     public String alias() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return " t ";
     }
 
     @Override
     public String join() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
-    public ArrayList<DefaultDomainObject> returnList(ResultSet rs) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception{
+        LinkedList<DefaultDomainObject> list=new LinkedList<>();
+        while (rs.next()){
+            Trainer t=new Trainer();
+            t.setIdTrаiner(rs.getInt("idTrainer"));
+            t.setUserName(rs.getString("userName"));
+            t.setName(rs.getString("t_name"));
+            t.setLastName(rs.getString("t_lastname"));
+            t.setPassword(rs.getString("password"));
+            list.add(t);
+        }    
+        return list;
     }
     
 }

@@ -9,7 +9,7 @@ public abstract class AbstractSO {
     protected abstract void validate(DefaultDomainObject ddo) throws Exception;
     protected abstract void execute(DefaultDomainObject ddo) throws Exception;
 
-    public void ExecuteSO(DefaultDomainObject ddo) throws Exception {
+    public void executeSO(DefaultDomainObject ddo) throws Exception {
         try {
             validate(ddo);
             execute(ddo);

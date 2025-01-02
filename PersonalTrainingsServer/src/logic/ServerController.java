@@ -6,8 +6,11 @@ package logic;
 
 import domain.Trainer;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import so.login.SOLogin;
 import so.register.SORegister;
+import so.trainer.SOGetAllTrainer;
+import so.trainer.SOUpdateTrainer;
 
 /**
  *
@@ -30,13 +33,25 @@ public class ServerController {
     
     public Trainer login(Trainer trainer) throws Exception{
         SOLogin so = new SOLogin();
-        so.ExecuteSO(trainer);
+        so.executeSO(trainer);
         return so.getLoggedIn();
     }
     
     public boolean register(Trainer trainer) throws Exception{
         SORegister so=new SORegister();
-        so.ExecuteSO(trainer);
+        so.executeSO(trainer);
+        return so.isSuccess();
+    }
+    
+    public LinkedList<Trainer> getAllTrainer() throws Exception{
+        SOGetAllTrainer so=new SOGetAllTrainer();
+        so.executeSO(new Trainer());
+        return so.getList();
+        
+    }
+    public Boolean updateTrainer(Trainer trainer) throws Exception{
+        SOUpdateTrainer so=new SOUpdateTrainer();
+        so.executeSO(trainer);
         return so.isSuccess();
     }
 }
