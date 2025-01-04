@@ -39,6 +39,9 @@ public class ClientController {
         return (Trainer) sendRequest(Operation.LOGIN, trainer);
         
     }
+    public void logout(Trainer trainer) throws Exception{
+        sendRequest(Operation.LOGOUT, trainer);
+    }
     public boolean register(Trainer trainer) throws Exception{
         return (Boolean) sendRequest(Operation.REGISTER, trainer);
     }

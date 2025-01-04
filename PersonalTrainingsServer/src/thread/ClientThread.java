@@ -29,12 +29,17 @@ public class ClientThread extends Thread{
     private Response handleReq(Request r){
         Response response=new Response(null, null);
         Boolean success;
+        Trainer trainer;
         try {
             switch(r.getOperation()){
                 case Operation.LOGIN:
-                    Trainer trainer=(Trainer)r.getArgument();
+                    trainer=(Trainer)r.getArgument();
                     trainer= ServerController.getInstance().login(trainer);
                     response.setResult(trainer);
+                    break;
+                case Operation.LOGOUT:
+                    trainer=(Trainer)r.getArgument();
+                    ServerController.getInstance().logout(trainer);
                     break;
                 case Operation.REGISTER:
                     success=ServerController.getInstance().register((Trainer)r.getArgument());

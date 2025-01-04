@@ -5,9 +5,10 @@
 package logic;
 
 import domain.Trainer;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.LinkedList;
 import so.login.SOLogin;
+import so.login.SOLogout;
 import so.register.SORegister;
 import so.trainer.SOGetAllTrainer;
 import so.trainer.SOUpdateTrainer;
@@ -18,16 +19,17 @@ import so.trainer.SOUpdateTrainer;
  */
 public class ServerController {
     private static ServerController instance;
-    private ArrayList<Trainer> loggedInTrainers=new ArrayList<>();
+    private LinkedList<Trainer> loggedInTrainers=new LinkedList<>();
     private ServerController(){
         
-    } 
+    }
+    
     public static ServerController getInstance(){
         if(instance == null) instance = new ServerController();
         return instance;
     }
 
-    public ArrayList<Trainer> getLoggedInTrainers() {
+    public LinkedList<Trainer> getLoggedInTrainers() {
         return loggedInTrainers;
     }
     
@@ -36,7 +38,10 @@ public class ServerController {
         so.executeSO(trainer);
         return so.getLoggedIn();
     }
-    
+    public void logout(Trainer trainer) throws Exception{
+        SOLogout so=new SOLogout();
+        so.executeSO(trainer);
+    }
     public boolean register(Trainer trainer) throws Exception{
         SORegister so=new SORegister();
         so.executeSO(trainer);

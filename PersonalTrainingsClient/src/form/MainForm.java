@@ -8,7 +8,11 @@ import domain.Trainer;
 import form.trainer.TrainerDetailsForm;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import logic.ClientController;
 
 /**
  *
@@ -21,6 +25,7 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();
         this.trainer=trener;
         resizeFrame();
+        setWindowListener();
     }
 
     public Trainer getTrainer() {
@@ -98,5 +103,13 @@ public class MainForm extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         this.setLocation(bounds.x, bounds.y);
+    }
+
+    private void setWindowListener() {
+        try {
+            ClientController.getInstance().logout(trainer);
+        } catch (Exception ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

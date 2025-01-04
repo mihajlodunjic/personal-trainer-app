@@ -6,7 +6,7 @@ package communication;
 
 
 public enum Operation {
-    LOGIN, REGISTER,
+    LOGIN, REGISTER, LOGOUT,
     UPDATE_TRAINER,
     GET_ALL_TRAINER,
     
