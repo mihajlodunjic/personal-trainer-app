@@ -41,7 +41,7 @@ public class ClientThread extends Thread{
                     response.setResult(success);
                     break;
                 case Operation.GET_ALL_TRAINER:
-                    LinkedList<Trainer>list=ServerController.getInstance().getAllTrainer();
+                    LinkedList<Trainer>list=ServerController.getInstance().getAllTrainer(new Trainer());
                     response.setResult(list);
                     break;
                 case Operation.UPDATE_TRAINER:

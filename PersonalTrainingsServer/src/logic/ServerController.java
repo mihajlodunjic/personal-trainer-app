@@ -43,9 +43,9 @@ public class ServerController {
         return so.isSuccess();
     }
     
-    public LinkedList<Trainer> getAllTrainer() throws Exception{
+    public LinkedList<Trainer> getAllTrainer(Trainer trainer) throws Exception{
         SOGetAllTrainer so=new SOGetAllTrainer();
-        so.executeSO(new Trainer());
+        so.executeSO(trainer);
         return so.getList();
         
     }

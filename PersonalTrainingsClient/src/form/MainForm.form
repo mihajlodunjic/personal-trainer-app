@@ -9,15 +9,18 @@
             <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu2">
+        <Menu class="javax.swing.JMenu" name="MenuAccount">
           <Properties>
             <Property name="text" type="java.lang.String" value="Nalog"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="MenuItemAccountDetails">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Detalji"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuItemAccountDetailsActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

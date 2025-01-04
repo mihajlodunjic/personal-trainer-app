@@ -92,7 +92,7 @@ public class Trainer extends DefaultDomainObject{
 
     @Override
     public String setAttrValues() {
-        return "username="+"'"+userName+"',password='"+"'"+password+", name="+"'"+name+",lastname="+"'"+lastName;
+        return "username='"+userName+"',password='"+password+"', t_name="+"'"+name+"',t_lastname="+"'"+lastName+"'";
     }
 
     @Override

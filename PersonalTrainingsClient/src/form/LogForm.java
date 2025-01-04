@@ -174,7 +174,7 @@ public class LogForm extends javax.swing.JFrame {
         }
         System.out.println(trainer);
         
-        MainLoggedInForm mainForm=new MainLoggedInForm(trainer);
+        MainForm mainForm=new MainForm(trainer);
         mainForm.setLocationRelativeTo(null);
         this.dispose();
         mainForm.setVisible(true);

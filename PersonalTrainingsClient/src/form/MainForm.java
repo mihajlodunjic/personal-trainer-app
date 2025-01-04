@@ -5,6 +5,7 @@
 package form;
 
 import domain.Trainer;
+import form.trainer.TrainerDetailsForm;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import javax.swing.JFrame;
@@ -13,13 +14,17 @@ import javax.swing.JFrame;
  *
  * @author pc
  */
-public class MainLoggedInForm extends javax.swing.JFrame {
+public class MainForm extends javax.swing.JFrame {
 
-    Trainer trener;
-    public MainLoggedInForm(Trainer trener) {
+    private Trainer trainer;
+    public MainForm(Trainer trener) {
         initComponents();
-        this.trener=trener;
+        this.trainer=trener;
         resizeFrame();
+    }
+
+    public Trainer getTrainer() {
+        return trainer;
     }
 
     /**
@@ -33,8 +38,8 @@ public class MainLoggedInForm extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        MenuAccount = new javax.swing.JMenu();
+        MenuItemAccountDetails = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1920, 1080));
@@ -42,12 +47,17 @@ public class MainLoggedInForm extends javax.swing.JFrame {
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Nalog");
+        MenuAccount.setText("Nalog");
 
-        jMenuItem1.setText("Detalji");
-        jMenu2.add(jMenuItem1);
+        MenuItemAccountDetails.setText("Detalji");
+        MenuItemAccountDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemAccountDetailsActionPerformed(evt);
+            }
+        });
+        MenuAccount.add(MenuItemAccountDetails);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(MenuAccount);
 
         setJMenuBar(jMenuBar1);
 
@@ -65,13 +75,19 @@ public class MainLoggedInForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void MenuItemAccountDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemAccountDetailsActionPerformed
+        TrainerDetailsForm tdf=new TrainerDetailsForm(this, true, trainer);
+        tdf.setVisible(true);
+        tdf.setLocationRelativeTo(this);
+    }//GEN-LAST:event_MenuItemAccountDetailsActionPerformed
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu MenuAccount;
+    private javax.swing.JMenuItem MenuItemAccountDetails;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
 
     private void resizeFrame() {

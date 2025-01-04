@@ -68,12 +68,13 @@ public class DatabaseBroker {
             st=connection.createStatement();
             query="UPDATE "+ddo.returnClassName()+
                   " SET "+ddo.setAttrValues()+
-                  " WHERE "+ddo.returnSearchCondition();
+                  "  WHERE "+ddo.returnSearchCondition();
+            System.out.println(query);
             st.executeUpdate(query);
             st.close();
         }
         catch(SQLException esql){
-            return false;
+            throw new RuntimeException(esql);
         }
         
         return true;

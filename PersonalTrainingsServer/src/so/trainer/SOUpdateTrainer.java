@@ -24,8 +24,10 @@ public class SOUpdateTrainer extends AbstractSO{
     protected void validate(DefaultDomainObject ddo) throws Exception {
         if(!(ddo instanceof Trainer))
             throw new Exception("Prosledjeni objekat nije instanca Trainer-a");
-        LinkedList<Trainer> trainers=ServerController.getInstance().getAllTrainer();
         Trainer updatedTrainer=(Trainer) ddo;
+        updatedTrainer.setSearchCondition("idTrainer!="+updatedTrainer.getIdTrаiner());
+        LinkedList<Trainer> trainers=ServerController.getInstance().getAllTrainer(updatedTrainer);
+        
         for (Trainer trainer : trainers){
             if(updatedTrainer.getIdTrаiner()!=trainer.getIdTrаiner() &&
                     updatedTrainer.getUserName().equals(trainer.getUserName()))
@@ -35,7 +37,10 @@ public class SOUpdateTrainer extends AbstractSO{
 
     @Override
     protected void execute(DefaultDomainObject ddo) throws Exception {
-        success=DatabaseBroker.updateRow(ddo);
+        Trainer updatedTrainer=(Trainer) ddo;
+        updatedTrainer.setSearchCondition("idTrainer="+updatedTrainer.getIdTrаiner());
+        success=DatabaseBroker.updateRow(updatedTrainer);
+        System.out.println(success);
     }
     
 }

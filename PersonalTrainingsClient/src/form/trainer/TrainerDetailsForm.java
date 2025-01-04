@@ -3,7 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package form.trainer;
+import com.sun.source.tree.ParenthesizedTree;
 import domain.Trainer;
+import form.MainForm;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import logic.ClientController;
 /**
  *
  * @author pc
@@ -18,6 +24,8 @@ public class TrainerDetailsForm extends javax.swing.JDialog {
         initComponents();
         this.loggedIn=loggedIn;
         fillFields();
+        setDocumentListeners();
+        btnSave.setEnabled(false);
     }
 
     /**
@@ -163,6 +171,30 @@ public class TrainerDetailsForm extends javax.swing.JDialog {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         //to do update
+        
+        try {
+            if(!passOld.getText().equals(loggedIn.getPassword())){
+                throw new Exception("Stara sifra nije dobra!");
+            }
+            Trainer updatedTrainer = new Trainer();
+            updatedTrainer.setIdTrаiner(loggedIn.getIdTrаiner());
+            updatedTrainer.setUserName(txtUserName.getText().trim());
+            updatedTrainer.setName(txtName.getText().trim());
+            updatedTrainer.setLastName(txtLastName.getText().trim());
+            if(!passNew.getText().isBlank())
+                updatedTrainer.setPassword(passNew.getText());
+            updatedTrainer.setSearchCondition("idTrainer="+loggedIn.getIdTrаiner());
+            if(ClientController.getInstance().updateTrainer(updatedTrainer)){
+                JOptionPane.showMessageDialog(this, "Uspesno!");
+                loggedIn.setLastName(updatedTrainer.getLastName());
+                loggedIn.setUserName(updatedTrainer.getUserName());
+                loggedIn.setName(updatedTrainer.getName());
+                loggedIn.setPassword(updatedTrainer.getPassword());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            return;
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     
@@ -190,5 +222,37 @@ public class TrainerDetailsForm extends javax.swing.JDialog {
         txtLastName.setText(loggedIn.getLastName());
         passNew.setText("");
         passOld.setText("");
+    }
+
+    private void setDocumentListeners() {
+        DocumentListener
+        dl = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                checkTextFields();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                checkTextFields();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkTextFields();
+                
+            }
+
+            private void checkTextFields() {
+                if(!txtUserName.getText().isBlank() && !txtLastName.getText().isBlank() && !txtName.getText().isBlank())
+                    btnSave.setEnabled(true);
+                else
+                    btnSave.setEnabled(false);
+            }
+        };
+        txtUserName.getDocument().addDocumentListener(dl);
+        txtName.getDocument().addDocumentListener(dl);
+        txtLastName.getDocument().addDocumentListener(dl);
+        
     }
 }
