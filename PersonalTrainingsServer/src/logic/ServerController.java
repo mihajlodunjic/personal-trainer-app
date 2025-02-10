@@ -4,9 +4,13 @@
  */
 package logic;
 
-import domain.Trainer;
+import domain.*;
 import java.util.LinkedList;
 import java.util.LinkedList;
+import so.client.SOAddClient;
+import so.client.SOGetAllClient;
+import so.gym.SOAddGym;
+import so.gym.SOGetAllGym;
 import so.login.SOLogin;
 import so.login.SOLogout;
 import so.register.SORegister;
@@ -58,5 +62,30 @@ public class ServerController {
         SOUpdateTrainer so=new SOUpdateTrainer();
         so.executeSO(trainer);
         return so.isSuccess();
+    }
+    
+    //client operations
+    public Boolean addClient(Client client) throws Exception{
+        SOAddClient so=new SOAddClient();
+        so.executeSO(client);
+        return so.isSuccess();
+    }
+    public LinkedList<Client>getAllClient(Client client) throws Exception{
+        SOGetAllClient so=new SOGetAllClient();
+        so.executeSO(client);
+        return so.getList();
+    }
+    
+    //gym operations
+    public Boolean addGym(Gym gym) throws Exception{
+        SOAddGym so=new SOAddGym();
+        so.executeSO(gym);
+        return so.isSuccess();
+    }
+
+    public LinkedList<Gym> getAllGym(Gym gym) throws Exception{
+        SOGetAllGym so=new SOGetAllGym();
+        so.executeSO(gym);
+        return so.getList();
     }
 }

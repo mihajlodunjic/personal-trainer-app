@@ -90,16 +90,18 @@ public class Gym extends DefaultDomainObject{
 
     @Override
     public String returnInsertColumns() {
-        return "(name,address,equipmentLevel,mobilePhone)";
+        return "(g_name,address,equipmentLevel,g_mobilePhone)";
     }
 
     @Override
     public boolean setAttributes(ResultSet rs) {
         try {
+            int idGym=rs.getInt("idGym");
             String name=rs.getString("g_name");
             String address=rs.getString("address");
             Measurement equipmentLevel=Measurement.fromSerbianName(rs.getString("equipmentLevel"));
             String mobilePhone=rs.getString("g_mobilePhone");
+            this.idGym=idGym;
             this.name=name;
             this.address=address;
             this.equipmentLevel=equipmentLevel;
@@ -119,11 +121,22 @@ public class Gym extends DefaultDomainObject{
 
     @Override
     public String join() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
-    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception{
+        LinkedList<DefaultDomainObject> list=new LinkedList<>();
+        while(rs.next()){
+            Gym gym=new Gym();
+//            gym.setIdGym(rs.getInt("idGym"));
+//            gym.setName(rs.getString("g_name"));
+//            gym.setAddress(rs.getString("address"));
+//            gym.setEquipmentLevel(Measurement.fromSerbianName(rs.getString("equipmentLevel")));
+//            gym.setMobilePhone(rs.getString("g_mobilePhone"));
+            gym.setAttributes(rs);
+            list.add(gym);
+        }
+        return list;
     }
 }

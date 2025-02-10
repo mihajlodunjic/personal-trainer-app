@@ -9,8 +9,7 @@ import communication.Receiver;
 import communication.Request;
 import communication.Response;
 import communication.Sender;
-import domain.Trainer;
-import database.DatabaseBroker;
+import domain.*;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.LinkedList;
@@ -35,6 +34,7 @@ public class ClientController {
         return instance;
     }
     
+    //User operations
     public Trainer login(Trainer trainer) throws Exception{
         return (Trainer) sendRequest(Operation.LOGIN, trainer);
         
@@ -52,6 +52,26 @@ public class ClientController {
     
     public boolean updateTrainer(Trainer trainer) throws Exception{
         return (Boolean)sendRequest(Operation.UPDATE_TRAINER, trainer);
+    }
+    
+    
+    //Client operations
+    public boolean addClient(Client client) throws Exception{
+        return (Boolean)sendRequest(Operation.INSERT_CLIENT, client);
+    }
+    public LinkedList<Client> getAllClient(Client client, String criteria) throws Exception{
+        client.setSearchCondition(criteria);
+        return(LinkedList<Client>)sendRequest(Operation.GET_ALL_CLIENT, client);
+    }
+    
+    
+    //gym operations
+    public LinkedList<Gym> getAllGym(Gym gym, String criteria) throws Exception{
+        gym.setSearchCondition(criteria);
+        return (LinkedList<Gym>)sendRequest(Operation.GET_ALL_GYM, gym);
+    }
+    public boolean addGym(Gym gym)throws Exception{
+        return (Boolean)sendRequest(Operation.INSERT_GYM, gym);
     }
     private Object sendRequest(Operation operation, Object arg) throws Exception{
         Request request=new Request(operation, arg);

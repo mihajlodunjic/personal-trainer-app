@@ -7,7 +7,7 @@ package thread;
 import communication.Request;
 import communication.Response;
 import communication.Operation;
-import domain.Trainer;
+import domain.*;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -30,6 +30,7 @@ public class ClientThread extends Thread{
         Response response=new Response(null, null);
         Boolean success;
         Trainer trainer;
+        
         try {
             switch(r.getOperation()){
                 case Operation.LOGIN:
@@ -52,6 +53,26 @@ public class ClientThread extends Thread{
                 case Operation.UPDATE_TRAINER:
                     success=ServerController.getInstance().updateTrainer((Trainer)r.getArgument());
                     response.setResult(success);
+                    break;
+                    
+                //client operations    
+                case Operation.INSERT_CLIENT:
+                    success=ServerController.getInstance().addClient((Client)r.getArgument());
+                    response.setResult(success);
+                    break;
+                case Operation.GET_ALL_CLIENT:
+                    LinkedList<Client>clientList=ServerController.getInstance().getAllClient((Client)r.getArgument());
+                    response.setResult(clientList);
+                    break;
+                    
+                //gym operations
+                case Operation.INSERT_GYM:
+                    success=ServerController.getInstance().addGym((Gym)r.getArgument());
+                    response.setResult(success);
+                    break;
+                case Operation.GET_ALL_GYM:
+                    LinkedList<Gym>gymList=ServerController.getInstance().getAllGym((Gym)r.getArgument());
+                    response.setResult(gymList);
                     break;
                 default:
                     return null;

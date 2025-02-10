@@ -37,6 +37,7 @@ public class Client extends DefaultDomainObject{
     }
 
     public Client() {
+        this.gym=new Gym();
     }
 
     
@@ -112,17 +113,18 @@ public class Client extends DefaultDomainObject{
     @Override
     public String setAttrValues() {
         Date date=Date.valueOf(birthday);
-        return "name='"+name+",lastName='"+lastName+"',gender='"+gender.getSerbianName()+"',birthday='"+date.toString()+"',mobilePhone='"+mobilePhone+"',idGym="+gym.getIdGym();
+        return "c_name='"+name+",c_lastName='"+lastName+"',gender='"+gender.getSerbianName()+"',birthday='"+date.toString()+"',c_mobilePhone='"+mobilePhone+"',idGym="+gym.getIdGym();
     }
 
     @Override
     public String returnInsertColumns() {
-        return "(name,lastName,gender,birthday,mobilePhone,idGym)";
+        return "(c_name,c_lastName,gender,birthday,c_mobilePhone,idGym)";
     }
 
     @Override
     public boolean setAttributes(ResultSet rs) {
         try {
+            int idClient=rs.getInt("idClient");
             String name=rs.getString("c_name");
             String lastName=rs.getString("c_lastName");
             Gender gender=Gender.fromSerbianName(rs.getString("gender"));
@@ -132,6 +134,7 @@ public class Client extends DefaultDomainObject{
             //to do
             //Gym
             // u kontroleru staviti gym mozda??
+            this.idClient=idClient;
             int gymId = rs.getInt("idGym");
             this.name=name;
             this.lastName=lastName;
@@ -153,11 +156,30 @@ public class Client extends DefaultDomainObject{
 
     @Override
     public String join() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
-    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception{
+        LinkedList<DefaultDomainObject> list=new LinkedList<>();
+        while(rs.next()){
+            Client client=new Client();
+//            client.setIdClient(rs.getInt("idClient"));
+//            client.setName(rs.getString("c_name"));
+//            client.setLastName(rs.getString("c_lastName"));
+//            client.setGender(Gender.fromSerbianName(rs.getString("gender")));
+//            Date sqlDate=rs.getDate("birthday");
+//            LocalDate birthday=sqlDate.toLocalDate();
+//            client.setBirthday(birthday);
+            client.setAttributes(rs);
+            list.add(client);
+        }
+        return list;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" + "idClient=" + idClient + ", name=" + name + ", lastName=" + lastName + ", gender=" + gender + ", birthday=" + birthday + ", mobilePhone=" + mobilePhone + ", gym=" + gym +" "+gym.getIdGym() +'}';
+    }
+    
 }

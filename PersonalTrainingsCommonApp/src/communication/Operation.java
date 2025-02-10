@@ -15,5 +15,15 @@ public enum Operation {
     DELETE_ACTIVITY,
     UPDATE_ACTIVITY,
     
+    GET_ALL_CLIENT,
+    INSERT_CLIENT,
+    DELETE_CLIENT,
+    UPDATE_CLIENT,
+    
+    GET_ALL_GYM,
+    INSERT_GYM,
+    UPDATE_GYM,
+    DELETE_GYM,
+    
     DELETE, CHANGE, READ, READ_ALL
 }

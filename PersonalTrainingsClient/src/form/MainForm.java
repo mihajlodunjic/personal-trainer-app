@@ -4,14 +4,20 @@
  */
 package form;
 
+import domain.Client;
+import domain.Gym;
 import domain.Trainer;
+import form.client.AddClientDialog;
 import form.trainer.TrainerDetailsForm;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import logic.ClientController;
 
 /**
@@ -19,13 +25,17 @@ import logic.ClientController;
  * @author pc
  */
 public class MainForm extends javax.swing.JFrame {
-
+    private LinkedList<Gym> gymList;
+    private LinkedList<Client> clientList;
     private Trainer trainer;
     public MainForm(Trainer trener) {
         initComponents();
         this.trainer=trener;
         resizeFrame();
         setWindowListener();
+        setResizable(false);
+        fillGymComboBox();
+        fillClientComboBox(gymList.get(cmbGym.getSelectedIndex()));
     }
 
     public Trainer getTrainer() {
@@ -41,26 +51,187 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableWorkoutRecords = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        checkBoxOnlyMyRecords = new javax.swing.JCheckBox();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        btnDeleteRecord = new javax.swing.JButton();
+        btnAddRecord = new javax.swing.JButton();
+        btnRecordDetails = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        btnClientDetails = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        cmbClient = new javax.swing.JComboBox<>();
+        cmbGym = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        AddClientMenuItem = new javax.swing.JMenuItem();
         MenuAccount = new javax.swing.JMenu();
-        MenuItemAccountDetails = new javax.swing.JMenuItem();
+        AccountDetailsMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        jMenu1.setText("File");
+        tableWorkoutRecords.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tableWorkoutRecords.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tableWorkoutRecords);
+
+        checkBoxOnlyMyRecords.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        checkBoxOnlyMyRecords.setText("Treninzi odrzani samo kod vas");
+        checkBoxOnlyMyRecords.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxOnlyMyRecordsActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel3.setText("Odrzani treninzi:");
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("EVIDENCIJA TRENINGA");
+
+        btnDeleteRecord.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnDeleteRecord.setText("Obrisi trening");
+        btnDeleteRecord.setMaximumSize(new java.awt.Dimension(150, 30));
+        btnDeleteRecord.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnDeleteRecord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteRecordActionPerformed(evt);
+            }
+        });
+
+        btnAddRecord.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnAddRecord.setText("Unesi trening");
+        btnAddRecord.setMaximumSize(new java.awt.Dimension(150, 30));
+        btnAddRecord.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnAddRecord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddRecordActionPerformed(evt);
+            }
+        });
+
+        btnRecordDetails.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnRecordDetails.setText("Detalji o treningu");
+        btnRecordDetails.setMaximumSize(new java.awt.Dimension(150, 30));
+        btnRecordDetails.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnRecordDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecordDetailsActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btnClientDetails.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnClientDetails.setText("Detalji o klijentu");
+        btnClientDetails.setMaximumSize(new java.awt.Dimension(150, 30));
+        btnClientDetails.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnClientDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientDetailsActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel1.setText("Klijent:");
+
+        cmbClient.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        cmbClient.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbClientActionPerformed(evt);
+            }
+        });
+
+        cmbGym.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        cmbGym.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbGym.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbGymActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel4.setText("Teretana:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 338, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(26, 26, 26)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cmbClient, 0, 150, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(46, 46, 46)
+                            .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(cmbGym, javax.swing.GroupLayout.Alignment.TRAILING, 0, 196, Short.MAX_VALUE))
+                    .addGap(26, 26, 26)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 194, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(9, 9, 9)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(cmbGym, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(34, 34, 34)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
+                    .addGap(46, 46, 46)
+                    .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+
+        jMenuBar1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        jMenu1.setText("Klijent");
+        jMenu1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        AddClientMenuItem.setText("Dodaj");
+        AddClientMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddClientMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(AddClientMenuItem);
+
         jMenuBar1.add(jMenu1);
 
         MenuAccount.setText("Nalog");
+        MenuAccount.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
-        MenuItemAccountDetails.setText("Detalji");
-        MenuItemAccountDetails.addActionListener(new java.awt.event.ActionListener() {
+        AccountDetailsMenuItem.setText("Detalji");
+        AccountDetailsMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuItemAccountDetailsActionPerformed(evt);
+                AccountDetailsMenuItemActionPerformed(evt);
             }
         });
-        MenuAccount.add(MenuItemAccountDetails);
+        MenuAccount.add(AccountDetailsMenuItem);
 
         jMenuBar1.add(MenuAccount);
 
@@ -70,36 +241,127 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 432, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1806, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(checkBoxOnlyMyRecords)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDeleteRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAddRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRecordDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAddRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDeleteRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRecordDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(checkBoxOnlyMyRecords)
+                .addGap(101, 101, 101))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MenuItemAccountDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemAccountDetailsActionPerformed
+    private void AccountDetailsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AccountDetailsMenuItemActionPerformed
         TrainerDetailsForm tdf=new TrainerDetailsForm(this, true, trainer);
         tdf.setVisible(true);
-        tdf.setLocationRelativeTo(this);
-    }//GEN-LAST:event_MenuItemAccountDetailsActionPerformed
+        tdf.setLocationRelativeTo(null);
+    }//GEN-LAST:event_AccountDetailsMenuItemActionPerformed
+
+    private void AddClientMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddClientMenuItemActionPerformed
+        AddClientDialog acd=new AddClientDialog(this, true);
+        acd.setVisible(true);
+        acd.setLocationRelativeTo(null);
+    }//GEN-LAST:event_AddClientMenuItemActionPerformed
+
+    private void checkBoxOnlyMyRecordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxOnlyMyRecordsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkBoxOnlyMyRecordsActionPerformed
+
+    private void btnClientDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientDetailsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnClientDetailsActionPerformed
+
+    private void btnDeleteRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRecordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteRecordActionPerformed
+
+    private void btnAddRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRecordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddRecordActionPerformed
+
+    private void cmbClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClientActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbClientActionPerformed
+
+    private void btnRecordDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecordDetailsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRecordDetailsActionPerformed
+
+    private void cmbGymActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGymActionPerformed
+        fillClientComboBox(gymList.get(cmbGym.getSelectedIndex()));
+    }//GEN-LAST:event_cmbGymActionPerformed
 
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem AccountDetailsMenuItem;
+    private javax.swing.JMenuItem AddClientMenuItem;
     private javax.swing.JMenu MenuAccount;
-    private javax.swing.JMenuItem MenuItemAccountDetails;
+    private javax.swing.JButton btnAddRecord;
+    private javax.swing.JButton btnClientDetails;
+    private javax.swing.JButton btnDeleteRecord;
+    private javax.swing.JButton btnRecordDetails;
+    private javax.swing.JCheckBox checkBoxOnlyMyRecords;
+    private javax.swing.JComboBox<String> cmbClient;
+    private javax.swing.JComboBox<String> cmbGym;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableWorkoutRecords;
     // End of variables declaration//GEN-END:variables
 
     private void resizeFrame() {
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Rectangle bounds = env.getMaximumWindowBounds();
-
-//        this.setSize(bounds.width, bounds.height);
+        System.out.println(bounds);
+        this.setSize(bounds.width, bounds.height);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         this.setLocation(bounds.x, bounds.y);
@@ -110,6 +372,40 @@ public class MainForm extends javax.swing.JFrame {
             ClientController.getInstance().logout(trainer);
         } catch (Exception ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void fillGymComboBox() {
+        try {
+            gymList=ClientController.getInstance().getAllGym(new Gym(), "1");
+            gymList.addFirst(null);
+            DefaultComboBoxModel<String> cbm=new DefaultComboBoxModel<>();
+            for(Gym g : gymList){
+                if(g==null)
+                {
+                    cbm.addElement("Sve teretane");
+                    continue;
+                }
+                cbm.addElement(g.getName()+" - "+g.getAddress());
+            }
+            cmbGym.setModel(cbm);
+            cmbGym.setSelectedIndex(0);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+
+    private void fillClientComboBox(Gym gym) {
+        try {
+            clientList=ClientController.getInstance().getAllClient(new Client(), gym==null? "1" : "idGym="+gym.getIdGym());
+            DefaultComboBoxModel<String> cbm=new DefaultComboBoxModel<>();
+            for(Client c : clientList){
+                cbm.addElement(c.getName()+" "+c.getLastName());
+            }
+            cmbClient.setModel(cbm);
+            cmbClient.setSelectedIndex(-1);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 }
