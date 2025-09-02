@@ -8,7 +8,6 @@ import domain.Trainer;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import database.DatabaseBroker;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

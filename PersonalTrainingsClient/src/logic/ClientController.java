@@ -13,6 +13,7 @@ import domain.*;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.LinkedList;
+import session.ClientSession;
 
 /**
  *
@@ -20,15 +21,11 @@ import java.util.LinkedList;
  */
 public class ClientController {
     private static ClientController instance=null;
-    private final Socket socket;
-    private final Sender sender;
-    private final Receiver receiver;
-    private ClientController()throws IOException{
-        socket = new Socket("127.0.0.1", 9000);
-        sender = new Sender(socket);
-        receiver = new Receiver(socket);
+    private ClientController()throws Exception{
+        
+        
     }
-    public static ClientController getInstance() throws IOException{
+    public static ClientController getInstance() throws Exception{
         if(instance==null)
             instance=new ClientController();
         return instance;
@@ -75,8 +72,9 @@ public class ClientController {
     }
     private Object sendRequest(Operation operation, Object arg) throws Exception{
         Request request=new Request(operation, arg);
-        sender.send(request);
-        Response response=(Response)receiver.receive();
+        
+        ClientSession.getInstance().getSender().send(request);
+        Response response=(Response)ClientSession.getInstance().getReceiver().receive();
         if(response.getException()!=null)
             throw response.getException();
         return response.getResult();

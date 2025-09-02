@@ -25,5 +25,8 @@ public enum Operation {
     UPDATE_GYM,
     DELETE_GYM,
     
+    INSERT_WORKOUT_RECORD,
+    UPDATE_WORKOUT_RECORD,
+
     DELETE, CHANGE, READ, READ_ALL
 }

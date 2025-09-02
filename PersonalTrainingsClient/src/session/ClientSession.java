@@ -4,6 +4,8 @@
  */
 package session;
 
+import communication.Receiver;
+import communication.Sender;
 import domain.Trainer;
 import java.net.Socket;
 
@@ -14,10 +16,14 @@ import java.net.Socket;
 public class ClientSession {
     private Socket socket;
     private Trainer loggedIn;
+    private Sender sender;
+    private Receiver receiver;
     private static ClientSession instance;
     private ClientSession(){
         try {
             socket=new Socket("127.0.0.1",9000);
+            sender = new Sender(socket);
+            receiver = new Receiver(socket);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,6 +47,14 @@ public class ClientSession {
 
     public void setLoggedIn(Trainer loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public Sender getSender() {
+        return sender;
+    }
+
+    public Receiver getReceiver() {
+        return receiver;
     }
     
 }

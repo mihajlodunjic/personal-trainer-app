@@ -97,12 +97,20 @@ public class Activity extends DefaultDomainObject{
 
     @Override
     public String join() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
-    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception{
+        LinkedList<DefaultDomainObject> list = new LinkedList<>();
+    while (rs.next()) {
+        Activity a = new Activity();
+        a.setIdActivity(rs.getInt("idActivity"));
+        a.setCategory(Category.fromSerbianName(rs.getString("category")));
+        a.setName(rs.getString("name"));
+        list.add(a);
+    }
+    return list;
     }
     
 }

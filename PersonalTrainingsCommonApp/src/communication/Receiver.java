@@ -12,15 +12,16 @@ import java.util.logging.Logger;
 
 public class Receiver {
     private final Socket socket;
+    ObjectInputStream in;
 
-    public Receiver(Socket socket) {
+    public Receiver(Socket socket) throws Exception {
         this.socket = socket;
+        in = new ObjectInputStream(socket.getInputStream());
     }
     
     public  Object receive() throws Exception{
-        ObjectInputStream in;
         try {
-            in = new ObjectInputStream(socket.getInputStream());
+            
             return in.readObject();
         } catch (IOException ex) {
              ex.printStackTrace();

@@ -163,6 +163,8 @@ public class WorkoutRecord extends DefaultDomainObject{
             this.startTime=startTime;
             this.endTime=endTime;
             this.avgIntensity=avgIntensity;
+            if (this.trainer == null) this.trainer = new Trainer();
+            if (this.client  == null) this.client  = new Client();
             trainer.setIdTrаiner(idTrainer);
             client.setIdClient(idClient);
             

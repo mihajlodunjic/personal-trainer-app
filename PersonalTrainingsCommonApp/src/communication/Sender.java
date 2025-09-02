@@ -10,14 +10,16 @@ import java.net.Socket;
 
 public class Sender {
     private final Socket socket;
+    private ObjectOutputStream out;
 
-    public Sender(Socket socket) {
+    public Sender(Socket socket)throws Exception{
         this.socket = socket;
+        out=new ObjectOutputStream(socket.getOutputStream());
     }
     
     public void send(Object object) throws Exception{
         try {
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            out.reset();
             out.writeObject(object);
             out.flush();
         } catch (IOException ex) {

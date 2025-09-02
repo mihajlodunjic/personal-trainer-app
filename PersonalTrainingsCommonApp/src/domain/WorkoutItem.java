@@ -110,7 +110,7 @@ public class WorkoutItem extends DefaultDomainObject{
 
     @Override
     public String returnInsertColumns() {
-        return "(itemSN, intensity, numOfSeries, mass, comment, idActivity)";
+        return "(idWorkoutRecord, itemSN, intensity, numOfSeries, mass, comment, idActivity)";
     }
 
     @Override

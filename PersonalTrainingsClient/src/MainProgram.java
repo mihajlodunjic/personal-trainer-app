@@ -1,8 +1,6 @@
 
-import form.RegDialog;
 import form.LogForm;
 import javax.swing.JOptionPane;
-import database.DatabaseBroker;
 import logic.ClientController;
 
 public class MainProgram {
