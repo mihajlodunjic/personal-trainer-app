@@ -16,12 +16,12 @@ import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
-
 /**
  *
  * @author pc
  */
-public class WorkoutRecord extends DefaultDomainObject{
+public class WorkoutRecord extends DefaultDomainObject {
+
     private int idWorkoutRecord;
     private LocalDate workoutDate;
     private LocalTime startTime;
@@ -107,23 +107,24 @@ public class WorkoutRecord extends DefaultDomainObject{
     public void setClient(Client client) {
         this.client = client;
     }
-    public LocalTime getDuration(){
+
+    public LocalTime getDuration() {
         //to do
         return null;
     }
 
     @Override
     public String returnAttrValues() {
-        Date date=Date.valueOf(workoutDate);
-        Time start=Time.valueOf(startTime);
-        Time end=Time.valueOf(endTime);
-        Duration duration=Duration.between(startTime, endTime);
-        long hours=duration.toHours();
-        long minutes=duration.toMinutes()%60;
-        long seconds=duration.toSeconds()%60;
-        String durationString=String.format("%02d:%02d:%02d", hours,minutes,seconds);
+        Date date = Date.valueOf(workoutDate);
+        Time start = Time.valueOf(startTime);
+        Time end = Time.valueOf(endTime);
+        Duration duration = Duration.between(startTime, endTime);
+        long hours = duration.toHours();
+        long minutes = duration.toMinutes() % 60;
+        long seconds = duration.toSeconds() % 60;
+        String durationString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
         //nije gotovo
-        return "'"+date+"','"+start+"','"+end+"','"+durationString+"','"+avgIntensity.getSerbianName()+"',"+trainer.getIdTrаiner()+","+client.getIdClient();
+        return "'" + date + "','" + start + "','" + end + "','" + durationString + "','" + avgIntensity.getSerbianName() + "'," + trainer.getIdTrаiner() + "," + client.getIdClient();
     }
 
     @Override
@@ -133,62 +134,84 @@ public class WorkoutRecord extends DefaultDomainObject{
 
     @Override
     public String setAttrValues() {
-        Date date=Date.valueOf(workoutDate);
-        Time start=Time.valueOf(startTime);
-        Time end=Time.valueOf(endTime);
-        Duration duration=Duration.between(startTime, endTime);
-        long hours=duration.toHours();
-        long minutes=duration.toMinutes()%60;
-        long seconds=duration.toSeconds()%60;
-        String durationString=String.format("%02d:%02d:%02d", hours,minutes,seconds);
-        return "workoutDate='"+date+"',startTime='"+start+"',endTime='"+end+"',duration='"+durationString+"',avgintensity='"+avgIntensity.getSerbianName()+"',idTrainer="+trainer.getIdTrаiner()+",idClient="+client.getIdClient();
+        Date date = Date.valueOf(workoutDate);
+        Time start = Time.valueOf(startTime);
+        Time end = Time.valueOf(endTime);
+        Duration duration = Duration.between(startTime, endTime);
+        long hours = duration.toHours();
+        long minutes = duration.toMinutes() % 60;
+        long seconds = duration.toSeconds() % 60;
+        String durationString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        return "workoutDate='" + date + "',startTime='" + start + "',endTime='" + end + "',duration='" + durationString + "',avgintensity='" + avgIntensity.getSerbianName() + "',idTrainer=" + trainer.getIdTrаiner() + ",idClient=" + client.getIdClient();
     }
 
     @Override
     public String returnInsertColumns() {
         return "(workoutDate,startTime,endTime,duration,avgIntensity,idTrainer,idClient)";
     }
-    
+
     @Override
     public boolean setAttributes(ResultSet rs) {
         try {
-            LocalDate workoutDate=rs.getDate("workoutDate").toLocalDate();
-            LocalTime startTime=rs.getTime("startTime").toLocalTime();
-            LocalTime endTime=rs.getTime("endTime").toLocalTime();
-            LocalTime duration=rs.getTime("duration").toLocalTime();
-            Measurement avgIntensity=Measurement.fromSerbianName(rs.getString("avgIntensity"));
-            int idTrainer=rs.getInt("idTrainer");
-            int idClient=rs.getInt("idClient");
-            this.workoutDate=workoutDate;
-            this.startTime=startTime;
-            this.endTime=endTime;
-            this.avgIntensity=avgIntensity;
-            if (this.trainer == null) this.trainer = new Trainer();
-            if (this.client  == null) this.client  = new Client();
+            LocalDate workoutDate = rs.getDate("workoutDate").toLocalDate();
+            LocalTime startTime = rs.getTime("startTime").toLocalTime();
+            LocalTime endTime = rs.getTime("endTime").toLocalTime();
+            LocalTime duration = rs.getTime("duration").toLocalTime();
+            Measurement avgIntensity = Measurement.fromSerbianName(rs.getString("avgIntensity"));
+            int idTrainer = rs.getInt("idTrainer");
+            int idClient = rs.getInt("idClient");
+            this.workoutDate = workoutDate;
+            this.startTime = startTime;
+            this.endTime = endTime;
+            this.avgIntensity = avgIntensity;
+            if (this.trainer == null) {
+                this.trainer = new Trainer();
+            }
+            if (this.client == null) {
+                this.client = new Client();
+            }
             trainer.setIdTrаiner(idTrainer);
             client.setIdClient(idClient);
-            
-            
+
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
-        
+
     }
 
     @Override
     public String alias() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return " wr ";
     }
 
     @Override
     public String join() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
-    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception {
+        LinkedList<DefaultDomainObject> list = new LinkedList<>();
+        while (rs.next()) {
+            WorkoutRecord wr = new WorkoutRecord();
+            wr.setIdWorkoutRecord(rs.getInt("idWorkoutRecord"));
+            wr.setWorkoutDate(rs.getDate("workoutDate").toLocalDate());
+            wr.setStartTime(rs.getTime("startTime").toLocalTime());
+            wr.setEndTime(rs.getTime("endTime").toLocalTime());
+            wr.setAvgIntensity(Measurement.fromSerbianName(rs.getString("avgIntensity")));
+
+            Trainer t = new Trainer();
+            t.setIdTrаiner(rs.getInt("idTrainer"));
+            wr.setTrainer(t);
+
+            Client c = new Client();
+            c.setIdClient(rs.getInt("idClient"));
+            wr.setClient(c);
+
+            list.add(wr);
+        }
+        return list;
     }
 }

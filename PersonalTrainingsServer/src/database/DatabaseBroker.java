@@ -154,15 +154,17 @@ public class DatabaseBroker {
     }
 
     public static LinkedList<DefaultDomainObject> select(DefaultDomainObject ddo) throws Exception {
-        String query = "SELECT * "
+        String query = "SELECT " + ddo.columns() + " "
                 + "FROM " + ddo.returnClassName() + " " + ddo.alias() + " "
                 + ddo.join()
-                + " WHERE " + ddo.returnSearchCondition();
-        System.out.println(query);
-        st = connection.createStatement();
-        ResultSet rs = st.executeQuery(query);
-        return ddo.returnList(rs);
+                + " WHERE " + ddo.returnSearchCondition()
+                + (ddo.orderBy().isEmpty() ? "" : " ORDER BY " + ddo.orderBy());
 
+        System.out.println(query);
+
+        try (Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet rs = st.executeQuery(query)) {
+            return ddo.returnList(rs); 
+        }
     }
 
 //    public static void main(String[] args) {

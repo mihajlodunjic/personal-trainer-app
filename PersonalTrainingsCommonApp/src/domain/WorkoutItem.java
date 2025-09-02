@@ -10,12 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
-
 /**
  *
  * @author pc
  */
-public class WorkoutItem extends DefaultDomainObject{
+public class WorkoutItem extends DefaultDomainObject {
+
     private WorkoutRecord workoutRecord;
     private int itemSN; //sequence number
     private Measurement intensity;
@@ -24,7 +24,7 @@ public class WorkoutItem extends DefaultDomainObject{
     private String comment;
     private Activity activity;
 
-    public WorkoutItem(){
+    public WorkoutItem() {
     }
 
     public WorkoutItem(WorkoutRecord workoutRecord, int itemSN, Measurement intensity, int numOfSeries, double mass, String comment, Activity activity) {
@@ -95,7 +95,7 @@ public class WorkoutItem extends DefaultDomainObject{
 
     @Override
     public String returnAttrValues() {
-        return workoutRecord.getIdWorkoutRecord()+","+itemSN+",'"+intensity.getSerbianName()+"',"+numOfSeries+","+mass+",'"+comment+"',"+activity.getIdActivity();
+        return workoutRecord.getIdWorkoutRecord() + "," + itemSN + ",'" + intensity.getSerbianName() + "'," + numOfSeries + "," + mass + ",'" + comment + "'," + activity.getIdActivity();
     }
 
     @Override
@@ -105,7 +105,7 @@ public class WorkoutItem extends DefaultDomainObject{
 
     @Override
     public String setAttrValues() {
-        return "intensity='"+intensity.getSerbianName()+"',numOfSeries="+numOfSeries+",mass="+mass+",comment='"+comment+"',idActivity="+activity.getIdActivity();
+        return "intensity='" + intensity.getSerbianName() + "',numOfSeries=" + numOfSeries + ",mass=" + mass + ",comment='" + comment + "',idActivity=" + activity.getIdActivity();
     }
 
     @Override
@@ -116,11 +116,11 @@ public class WorkoutItem extends DefaultDomainObject{
     @Override
     public boolean setAttributes(ResultSet rs) {
         try {
-            itemSN=rs.getInt("itemSN");
-            intensity=Measurement.fromSerbianName(rs.getString("intensity"));
-            numOfSeries=rs.getInt("numOfSeries");
-            mass=rs.getDouble("mass");
-            comment=rs.getString("comment");
+            itemSN = rs.getInt("itemSN");
+            intensity = Measurement.fromSerbianName(rs.getString("intensity"));
+            numOfSeries = rs.getInt("numOfSeries");
+            mass = rs.getDouble("mass");
+            comment = rs.getString("comment");
             //record i activity dodati u kontroleru
 
             return true;
@@ -128,24 +128,41 @@ public class WorkoutItem extends DefaultDomainObject{
             ex.printStackTrace();
             return false;
         }
-        
-        
-        
+
     }
 
     @Override
     public String alias() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "wi";
     }
 
     @Override
     public String join() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
-    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception{
+        LinkedList<DefaultDomainObject> list = new LinkedList<>();
+        while (rs.next()) {
+            WorkoutItem it = new WorkoutItem();
+            WorkoutRecord wr = new WorkoutRecord();
+            wr.setIdWorkoutRecord(rs.getInt("idWorkoutRecord"));
+            it.setWorkoutRecord(wr);
+
+            it.setItemSN(rs.getInt("itemSN"));
+            it.setIntensity(Measurement.fromSerbianName(rs.getString("intensity")));
+            it.setNumOfSeries(rs.getInt("numOfSeries"));
+            it.setMass(rs.getDouble("mass"));
+            it.setComment(rs.getString("comment"));
+
+            Activity a = new Activity();
+            a.setIdActivity(rs.getInt("idActivity"));
+            it.setActivity(a);
+
+            list.add(it);
+        }
+        return list;
     }
-    
+
 }

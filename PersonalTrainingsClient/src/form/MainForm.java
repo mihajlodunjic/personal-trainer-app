@@ -9,8 +9,11 @@ import domain.Gym;
 import domain.Trainer;
 import form.client.AddClientDialog;
 import form.trainer.TrainerDetailsForm;
+import form.workoutrecord.AddWorkoutRecordDialog;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -317,7 +320,14 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteRecordActionPerformed
 
     private void btnAddRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRecordActionPerformed
-        // TODO add your handling code here:
+        if(cmbClient.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "Morate izabrati klijenta da biste dodali trening.");
+            return;
+        }
+        
+        Client client=clientList.get(cmbClient.getSelectedIndex());
+        
+        new AddWorkoutRecordDialog(this, true, trainer, client).show();
     }//GEN-LAST:event_btnAddRecordActionPerformed
 
     private void cmbClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClientActionPerformed
@@ -369,9 +379,23 @@ public class MainForm extends javax.swing.JFrame {
 
     private void setWindowListener() {
         try {
-            ClientController.getInstance().logout(trainer);
+            
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    try {
+                        ClientController.getInstance().logout(trainer);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                
+            
+            });
+            
+            
         } catch (Exception ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 

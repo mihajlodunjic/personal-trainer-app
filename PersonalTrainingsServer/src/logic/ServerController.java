@@ -6,7 +6,6 @@ package logic;
 
 import domain.*;
 import java.util.LinkedList;
-import java.util.LinkedList;
 import so.activity.SOGetAllActivity;
 import so.client.SOAddClient;
 import so.client.SOGetAllClient;
@@ -17,6 +16,8 @@ import so.login.SOLogout;
 import so.register.SORegister;
 import so.trainer.SOGetAllTrainer;
 import so.trainer.SOUpdateTrainer;
+import so.workoutrecord.SOAddWorkoutRecord;
+import so.workoutrecord.SOUpdateWorkoutRecord;
 
 /**
  *
@@ -97,10 +98,23 @@ public class ServerController {
         so.executeSO(gym);
         return so.getList();
     }
+
     //activity operations
     public LinkedList<Activity> getAllActivity(Activity a) throws Exception {
         SOGetAllActivity so = new SOGetAllActivity();
         so.executeSO(a);
         return so.getList();
+    }
+
+    public Boolean addWorkoutRecord(WorkoutRecord wr) throws Exception {
+        SOAddWorkoutRecord so = new SOAddWorkoutRecord();
+        so.executeSO(wr);
+        return so.isSuccess();
+    }
+
+    public Boolean updateWorkoutRecord(WorkoutRecord wr) throws Exception {
+        SOUpdateWorkoutRecord so = new SOUpdateWorkoutRecord();
+        so.executeSO(wr);
+        return so.isSuccess();
     }
 }

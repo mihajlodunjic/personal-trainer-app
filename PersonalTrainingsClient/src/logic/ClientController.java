@@ -70,6 +70,13 @@ public class ClientController {
     public boolean addGym(Gym gym)throws Exception{
         return (Boolean)sendRequest(Operation.INSERT_GYM, gym);
     }
+    
+    
+    //activity operations
+    public LinkedList<Activity> getAllActivity(Activity activity, String criteria)throws Exception{
+        activity.setSearchCondition(criteria);
+        return (LinkedList<Activity>)sendRequest(Operation.GET_ALL_ACTIVITY,activity);
+    }
     private Object sendRequest(Operation operation, Object arg) throws Exception{
         Request request=new Request(operation, arg);
         
@@ -79,4 +86,6 @@ public class ClientController {
             throw response.getException();
         return response.getResult();
     }
+    
+    
 }

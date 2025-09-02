@@ -23,7 +23,8 @@ public abstract class DefaultDomainObject implements Serializable{
     public abstract String returnInsertColumns();
     public abstract boolean setAttributes(ResultSet rs);
     public abstract LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception;
-    
+    public String columns() { return "*"; }     
+    public String orderBy() { return ""; }      
     public void setSearchCondition(String searchCondition){
         this.searchCondition=searchCondition;
     }

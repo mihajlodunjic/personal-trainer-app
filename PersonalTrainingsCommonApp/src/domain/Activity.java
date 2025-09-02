@@ -16,7 +16,8 @@ import java.util.logging.Logger;
  *
  * @author pc
  */
-public class Activity extends DefaultDomainObject{
+public class Activity extends DefaultDomainObject {
+
     private int idActivity;
     private Category category;
     private String name;
@@ -27,8 +28,9 @@ public class Activity extends DefaultDomainObject{
         this.name = name;
     }
 
-    public Activity(){}
-    
+    public Activity() {
+    }
+
     public int getIdActivity() {
         return idActivity;
     }
@@ -55,7 +57,7 @@ public class Activity extends DefaultDomainObject{
 
     @Override
     public String returnAttrValues() {
-        return "'"+category.getSerbianName()+"','"+name+"'";
+        return "'" + category.getSerbianName() + "','" + name + "'";
     }
 
     @Override
@@ -63,10 +65,9 @@ public class Activity extends DefaultDomainObject{
         return "activity";
     }
 
-
     @Override
     public String setAttrValues() {
-        return "category= '"+category.getSerbianName()+"', name='"+name+"'";
+        return "category= '" + category.getSerbianName() + "', name='" + name + "'";
     }
 
     @Override
@@ -77,12 +78,12 @@ public class Activity extends DefaultDomainObject{
     @Override
     public boolean setAttributes(ResultSet rs) {
         try {
-            int idActivity=rs.getInt("idActivity");
-            Category category=Category.fromSerbianName(rs.getString("category"));
-            String name=rs.getString("name");
-            this.idActivity=idActivity;
-            this.category=category;
-            this.name=name;
+            int idActivity = rs.getInt("idActivity");
+            Category category = Category.fromSerbianName(rs.getString("category"));
+            String name = rs.getString("name");
+            this.idActivity = idActivity;
+            this.category = category;
+            this.name = name;
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -101,16 +102,16 @@ public class Activity extends DefaultDomainObject{
     }
 
     @Override
-    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception{
+    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception {
         LinkedList<DefaultDomainObject> list = new LinkedList<>();
-    while (rs.next()) {
-        Activity a = new Activity();
-        a.setIdActivity(rs.getInt("idActivity"));
-        a.setCategory(Category.fromSerbianName(rs.getString("category")));
-        a.setName(rs.getString("name"));
-        list.add(a);
+        while (rs.next()) {
+            Activity a = new Activity();
+            a.setIdActivity(rs.getInt("idActivity"));
+            a.setCategory(Category.fromSerbianName(rs.getString("category")));
+            a.setName(rs.getString("name"));
+            list.add(a);
+        }
+        return list;
     }
-    return list;
-    }
-    
+
 }

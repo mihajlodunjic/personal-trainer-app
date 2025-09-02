@@ -88,8 +88,17 @@ public class ClientThread extends Thread {
                     response.setResult(gymList);
                     break;
                 case Operation.GET_ALL_ACTIVITY:
-                    LinkedList<Activity> activities = ServerController.getInstance().getAllActivity(new Activity());
+                    LinkedList<Activity> activities = ServerController.getInstance().getAllActivity((Activity)r.getArgument());
                     response.setResult(activities);
+                    break;
+                case Operation.INSERT_WORKOUT_RECORD:
+                    success = ServerController.getInstance().addWorkoutRecord((WorkoutRecord) r.getArgument());
+                    response.setResult(success);
+                    break;
+
+                case Operation.UPDATE_WORKOUT_RECORD:
+                    success = ServerController.getInstance().updateWorkoutRecord((WorkoutRecord) r.getArgument());
+                    response.setResult(success);
                     break;
                 default:
                     return null;
