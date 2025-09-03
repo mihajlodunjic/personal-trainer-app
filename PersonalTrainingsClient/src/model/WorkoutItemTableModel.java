@@ -51,4 +51,13 @@ public class WorkoutItemTableModel extends AbstractTableModel{
         fireTableRowsInserted(idx, idx);
     }
     
+    public LinkedList<WorkoutItem> getItems(){
+        return list;
+    }
+    
+    public void removeAt(int row){
+        list.remove(row);
+        fireTableRowsDeleted(row, row);
+    }
+    
 }

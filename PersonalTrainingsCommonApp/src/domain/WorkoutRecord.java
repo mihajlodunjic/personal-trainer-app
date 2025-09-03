@@ -26,10 +26,12 @@ public class WorkoutRecord extends DefaultDomainObject {
     private LocalDate workoutDate;
     private LocalTime startTime;
     private LocalTime endTime;
+    private LocalTime duration;
     private Measurement avgIntensity;
     private Trainer trainer;
     private Client client;
     private List<WorkoutItem> items;
+    private String joinClause = "";
 
     public List<WorkoutItem> getItems() {
         return items;
@@ -37,6 +39,7 @@ public class WorkoutRecord extends DefaultDomainObject {
 
     public void setItems(List<WorkoutItem> items) {
         this.items = items;
+        calculateAvgIntensity();
     }
 
     public WorkoutRecord() {
@@ -50,6 +53,7 @@ public class WorkoutRecord extends DefaultDomainObject {
         this.avgIntensity = avgIntensity;
         this.trainer = trainer;
         this.client = client;
+        calculateDuration();
     }
 
     public int getIdWorkoutRecord() {
@@ -109,8 +113,12 @@ public class WorkoutRecord extends DefaultDomainObject {
     }
 
     public LocalTime getDuration() {
-        //to do
-        return null;
+        calculateDuration();
+        return duration;
+    }
+
+    public void setJoinClause(String joinClause) {
+        this.joinClause = joinClause;
     }
 
     @Override
@@ -153,17 +161,14 @@ public class WorkoutRecord extends DefaultDomainObject {
     @Override
     public boolean setAttributes(ResultSet rs) {
         try {
-            LocalDate workoutDate = rs.getDate("workoutDate").toLocalDate();
-            LocalTime startTime = rs.getTime("startTime").toLocalTime();
-            LocalTime endTime = rs.getTime("endTime").toLocalTime();
-            LocalTime duration = rs.getTime("duration").toLocalTime();
-            Measurement avgIntensity = Measurement.fromSerbianName(rs.getString("avgIntensity"));
+            this.idWorkoutRecord = rs.getInt("idWorkoutRecord");
+            this.workoutDate = rs.getDate("workoutDate").toLocalDate();
+            this.startTime = rs.getTime("startTime").toLocalTime();
+            this.endTime = rs.getTime("endTime").toLocalTime();
+            this.avgIntensity = Measurement.fromSerbianName(rs.getString("avgIntensity"));
             int idTrainer = rs.getInt("idTrainer");
             int idClient = rs.getInt("idClient");
-            this.workoutDate = workoutDate;
-            this.startTime = startTime;
-            this.endTime = endTime;
-            this.avgIntensity = avgIntensity;
+
             if (this.trainer == null) {
                 this.trainer = new Trainer();
             }
@@ -188,7 +193,7 @@ public class WorkoutRecord extends DefaultDomainObject {
 
     @Override
     public String join() {
-        return "";
+        return joinClause == null ? "" : joinClause;
     }
 
     @Override
@@ -196,22 +201,43 @@ public class WorkoutRecord extends DefaultDomainObject {
         LinkedList<DefaultDomainObject> list = new LinkedList<>();
         while (rs.next()) {
             WorkoutRecord wr = new WorkoutRecord();
-            wr.setIdWorkoutRecord(rs.getInt("idWorkoutRecord"));
-            wr.setWorkoutDate(rs.getDate("workoutDate").toLocalDate());
-            wr.setStartTime(rs.getTime("startTime").toLocalTime());
-            wr.setEndTime(rs.getTime("endTime").toLocalTime());
-            wr.setAvgIntensity(Measurement.fromSerbianName(rs.getString("avgIntensity")));
-
-            Trainer t = new Trainer();
-            t.setIdTrаiner(rs.getInt("idTrainer"));
-            wr.setTrainer(t);
-
-            Client c = new Client();
-            c.setIdClient(rs.getInt("idClient"));
-            wr.setClient(c);
-
+            wr.setAttributes(rs);
             list.add(wr);
         }
+        rs.close();
         return list;
     }
+
+    public void calculateDuration() {
+        Duration diff = Duration.between(startTime, endTime);
+
+        long hours = diff.toHours();
+        long minutes = diff.toMinutes() % 60;
+
+        duration = LocalTime.of((int) hours, (int) minutes);
+    }
+
+    public void setWorkoutRecordForItems() {
+        for (WorkoutItem wi : items) {
+            wi.setWorkoutRecord(this);
+        }
+    }
+
+    public void calculateAvgIntensity() {
+        double sum = 0;
+        for (WorkoutItem wi : items) {
+            sum += wi.getIntensity().ordinal();
+        }
+
+        double avg = sum / items.size();
+        int rounded = (int) Math.round(avg);
+        avgIntensity = Measurement.values()[rounded];
+
+    }
+
+    @Override
+    public String toString() {
+        return "WorkoutRecord{" + "idWorkoutRecord=" + idWorkoutRecord + ", workoutDate=" + workoutDate + ", startTime=" + startTime + ", endTime=" + endTime + ", duration=" + duration + ", avgIntensity=" + avgIntensity + ", trainer=" + trainer + ", client=" + client + ", items=" + items + '}';
+    }
+
 }

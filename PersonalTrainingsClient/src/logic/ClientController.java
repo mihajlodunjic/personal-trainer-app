@@ -77,6 +77,14 @@ public class ClientController {
         activity.setSearchCondition(criteria);
         return (LinkedList<Activity>)sendRequest(Operation.GET_ALL_ACTIVITY,activity);
     }
+    //workout record operaitons
+    
+    public boolean addWorkoutRecord(WorkoutRecord wr)throws Exception{
+        return (Boolean)sendRequest(Operation.INSERT_WORKOUT_RECORD, wr);
+    }
+    
+    
+    
     private Object sendRequest(Operation operation, Object arg) throws Exception{
         Request request=new Request(operation, arg);
         
