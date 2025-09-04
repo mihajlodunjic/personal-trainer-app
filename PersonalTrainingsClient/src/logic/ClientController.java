@@ -10,6 +10,7 @@ import communication.Request;
 import communication.Response;
 import communication.Sender;
 import domain.*;
+import dto.WorkoutRecordCriteria;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.LinkedList;
@@ -20,80 +21,97 @@ import session.ClientSession;
  * @author pc
  */
 public class ClientController {
-    private static ClientController instance=null;
-    private ClientController()throws Exception{
-        
-        
+
+    private static ClientController instance = null;
+
+    private ClientController() throws Exception {
+
     }
-    public static ClientController getInstance() throws Exception{
-        if(instance==null)
-            instance=new ClientController();
+
+    public static ClientController getInstance() throws Exception {
+        if (instance == null) {
+            instance = new ClientController();
+        }
         return instance;
     }
-    
+
     //User operations
-    public Trainer login(Trainer trainer) throws Exception{
+    public Trainer login(Trainer trainer) throws Exception {
         return (Trainer) sendRequest(Operation.LOGIN, trainer);
-        
+
     }
-    public void logout(Trainer trainer) throws Exception{
+
+    public void logout(Trainer trainer) throws Exception {
         sendRequest(Operation.LOGOUT, trainer);
     }
-    public boolean register(Trainer trainer) throws Exception{
+
+    public boolean register(Trainer trainer) throws Exception {
         return (Boolean) sendRequest(Operation.REGISTER, trainer);
     }
-    
-    public LinkedList<Trainer> getAllTrainer() throws Exception{
+
+    public LinkedList<Trainer> getAllTrainer() throws Exception {
         return (LinkedList<Trainer>) sendRequest(Operation.GET_ALL_TRAINER, null);
     }
-    
-    public boolean updateTrainer(Trainer trainer) throws Exception{
-        return (Boolean)sendRequest(Operation.UPDATE_TRAINER, trainer);
+
+    public boolean updateTrainer(Trainer trainer) throws Exception {
+        return (Boolean) sendRequest(Operation.UPDATE_TRAINER, trainer);
     }
-    
-    
+
     //Client operations
-    public boolean addClient(Client client) throws Exception{
-        return (Boolean)sendRequest(Operation.INSERT_CLIENT, client);
+    public boolean addClient(Client client) throws Exception {
+        return (Boolean) sendRequest(Operation.INSERT_CLIENT, client);
     }
-    public LinkedList<Client> getAllClient(Client client, String criteria) throws Exception{
+
+    public LinkedList<Client> getAllClient(Client client, String criteria) throws Exception {
         client.setSearchCondition(criteria);
-        return(LinkedList<Client>)sendRequest(Operation.GET_ALL_CLIENT, client);
+        return (LinkedList<Client>) sendRequest(Operation.GET_ALL_CLIENT, client);
     }
-    
-    
+
     //gym operations
-    public LinkedList<Gym> getAllGym(Gym gym, String criteria) throws Exception{
+    public LinkedList<Gym> getAllGym(Gym gym, String criteria) throws Exception {
         gym.setSearchCondition(criteria);
-        return (LinkedList<Gym>)sendRequest(Operation.GET_ALL_GYM, gym);
+        return (LinkedList<Gym>) sendRequest(Operation.GET_ALL_GYM, gym);
     }
-    public boolean addGym(Gym gym)throws Exception{
-        return (Boolean)sendRequest(Operation.INSERT_GYM, gym);
+
+    public boolean addGym(Gym gym) throws Exception {
+        return (Boolean) sendRequest(Operation.INSERT_GYM, gym);
     }
-    
-    
+
     //activity operations
-    public LinkedList<Activity> getAllActivity(Activity activity, String criteria)throws Exception{
+    public LinkedList<Activity> getAllActivity(Activity activity, String criteria) throws Exception {
         activity.setSearchCondition(criteria);
-        return (LinkedList<Activity>)sendRequest(Operation.GET_ALL_ACTIVITY,activity);
+        return (LinkedList<Activity>) sendRequest(Operation.GET_ALL_ACTIVITY, activity);
     }
     //workout record operaitons
-    
-    public boolean addWorkoutRecord(WorkoutRecord wr)throws Exception{
-        return (Boolean)sendRequest(Operation.INSERT_WORKOUT_RECORD, wr);
+
+    public boolean addWorkoutRecord(WorkoutRecord wr) throws Exception {
+        return (Boolean) sendRequest(Operation.INSERT_WORKOUT_RECORD, wr);
     }
-    
-    
-    
-    private Object sendRequest(Operation operation, Object arg) throws Exception{
-        Request request=new Request(operation, arg);
-        
+
+    public LinkedList<WorkoutRecord> getWorkoutRecordsForClient(Client client) throws Exception {
+        WorkoutRecordCriteria wrc = new WorkoutRecordCriteria();
+        wrc.setClientId(client.getIdClient());
+        return (LinkedList<WorkoutRecord>) sendRequest(Operation.SEARCH_WORKOUT_RECORDS, wrc);
+    }
+
+    public boolean updateWorkoutRecord(WorkoutRecord wr) throws Exception {
+        return (Boolean) sendRequest(Operation.UPDATE_WORKOUT_RECORD, wr);
+    }
+
+    //workout items operations
+    public LinkedList<WorkoutItem> getItemsForWorkoutRecord(WorkoutRecord wr) throws Exception {
+        return (LinkedList<WorkoutItem>) sendRequest(Operation.GET_WORKOUT_ITEMS_FOR_RECORD, wr);
+    }
+
+    private Object sendRequest(Operation operation, Object arg) throws Exception {
+        Request request = new Request(operation, arg);
+
         ClientSession.getInstance().getSender().send(request);
-        Response response=(Response)ClientSession.getInstance().getReceiver().receive();
-        if(response.getException()!=null)
+        Response response = (Response) ClientSession.getInstance().getReceiver().receive();
+        if (response.getException() != null) {
             throw response.getException();
+        }
         return response.getResult();
     }
-    
-    
+
 }

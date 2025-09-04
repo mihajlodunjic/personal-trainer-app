@@ -7,6 +7,8 @@ package form;
 import domain.Client;
 import domain.Gym;
 import domain.Trainer;
+import domain.WorkoutItem;
+import domain.WorkoutRecord;
 import form.client.AddClientDialog;
 import form.trainer.TrainerDetailsForm;
 import form.workoutrecord.AddWorkoutRecordDialog;
@@ -22,23 +24,29 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import logic.ClientController;
+import model.WorkoutRecordTableModel;
 
 /**
  *
  * @author pc
  */
 public class MainForm extends javax.swing.JFrame {
+
     private LinkedList<Gym> gymList;
     private LinkedList<Client> clientList;
     private Trainer trainer;
+    private LinkedList<WorkoutRecord> recordsOfSelectedClient;
+
     public MainForm(Trainer trener) {
         initComponents();
-        this.trainer=trener;
+        this.trainer = trener;
         resizeFrame();
         setWindowListener();
         setResizable(false);
         fillGymComboBox();
         fillClientComboBox(gymList.get(cmbGym.getSelectedIndex()));
+        tableWorkoutRecords.setModel(new WorkoutRecordTableModel());
+
     }
 
     public Trainer getTrainer() {
@@ -296,23 +304,47 @@ public class MainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AccountDetailsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AccountDetailsMenuItemActionPerformed
-        TrainerDetailsForm tdf=new TrainerDetailsForm(this, true, trainer);
+        TrainerDetailsForm tdf = new TrainerDetailsForm(this, true, trainer);
         tdf.setVisible(true);
         tdf.setLocationRelativeTo(null);
     }//GEN-LAST:event_AccountDetailsMenuItemActionPerformed
 
     private void AddClientMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddClientMenuItemActionPerformed
-        AddClientDialog acd=new AddClientDialog(this, true);
+        AddClientDialog acd = new AddClientDialog(this, true, null);
         acd.setVisible(true);
         acd.setLocationRelativeTo(null);
     }//GEN-LAST:event_AddClientMenuItemActionPerformed
-
     private void checkBoxOnlyMyRecordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxOnlyMyRecordsActionPerformed
-        // TODO add your handling code here:
+        if (!(tableWorkoutRecords.getModel() instanceof WorkoutRecordTableModel)) {
+            return;
+        }
+
+        if (checkBoxOnlyMyRecords.isSelected()) {
+            LinkedList<WorkoutRecord> onlyMyRecords = new LinkedList<>();
+            for (WorkoutRecord wr : recordsOfSelectedClient) {
+                if (wr.getTrainer().getIdTrаiner() == trainer.getIdTrаiner()) {
+                    System.out.println("moj trening: "+wr);
+                    onlyMyRecords.add(wr);
+                }
+            }
+            
+            fillRecordTable(onlyMyRecords);
+
+        } else {
+            fillRecordTable(recordsOfSelectedClient);
+        }
+
+
     }//GEN-LAST:event_checkBoxOnlyMyRecordsActionPerformed
 
     private void btnClientDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientDetailsActionPerformed
-        // TODO add your handling code here:
+        if (cmbClient.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Izaberite klijenta.");
+        }
+        (new AddClientDialog(this, true, clientList.get(cmbClient.getSelectedIndex()))).setVisible(true);
+        cmbClient.setSelectedIndex(-1);
+        cmbGym.setSelectedIndex(-1);
+        
     }//GEN-LAST:event_btnClientDetailsActionPerformed
 
     private void btnDeleteRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRecordActionPerformed
@@ -320,29 +352,64 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteRecordActionPerformed
 
     private void btnAddRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRecordActionPerformed
-        if(cmbClient.getSelectedIndex()==-1){
+        if (cmbClient.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(this, "Morate izabrati klijenta da biste dodali trening.");
             return;
         }
-        
-        Client client=clientList.get(cmbClient.getSelectedIndex());
-        
-        new AddWorkoutRecordDialog(this, true, trainer, client).show();
+
+        Client client = clientList.get(cmbClient.getSelectedIndex());
+
+        new AddWorkoutRecordDialog(this, true, trainer, client, null).show();
+        cmbClient.setSelectedIndex(cmbClient.getSelectedIndex());
     }//GEN-LAST:event_btnAddRecordActionPerformed
 
     private void cmbClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClientActionPerformed
-        // TODO add your handling code here:
+        //ucitati recorde za izabranog klijenta
+        if (cmbClient.getSelectedIndex() == -1) {
+            return;
+        }
+        try {
+            Client client = clientList.get(cmbClient.getSelectedIndex());
+            recordsOfSelectedClient = ClientController.getInstance().getWorkoutRecordsForClient(client);
+            fillRecordTable(recordsOfSelectedClient);
+            System.out.println("fetched records:");
+            for(WorkoutRecord wr : recordsOfSelectedClient){
+                System.out.println(wr);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            e.printStackTrace();
+        }
+
+
     }//GEN-LAST:event_cmbClientActionPerformed
 
     private void btnRecordDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecordDetailsActionPerformed
-        // TODO add your handling code here:
+        if(((WorkoutRecordTableModel)tableWorkoutRecords.getModel()).getList().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Lista je prazna");
+            return;
+        }
+        if(tableWorkoutRecords.getSelectedRow()!=-1){
+            (new AddWorkoutRecordDialog(this, true, trainer, clientList.get(cmbClient.getSelectedIndex()), ((WorkoutRecordTableModel)tableWorkoutRecords.getModel()).getList().get(tableWorkoutRecords.getSelectedRow()))).setVisible(true);
+//            cmbGym.setSelectedIndex(0);
+            cmbClient.setSelectedIndex(cmbClient.getSelectedIndex());
+            
+        }
+        else
+            JOptionPane.showMessageDialog(this, "Izaberite trening iz tabele.");
     }//GEN-LAST:event_btnRecordDetailsActionPerformed
 
     private void cmbGymActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGymActionPerformed
-        fillClientComboBox(gymList.get(cmbGym.getSelectedIndex()));
+        if (!(tableWorkoutRecords.getModel() instanceof WorkoutRecordTableModel)) {
+            return;
+        }
+//        if(cmbClient.getSelectedIndex()!=-1) 
+            fillClientComboBox(gymList.get(cmbGym.getSelectedIndex()));
+        ((WorkoutRecordTableModel) tableWorkoutRecords.getModel()).clear();
+
+
     }//GEN-LAST:event_cmbGymActionPerformed
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AccountDetailsMenuItem;
@@ -379,7 +446,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void setWindowListener() {
         try {
-            
+
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -389,11 +456,9 @@ public class MainForm extends javax.swing.JFrame {
                         ex.printStackTrace();
                     }
                 }
-                
-            
+
             });
-            
-            
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -401,16 +466,15 @@ public class MainForm extends javax.swing.JFrame {
 
     private void fillGymComboBox() {
         try {
-            gymList=ClientController.getInstance().getAllGym(new Gym(), "1");
+            gymList = ClientController.getInstance().getAllGym(new Gym(), "1");
             gymList.addFirst(null);
-            DefaultComboBoxModel<String> cbm=new DefaultComboBoxModel<>();
-            for(Gym g : gymList){
-                if(g==null)
-                {
+            DefaultComboBoxModel<String> cbm = new DefaultComboBoxModel<>();
+            for (Gym g : gymList) {
+                if (g == null) {
                     cbm.addElement("Sve teretane");
                     continue;
                 }
-                cbm.addElement(g.getName()+" - "+g.getAddress());
+                cbm.addElement(g.getName() + " - " + g.getAddress());
             }
             cmbGym.setModel(cbm);
             cmbGym.setSelectedIndex(0);
@@ -421,15 +485,23 @@ public class MainForm extends javax.swing.JFrame {
 
     private void fillClientComboBox(Gym gym) {
         try {
-            clientList=ClientController.getInstance().getAllClient(new Client(), gym==null? "1" : "idGym="+gym.getIdGym());
-            DefaultComboBoxModel<String> cbm=new DefaultComboBoxModel<>();
-            for(Client c : clientList){
-                cbm.addElement(c.getName()+" "+c.getLastName());
+            clientList = ClientController.getInstance().getAllClient(new Client(), gym == null ? "1" : "idGym=" + gym.getIdGym());
+            DefaultComboBoxModel<String> cbm = new DefaultComboBoxModel<>();
+            for (Client c : clientList) {
+                cbm.addElement(c.getName() + " " + c.getLastName());
             }
             cmbClient.setModel(cbm);
             cmbClient.setSelectedIndex(-1);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
+    }
+
+    private void fillRecordTable(LinkedList<WorkoutRecord> list) {
+        ((WorkoutRecordTableModel) tableWorkoutRecords.getModel()).clear();
+        for (WorkoutRecord wr : list) {
+            ((WorkoutRecordTableModel) tableWorkoutRecords.getModel()).add(wr);
+        }
+
     }
 }

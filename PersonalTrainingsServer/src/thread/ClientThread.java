@@ -10,6 +10,7 @@ import communication.Operation;
 import communication.Receiver;
 import communication.Sender;
 import domain.*;
+import dto.WorkoutRecordCriteria;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -88,7 +89,7 @@ public class ClientThread extends Thread {
                     response.setResult(gymList);
                     break;
                 case Operation.GET_ALL_ACTIVITY:
-                    LinkedList<Activity> activities = ServerController.getInstance().getAllActivity((Activity)r.getArgument());
+                    LinkedList<Activity> activities = ServerController.getInstance().getAllActivity((Activity) r.getArgument());
                     response.setResult(activities);
                     break;
                 case Operation.INSERT_WORKOUT_RECORD:
@@ -99,6 +100,17 @@ public class ClientThread extends Thread {
                 case Operation.UPDATE_WORKOUT_RECORD:
                     success = ServerController.getInstance().updateWorkoutRecord((WorkoutRecord) r.getArgument());
                     response.setResult(success);
+                    break;
+
+                case Operation.GET_WORKOUT_ITEMS_FOR_RECORD:
+                    LinkedList<WorkoutItem> items
+                            = ServerController.getInstance().getWorkoutItemsForRecord((WorkoutRecord) r.getArgument());
+                    response.setResult(items);
+                    break;
+                case Operation.SEARCH_WORKOUT_RECORDS:
+                    LinkedList<WorkoutRecord> wrList
+                            = ServerController.getInstance().searchWorkoutRecords((WorkoutRecordCriteria) r.getArgument());
+                    response.setResult(wrList);
                     break;
                 default:
                     return null;

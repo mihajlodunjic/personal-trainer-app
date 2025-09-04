@@ -5,6 +5,7 @@
 package logic;
 
 import domain.*;
+import dto.WorkoutRecordCriteria;
 import java.util.LinkedList;
 import so.activity.SOGetAllActivity;
 import so.client.SOAddClient;
@@ -17,6 +18,7 @@ import so.register.SORegister;
 import so.trainer.SOGetAllTrainer;
 import so.trainer.SOUpdateTrainer;
 import so.workoutrecord.SOAddWorkoutRecord;
+import so.workoutrecord.SOSearchWorkoutRecords;
 import so.workoutrecord.SOUpdateWorkoutRecord;
 
 /**
@@ -106,6 +108,7 @@ public class ServerController {
         return so.getList();
     }
 
+    //workout record operations
     public Boolean addWorkoutRecord(WorkoutRecord wr) throws Exception {
         SOAddWorkoutRecord so = new SOAddWorkoutRecord();
         so.executeSO(wr);
@@ -117,4 +120,18 @@ public class ServerController {
         so.executeSO(wr);
         return so.isSuccess();
     }
+
+    public LinkedList<WorkoutRecord> searchWorkoutRecords(WorkoutRecordCriteria c) throws Exception {
+        SOSearchWorkoutRecords so = new SOSearchWorkoutRecords();
+        so.executeSO(c);
+        return so.getList();
+    }
+
+    //workoutitems operations
+    public LinkedList<WorkoutItem> getWorkoutItemsForRecord(WorkoutRecord wr) throws Exception {
+        var so = new so.workoutitem.SOGetWorkoutItemsByRecord();
+        so.executeSO(wr);
+        return so.getList();
+    }
+
 }

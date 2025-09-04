@@ -95,7 +95,9 @@ public class WorkoutItem extends DefaultDomainObject {
 
     @Override
     public String returnAttrValues() {
-        return workoutRecord.getIdWorkoutRecord() + "," + itemSN + ",'" + intensity.getSerbianName() + "'," + numOfSeries + "," + mass + ",'" + comment + "'," + activity.getIdActivity();
+        String c = (comment == null) ? "NULL" : "'" + comment.replace("'", "''") + "'";
+        return workoutRecord.getIdWorkoutRecord() + "," + itemSN + ",'" + intensity.getSerbianName() + "',"
+                + numOfSeries + "," + mass + "," + c + "," + activity.getIdActivity();
     }
 
     @Override
@@ -113,6 +115,19 @@ public class WorkoutItem extends DefaultDomainObject {
         return "(idWorkoutRecord, itemSN, intensity, numOfSeries, mass, comment, idActivity)";
     }
 
+    private boolean hasColumn(ResultSet rs, String name) {
+        try {
+            var md = rs.getMetaData();
+            for (int i = 1; i <= md.getColumnCount(); i++) {
+                if (name.equalsIgnoreCase(md.getColumnLabel(i))) {
+                    return true;
+                }
+            }
+        } catch (SQLException ignore) {
+        }
+        return false;
+    }
+
     @Override
     public boolean setAttributes(ResultSet rs) {
         try {
@@ -121,47 +136,58 @@ public class WorkoutItem extends DefaultDomainObject {
             numOfSeries = rs.getInt("numOfSeries");
             mass = rs.getDouble("mass");
             comment = rs.getString("comment");
-            //record i activity dodati u kontroleru
 
+            //ako su kolone prisutne (zavisi od SELECT-a), popuni i reference:
+            if (hasColumn(rs, "idWorkoutRecord")) {
+                if (workoutRecord == null) {
+                    workoutRecord = new WorkoutRecord();
+                }
+                workoutRecord.setIdWorkoutRecord(rs.getInt("idWorkoutRecord"));
+            }
+            if (hasColumn(rs, "idActivity")) {
+                if (activity == null) {
+                    activity = new Activity();
+                }
+                activity.setIdActivity(rs.getInt("idActivity"));
+                if (hasColumn(rs, "category")) {
+                    try {
+                        activity.setCategory(enums.Category.fromSerbianName(rs.getString("category")));
+                    } catch (Exception ignore) {
+                    }
+                }
+                if (hasColumn(rs, "name")) {
+                    try {
+                        activity.setName(rs.getString("name"));
+                    } catch (Exception ignore) {
+                    }
+                }
+            }
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
-
     }
 
     @Override
     public String alias() {
-        return "wi";
+        return " wi ";
     }
 
     @Override
     public String join() {
-        return "";
+        return " JOIN activity a ON a.idActivity = wi.idActivity ";
     }
 
     @Override
-    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception{
+    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception {
         LinkedList<DefaultDomainObject> list = new LinkedList<>();
         while (rs.next()) {
             WorkoutItem it = new WorkoutItem();
-            WorkoutRecord wr = new WorkoutRecord();
-            wr.setIdWorkoutRecord(rs.getInt("idWorkoutRecord"));
-            it.setWorkoutRecord(wr);
-
-            it.setItemSN(rs.getInt("itemSN"));
-            it.setIntensity(Measurement.fromSerbianName(rs.getString("intensity")));
-            it.setNumOfSeries(rs.getInt("numOfSeries"));
-            it.setMass(rs.getDouble("mass"));
-            it.setComment(rs.getString("comment"));
-
-            Activity a = new Activity();
-            a.setIdActivity(rs.getInt("idActivity"));
-            it.setActivity(a);
-
+            it.setAttributes(rs);
             list.add(it);
         }
+
         return list;
     }
 

@@ -7,6 +7,7 @@ package form.client;
 import domain.Client;
 import domain.Gym;
 import enums.Gender;
+import java.awt.HeadlessException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -22,14 +23,16 @@ import java.util.Date;
  * @author pc
  */
 public class AddClientDialog extends javax.swing.JDialog {
-    LinkedList<Gym>gyms;
+    private LinkedList<Gym>gyms;
+    private Client client;
     /**
      * Creates new form AddClientDialog
      */
-    public AddClientDialog(java.awt.Frame parent, boolean modal) {
+    public AddClientDialog(java.awt.Frame parent, boolean modal, Client client) {
         super(parent, modal);
         initComponents();
         setResizable(false);
+        btnEnableEdit.setVisible(false);
         try {
             gyms=ClientController.getInstance().getAllGym((new Gym()), "1 ORDER BY g_name");
             for(Gym g : gyms){
@@ -39,6 +42,14 @@ public class AddClientDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         setComboBoxModel();
+        if(client!=null){
+            btnEnableEdit.setVisible(true);
+            this.client=client;
+            //todo
+            fillInfo();
+            toggleEdit(false);
+            
+        }
     }
 
     /**
@@ -68,6 +79,7 @@ public class AddClientDialog extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         cmbGym = new javax.swing.JComboBox<>();
         txtMobilePhone = new javax.swing.JTextField();
+        btnEnableEdit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -117,7 +129,7 @@ public class AddClientDialog extends javax.swing.JDialog {
                 .addComponent(rbMale)
                 .addGap(18, 18, 18)
                 .addComponent(rbFemale)
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,7 +140,7 @@ public class AddClientDialog extends javax.swing.JDialog {
                 .addGap(0, 7, Short.MAX_VALUE))
         );
 
-        btnAddClient.setText("Dodaj");
+        btnAddClient.setText("Sacuvaj");
         btnAddClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddClientActionPerformed(evt);
@@ -136,11 +148,23 @@ public class AddClientDialog extends javax.swing.JDialog {
         });
 
         btnCancel.setText("Otkazi");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel9.setText("Teretana");
 
         cmbGym.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnEnableEdit.setText("Omoguci izmene");
+        btnEnableEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnableEditActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -150,32 +174,35 @@ public class AddClientDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addGap(33, 33, 33)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtName)
-                            .addComponent(txtLastName)
-                            .addComponent(dpBirthday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(62, 62, 62)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(cmbGym, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtMobilePhone))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAddClient, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnEnableEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtName)
+                                    .addComponent(txtLastName)
+                                    .addComponent(dpBirthday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(62, 62, 62)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(cmbGym, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtMobilePhone))
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(98, 98, 98)
+                                .addComponent(btnAddClient, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,7 +230,8 @@ public class AddClientDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAddClient)
-                            .addComponent(btnCancel)))
+                            .addComponent(btnCancel)
+                            .addComponent(btnEnableEdit)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -262,12 +290,19 @@ public class AddClientDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, ex.getMessage());
             return;
         }
+        if(client==null) 
+            addNewClient();
+        else
+            updateClient();
+    }//GEN-LAST:event_btnAddClientActionPerformed
+
+    private void addNewClient() throws HeadlessException {
         Client c=new Client();
         c.setName(txtName.getText());
         c.setLastName(txtLastName.getText());
         c.setBirthday(dpBirthday.getDate().toInstant()
-                                   .atZone(ZoneId.systemDefault())
-                                   .toLocalDate());
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate());
         c.setGym(gyms.get(cmbGym.getSelectedIndex()));
         c.setMobilePhone(txtMobilePhone.getText());
         System.out.println();
@@ -285,13 +320,26 @@ public class AddClientDialog extends javax.swing.JDialog {
         finally{
             emptyFields();
         }
-    }//GEN-LAST:event_btnAddClientActionPerformed
+    }
+
+    private void btnEnableEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnableEditActionPerformed
+        toggleEdit(true);
+    }//GEN-LAST:event_btnEnableEditActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        int choice=JOptionPane.showConfirmDialog(this, "Da li ste  sigurni?","Izlazak",JOptionPane.YES_NO_OPTION);
+        
+        if(choice==JOptionPane.YES_OPTION)
+            this.dispose();
+        
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddClient;
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnEnableEdit;
     private javax.swing.JComboBox<String> cmbGym;
     private com.toedter.calendar.JDateChooser dpBirthday;
     private javax.swing.ButtonGroup genderButtonGroup;
@@ -331,5 +379,36 @@ public class AddClientDialog extends javax.swing.JDialog {
         dpBirthday.setDate(null);
         genderButtonGroup.clearSelection();
         cmbGym.setSelectedIndex(-1);
+    }
+
+    private void toggleEdit(boolean toggle) {
+        txtName.setEditable(toggle);
+        txtLastName.setEditable(toggle);
+        txtMobilePhone.setEditable(toggle);
+        dpBirthday.setEnabled(toggle);
+        rbFemale.setEnabled(toggle);
+        rbMale.setEnabled(toggle);
+        cmbGym.setEnabled(toggle);
+    }
+
+    private void fillInfo() {
+        txtName.setText(client.getName());
+        txtLastName.setText(client.getLastName());
+        txtMobilePhone.setText(client.getMobilePhone());
+        Date date = Date.from(client.getBirthday().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        dpBirthday.setDate(date);
+        if(client.getGender()==Gender.MALE)
+            rbMale.setSelected(true);
+        else
+            rbFemale.setSelected(true);
+        for(int i=0;i<gyms.size();i++)
+            if(gyms.get(i).getIdGym()==client.getGym().getIdGym())
+                cmbGym.setSelectedIndex(i);
+        
+        
+    }
+
+    private void updateClient() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
