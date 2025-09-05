@@ -144,6 +144,31 @@ public class ClientThread extends Thread {
                     success = ServerController.getInstance().updateActivity((Activity) r.getArgument());
                     response.setResult(success);
                     break;
+                case Operation.INSERT_SERTIFICATE:
+                    success = ServerController.getInstance().addSertificate((Sertificate) r.getArgument());
+                    response.setResult(success);
+                    break;
+
+                case Operation.UPDATE_SERTIFICATE:
+                    success = ServerController.getInstance().updateSertificate((Sertificate) r.getArgument());
+                    response.setResult(success);
+                    break;
+
+                case Operation.GET_ALL_SERTIFICATE:
+                    LinkedList<Sertificate> sList = ServerController.getInstance().getAllSertificate();
+                    response.setResult(sList);
+                    break;
+                case Operation.INSERT_TRAINER_SERTIFICATE:
+                    success = ServerController.getInstance()
+                            .addTrainerSertificate((TrainerSertificate) r.getArgument());
+                    response.setResult(success);
+                    break;
+
+                case Operation.GET_TRAINER_SERTIFICATES:
+                    LinkedList<TrainerSertificate> tsList
+                            = ServerController.getInstance().getTrainerSertificates((Trainer) r.getArgument());
+                    response.setResult(tsList);
+                    break;
 
                 default:
                     return null;

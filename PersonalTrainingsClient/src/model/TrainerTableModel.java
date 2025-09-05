@@ -13,8 +13,9 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author pc
  */
-public class TrainerTableModel extends AbstractTableModel{
-     private LinkedList<Trainer> list = new LinkedList<>();
+public class TrainerTableModel extends AbstractTableModel {
+
+    private LinkedList<Trainer> list = new LinkedList<>();
     private String[] columns = {"Ime", "Prezime"};
 
     @Override
@@ -40,18 +41,18 @@ public class TrainerTableModel extends AbstractTableModel{
                 t.getName();
             case 1 ->
                 t.getLastName();
-            
+
             default ->
                 "";
         };
     }
-    
-    public void add(Trainer t){
-        int idx=list.size();
+
+    public void add(Trainer t) {
+        int idx = list.size();
         list.add(t);
         fireTableRowsInserted(idx, idx);
     }
-    
+
     public void clear() {
         int size = list.size();
         if (size > 0) {
@@ -59,14 +60,14 @@ public class TrainerTableModel extends AbstractTableModel{
             fireTableRowsDeleted(0, size - 1);
         }
     }
-    
-    public LinkedList<Trainer> getItems(){
+
+    public LinkedList<Trainer> getItems() {
         return list;
     }
-    
-    public void removeAt(int row){
+
+    public void removeAt(int row) {
         list.remove(row);
         fireTableRowsDeleted(row, row);
     }
-    
+
 }

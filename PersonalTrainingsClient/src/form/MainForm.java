@@ -94,12 +94,13 @@ public class MainForm extends javax.swing.JFrame {
         tblClients = new javax.swing.JTable();
         btnClientDetails = new javax.swing.JButton();
         btnDeleteClient = new javax.swing.JButton();
-        btnDeleteClient1 = new javax.swing.JButton();
+        btnAddClient = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         AddClientMenuItem = new javax.swing.JMenuItem();
         MenuAccount = new javax.swing.JMenu();
         AccountDetailsMenuItem = new javax.swing.JMenuItem();
+        MySertificatesMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -285,13 +286,13 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        btnDeleteClient1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        btnDeleteClient1.setText("Dodaj klijenta");
-        btnDeleteClient1.setMaximumSize(new java.awt.Dimension(150, 30));
-        btnDeleteClient1.setMinimumSize(new java.awt.Dimension(150, 30));
-        btnDeleteClient1.addActionListener(new java.awt.event.ActionListener() {
+        btnAddClient.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnAddClient.setText("Dodaj klijenta");
+        btnAddClient.setMaximumSize(new java.awt.Dimension(150, 30));
+        btnAddClient.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnAddClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteClient1ActionPerformed(evt);
+                btnAddClientActionPerformed(evt);
             }
         });
 
@@ -321,6 +322,9 @@ public class MainForm extends javax.swing.JFrame {
         });
         MenuAccount.add(AccountDetailsMenuItem);
 
+        MySertificatesMenuItem.setText("Moji sertifikati");
+        MenuAccount.add(MySertificatesMenuItem);
+
         jMenuBar1.add(MenuAccount);
 
         setJMenuBar(jMenuBar1);
@@ -340,7 +344,7 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(94, 94, 94)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnDeleteClient1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                    .addComponent(btnAddClient, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -371,28 +375,26 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAddRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnDeleteRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnRecordDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAddRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(checkBoxOnlyMyRecords))
+                        .addComponent(btnDeleteRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRecordDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeleteClient, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDeleteClient1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddClient, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkBoxOnlyMyRecords))
                 .addContainerGap(468, Short.MAX_VALUE))
         );
 
@@ -578,22 +580,23 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeleteClientActionPerformed
 
-    private void btnDeleteClient1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteClient1ActionPerformed
+    private void btnAddClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClientActionPerformed
         AddClientDialog acd = new AddClientDialog(this, true, null);
         acd.setVisible(true);
         acd.setLocationRelativeTo(null);
         btnSearchClients.doClick();
-    }//GEN-LAST:event_btnDeleteClient1ActionPerformed
+    }//GEN-LAST:event_btnAddClientActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AccountDetailsMenuItem;
     private javax.swing.JMenuItem AddClientMenuItem;
     private javax.swing.JMenu MenuAccount;
+    private javax.swing.JMenuItem MySertificatesMenuItem;
+    private javax.swing.JButton btnAddClient;
     private javax.swing.JButton btnAddRecord;
     private javax.swing.JButton btnClientDetails;
     private javax.swing.JButton btnDeleteClient;
-    private javax.swing.JButton btnDeleteClient1;
     private javax.swing.JButton btnDeleteRecord;
     private javax.swing.JButton btnRecordDetails;
     private javax.swing.JButton btnResetClientSearch;

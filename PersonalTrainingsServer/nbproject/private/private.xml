@@ -4,27 +4,36 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/trainer/SOGetAllTrainer.java</file>
-            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/workoutrecord/SOAddWorkoutRecord.java</file>
             <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/activity/SOGetAllActivity.java</file>
             <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/workoutrecord/SOSearchWorkoutRecords.java</file>
-            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/gym/SOAddGym.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/trainersertificate/SODeleteTrainerSertificate.java</file>
             <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/logic/ServerController.java</file>
-            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/workoutrecord/SOUpdateWorkoutRecord.java</file>
-            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/client/SOUpdateClient.java</file>
             <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/client/SOAddClient.java</file>
-            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/abstractso/AbstractSO.java</file>
-            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/thread/ServerThread.java</file>
-            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/register/SORegister.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/sertificate/SOAddSertificate.java</file>
             <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/thread/ClientThread.java</file>
-            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/database/DatabaseBroker.java</file>
             <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/trainer/SOUpdateTrainer.java</file>
-            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/gym/SOGetAllGym.java</file>
-            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/trainer/SODeleteTrainer.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/client/SODeleteClient.java</file>
             <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/form/StartServerForm.java</file>
             <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/login/SOLogout.java</file>
             <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/login/SOLogin.java</file>
             <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/client/SOSearchClient.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/activity/SOUpdateActivity.java</file>
             <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/workoutitem/SOGetWorkoutItemsByRecord.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/workoutrecord/SOAddWorkoutRecord.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/trainersertificate/SOAddTrainerSertificate.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/trainersertificate/SOGetTrainerSertificates.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/gym/SOAddGym.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/sertificate/SOUpdateSertificate.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/workoutrecord/SOUpdateWorkoutRecord.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/client/SOUpdateClient.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/abstractso/AbstractSO.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/thread/ServerThread.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/register/SORegister.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/database/DatabaseBroker.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/gym/SOGetAllGym.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/trainer/SODeleteTrainer.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/activity/SOAddActivity.java</file>
+            <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/sertificate/SOGetAllSertificate.java</file>
             <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/workoutrecord/SODeleteWorkoutRecord.java</file>
             <file>file:/D:/PC/Desktop/seminarski-ps/personal-trainer-app/PersonalTrainingsServer/src/so/client/SOGetAllClient.java</file>
         </group>

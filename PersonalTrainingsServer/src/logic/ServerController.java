@@ -20,8 +20,13 @@ import so.gym.SOGetAllGym;
 import so.login.SOLogin;
 import so.login.SOLogout;
 import so.register.SORegister;
+import so.sertificate.SOAddSertificate;
+import so.sertificate.SOGetAllSertificate;
+import so.sertificate.SOUpdateSertificate;
 import so.trainer.SOGetAllTrainer;
 import so.trainer.SOUpdateTrainer;
+import so.trainersertificate.SOAddTrainerSertificate;
+import so.trainersertificate.SOGetTrainerSertificates;
 import so.workoutrecord.SOAddWorkoutRecord;
 import so.workoutrecord.SODeleteWorkoutRecord;
 import so.workoutrecord.SOSearchWorkoutRecords;
@@ -173,6 +178,38 @@ public class ServerController {
     public LinkedList<WorkoutItem> getWorkoutItemsForRecord(WorkoutRecord wr) throws Exception {
         var so = new so.workoutitem.SOGetWorkoutItemsByRecord();
         so.executeSO(wr);
+        return so.getList();
+    }
+
+    //sertificate operations
+    public Boolean addSertificate(Sertificate s) throws Exception {
+        SOAddSertificate so = new SOAddSertificate();
+        so.executeSO(s);
+        return so.isSuccess();
+    }
+
+    public Boolean updateSertificate(Sertificate s) throws Exception {
+        SOUpdateSertificate so = new SOUpdateSertificate();
+        so.executeSO(s);
+        return so.isSuccess();
+    }
+
+    public LinkedList<Sertificate> getAllSertificate() throws Exception {
+        SOGetAllSertificate so = new SOGetAllSertificate();
+        so.executeSO(new Sertificate());
+        return so.getList();
+    }
+
+    //trainer sertificate operations
+    public Boolean addTrainerSertificate(TrainerSertificate ts) throws Exception {
+        SOAddTrainerSertificate so = new SOAddTrainerSertificate();
+        so.executeSO(ts);
+        return so.isSuccess();
+    }
+
+    public LinkedList<TrainerSertificate> getTrainerSertificates(Trainer t) throws Exception {
+        SOGetTrainerSertificates so = new SOGetTrainerSertificates();
+        so.executeSO(t);
         return so.getList();
     }
 

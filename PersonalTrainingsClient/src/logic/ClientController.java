@@ -66,17 +66,19 @@ public class ClientController {
         client.setSearchCondition(criteria);
         return (LinkedList<Client>) sendRequest(Operation.GET_ALL_CLIENT, client);
     }
-    
-    public LinkedList<Client> searchClients(Client client) throws Exception{
-        return (LinkedList<Client>)sendRequest(Operation.SEARCH_CLIENT, client);
+
+    public LinkedList<Client> searchClients(Client client) throws Exception {
+        return (LinkedList<Client>) sendRequest(Operation.SEARCH_CLIENT, client);
     }
-    
-    public boolean updateClient(Client client)throws Exception{
-        return (Boolean)sendRequest(Operation.UPDATE_CLIENT, client);
+
+    public boolean updateClient(Client client) throws Exception {
+        return (Boolean) sendRequest(Operation.UPDATE_CLIENT, client);
     }
-    public boolean deleteClient(Client client)throws Exception{
-        return (Boolean)sendRequest(Operation.DELETE_CLIENT, client);
+
+    public boolean deleteClient(Client client) throws Exception {
+        return (Boolean) sendRequest(Operation.DELETE_CLIENT, client);
     }
+
     //gym operations
     public LinkedList<Gym> getAllGym(Gym gym, String criteria) throws Exception {
         gym.setSearchCondition(criteria);
@@ -92,9 +94,9 @@ public class ClientController {
         activity.setSearchCondition(criteria);
         return (LinkedList<Activity>) sendRequest(Operation.GET_ALL_ACTIVITY, activity);
     }
-    
-    public boolean addActivity(Activity activity)throws Exception{
-        return (Boolean)sendRequest(Operation.INSERT_ACTIVITY, activity);
+
+    public boolean addActivity(Activity activity) throws Exception {
+        return (Boolean) sendRequest(Operation.INSERT_ACTIVITY, activity);
     }
     //workout record operaitons
 
@@ -120,7 +122,29 @@ public class ClientController {
     public LinkedList<WorkoutItem> getItemsForWorkoutRecord(WorkoutRecord wr) throws Exception {
         return (LinkedList<WorkoutItem>) sendRequest(Operation.GET_WORKOUT_ITEMS_FOR_RECORD, wr);
     }
+    //sertificate operations
 
+    public boolean addSertificate(Sertificate sertificate) throws Exception {
+        return (Boolean) sendRequest(Operation.INSERT_SERTIFICATE, sertificate);
+    }
+
+    public boolean updateSertificate(Sertificate sertificate) throws Exception {
+        return (Boolean) sendRequest(Operation.UPDATE_SERTIFICATE, sertificate);
+    }
+
+    public LinkedList<Sertificate> getAllSertificate() throws Exception {
+        return (LinkedList<Sertificate>) sendRequest(Operation.GET_ALL_SERTIFICATE, new Sertificate());
+    }
+    //trainer sertificate operations
+    
+    public LinkedList<TrainerSertificate> getTrainerSertificateForTrainer(Trainer trainer)throws Exception{
+        return (LinkedList<TrainerSertificate>)sendRequest(Operation.GET_TRAINER_SERTIFICATES, trainer);
+    }
+    
+    public boolean addTrainerSertificate(TrainerSertificate trainerSertificate)throws Exception{
+        return (Boolean)sendRequest(Operation.INSERT_TRAINER_SERTIFICATE, trainerSertificate);
+    }
+    
     private Object sendRequest(Operation operation, Object arg) throws Exception {
         Request request = new Request(operation, arg);
 
@@ -131,5 +155,7 @@ public class ClientController {
         }
         return response.getResult();
     }
+    
+    
 
 }

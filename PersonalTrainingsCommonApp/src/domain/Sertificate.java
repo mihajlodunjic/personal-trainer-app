@@ -62,12 +62,12 @@ public class Sertificate extends DefaultDomainObject{
 
     @Override
     public String setAttrValues() {
-        return "name='"+name+"',publisher='"+publisher+"'";
+        return "s_name='"+name+"',publisher='"+publisher+"'";
     }
 
     @Override
     public String returnInsertColumns() {
-        return "(name,publisher)";
+        return "(s_name,publisher)";
     }
 
     @Override
@@ -79,23 +79,31 @@ public class Sertificate extends DefaultDomainObject{
             
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
 
     @Override
     public String alias() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return " s ";
     }
 
     @Override
     public String join() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
-    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception{
+        LinkedList<DefaultDomainObject> list = new LinkedList<>();
+        while (rs.next()) {
+            Sertificate s = new Sertificate();
+            s.setAttributes(rs);
+            list.add(s);
+        }
+        rs.close();
+        return list;
     }
     
 }
