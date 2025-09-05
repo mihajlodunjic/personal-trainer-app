@@ -68,16 +68,15 @@ public class DatabaseBroker {
     }
 
     public static boolean deleteRow(DefaultDomainObject ddo) {
-        String query;
-        try {
-            st = connection.createStatement();
-            query = "DELETE FROM " + ddo.returnClassName() + " WHERE " + ddo.returnSearchCondition();
-            st.executeUpdate(query);
-            st.close();
-        } catch (SQLException esql) {
+        String query = "DELETE FROM " + ddo.returnClassName()
+                + " WHERE " + ddo.returnSearchCondition();
+        try (Statement st = connection.createStatement()) {
+            int affected = st.executeUpdate(query);
+            return affected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
-        return true;
     }
 
     public static boolean updateRow(DefaultDomainObject ddo) {
@@ -163,7 +162,7 @@ public class DatabaseBroker {
         System.out.println(query);
 
         try (Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet rs = st.executeQuery(query)) {
-            return ddo.returnList(rs); 
+            return ddo.returnList(rs);
         }
     }
 

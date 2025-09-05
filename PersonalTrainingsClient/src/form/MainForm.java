@@ -9,10 +9,12 @@ import domain.Gym;
 import domain.Trainer;
 import domain.WorkoutItem;
 import domain.WorkoutRecord;
+import enums.Gender;
 import form.client.AddClientDialog;
 import form.trainer.TrainerDetailsForm;
 import form.workoutrecord.AddWorkoutRecordDialog;
 import java.awt.GraphicsEnvironment;
+import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -21,10 +23,12 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import logic.ClientController;
-import model.WorkoutRecordTableModel;
+import model.ClientTableModel;
+import model.ClientWorkoutRecordTableModel;
 
 /**
  *
@@ -43,9 +47,11 @@ public class MainForm extends javax.swing.JFrame {
         resizeFrame();
         setWindowListener();
         setResizable(false);
-        fillGymComboBox();
-        fillClientComboBox(gymList.get(cmbGym.getSelectedIndex()));
-        tableWorkoutRecords.setModel(new WorkoutRecordTableModel());
+        fillGymComboBox(cmbGymSearchClient);
+        tableWorkoutRecords.setModel(new ClientWorkoutRecordTableModel());
+        tblClients.setModel(new ClientTableModel());
+        fillClientTable();
+        setClientTableListSelectionListener();
 
     }
 
@@ -62,6 +68,7 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableWorkoutRecords = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -71,12 +78,23 @@ public class MainForm extends javax.swing.JFrame {
         btnDeleteRecord = new javax.swing.JButton();
         btnAddRecord = new javax.swing.JButton();
         btnRecordDetails = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtLastName = new javax.swing.JTextField();
+        rbMale = new javax.swing.JRadioButton();
+        rbFemale = new javax.swing.JRadioButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        cmbGymSearchClient = new javax.swing.JComboBox<>();
+        btnSearchClients = new javax.swing.JButton();
+        btnResetClientSearch = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblClients = new javax.swing.JTable();
         btnClientDetails = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        cmbClient = new javax.swing.JComboBox<>();
-        cmbGym = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
+        btnDeleteClient = new javax.swing.JButton();
+        btnDeleteClient1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         AddClientMenuItem = new javax.swing.JMenuItem();
@@ -84,7 +102,6 @@ public class MainForm extends javax.swing.JFrame {
         AccountDetailsMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1920, 1080));
 
         tableWorkoutRecords.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         tableWorkoutRecords.setModel(new javax.swing.table.DefaultTableModel(
@@ -145,7 +162,108 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel6.setText("Ime");
+
+        jLabel7.setText("Prezime");
+
+        buttonGroup1.add(rbMale);
+        rbMale.setText("Musko");
+        rbMale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbMaleActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(rbFemale);
+        rbFemale.setText("Zensko");
+
+        jLabel8.setText("Pol");
+
+        jLabel9.setText("Teretana");
+
+        cmbGymSearchClient.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnSearchClients.setText("Pretrazi");
+        btnSearchClients.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchClientsActionPerformed(evt);
+            }
+        });
+
+        btnResetClientSearch.setText("Reset");
+        btnResetClientSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetClientSearchActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnSearchClients, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnResetClientSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(rbMale, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rbFemale, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtName)
+                    .addComponent(txtLastName)
+                    .addComponent(cmbGymSearchClient, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbMale)
+                    .addComponent(rbFemale)
+                    .addComponent(jLabel8))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(cmbGymSearchClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSearchClients)
+                    .addComponent(btnResetClientSearch))
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        tblClients.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblClients);
 
         btnClientDetails.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnClientDetails.setText("Detalji o klijentu");
@@ -157,66 +275,25 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel1.setText("Klijent:");
-
-        cmbClient.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        cmbClient.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbClient.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteClient.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnDeleteClient.setText("Obrisi klijenta");
+        btnDeleteClient.setMaximumSize(new java.awt.Dimension(150, 30));
+        btnDeleteClient.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnDeleteClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbClientActionPerformed(evt);
+                btnDeleteClientActionPerformed(evt);
             }
         });
 
-        cmbGym.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        cmbGym.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbGym.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteClient1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnDeleteClient1.setText("Dodaj klijenta");
+        btnDeleteClient1.setMaximumSize(new java.awt.Dimension(150, 30));
+        btnDeleteClient1.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnDeleteClient1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbGymActionPerformed(evt);
+                btnDeleteClient1ActionPerformed(evt);
             }
         });
-
-        jLabel4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel4.setText("Teretana:");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 338, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(26, 26, 26)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel4)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(cmbClient, 0, 150, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(46, 46, 46)
-                            .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, Short.MAX_VALUE))
-                        .addComponent(cmbGym, javax.swing.GroupLayout.Alignment.TRAILING, 0, 196, Short.MAX_VALUE))
-                    .addGap(26, 26, 26)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 194, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(9, 9, 9)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(cmbGym, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(34, 34, 34)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cmbClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1))
-                    .addGap(46, 46, 46)
-                    .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
 
         jMenuBar1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
@@ -261,8 +338,16 @@ public class MainForm extends javax.swing.JFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(94, 94, 94)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnDeleteClient1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnDeleteClient, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(checkBoxOnlyMyRecords)
@@ -283,21 +368,32 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAddRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAddRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnDeleteRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnRecordDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDeleteRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(checkBoxOnlyMyRecords))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnRecordDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(checkBoxOnlyMyRecords)
-                .addGap(101, 101, 101))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeleteClient, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDeleteClient1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(468, Short.MAX_VALUE))
         );
 
         pack();
@@ -313,9 +409,10 @@ public class MainForm extends javax.swing.JFrame {
         AddClientDialog acd = new AddClientDialog(this, true, null);
         acd.setVisible(true);
         acd.setLocationRelativeTo(null);
+        btnSearchClients.doClick();
     }//GEN-LAST:event_AddClientMenuItemActionPerformed
     private void checkBoxOnlyMyRecordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxOnlyMyRecordsActionPerformed
-        if (!(tableWorkoutRecords.getModel() instanceof WorkoutRecordTableModel)) {
+        if (!(tableWorkoutRecords.getModel() instanceof ClientWorkoutRecordTableModel)) {
             return;
         }
 
@@ -323,11 +420,11 @@ public class MainForm extends javax.swing.JFrame {
             LinkedList<WorkoutRecord> onlyMyRecords = new LinkedList<>();
             for (WorkoutRecord wr : recordsOfSelectedClient) {
                 if (wr.getTrainer().getIdTrаiner() == trainer.getIdTrаiner()) {
-                    System.out.println("moj trening: "+wr);
+                    System.out.println("moj trening: " + wr);
                     onlyMyRecords.add(wr);
                 }
             }
-            
+
             fillRecordTable(onlyMyRecords);
 
         } else {
@@ -338,77 +435,155 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_checkBoxOnlyMyRecordsActionPerformed
 
     private void btnClientDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientDetailsActionPerformed
-        if (cmbClient.getSelectedIndex() == -1) {
+        if (tblClients.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Izaberite klijenta.");
         }
-        (new AddClientDialog(this, true, clientList.get(cmbClient.getSelectedIndex()))).setVisible(true);
-        cmbClient.setSelectedIndex(-1);
-        cmbGym.setSelectedIndex(-1);
-        
+        (new AddClientDialog(this, true, clientList.get(tblClients.getSelectedRow()))).setVisible(true);
+        tblClients.setRowSelectionInterval(tblClients.getSelectedRow(), tblClients.getSelectedRow());
+
     }//GEN-LAST:event_btnClientDetailsActionPerformed
 
     private void btnDeleteRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRecordActionPerformed
-        // TODO add your handling code here:
+        if (((ClientWorkoutRecordTableModel) tableWorkoutRecords.getModel()).getList().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Lista treninga je prazna.");
+            return;
+        }
+        if (tableWorkoutRecords.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Izaberite trening.");
+            return;
+        }
+        WorkoutRecord wr = ((ClientWorkoutRecordTableModel) tableWorkoutRecords.getModel()).getList().get(tableWorkoutRecords.getSelectedRow());
+        if (wr.getTrainer().getIdTrаiner() != trainer.getIdTrаiner()) {
+            JOptionPane.showMessageDialog(this, "Ne mozete obrisati trening koji nije odrzan kod Vas.");
+            return;
+        }
+
+        if (JOptionPane.showConfirmDialog(this, "Da li ste sigurni?", "Potvrda", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            try {
+                if (ClientController.getInstance().deleteWorkoutRecord(wr)) {
+                    JOptionPane.showMessageDialog(this, "Uspesno brisanje treninga");
+                    refreshWorkoutRecordTable();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Neuspesno brisanje treninga");
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+                ex.printStackTrace();
+            }
+
+        }
     }//GEN-LAST:event_btnDeleteRecordActionPerformed
 
     private void btnAddRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRecordActionPerformed
-        if (cmbClient.getSelectedIndex() == -1) {
+        if (tblClients.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Morate izabrati klijenta da biste dodali trening.");
             return;
         }
 
-        Client client = clientList.get(cmbClient.getSelectedIndex());
+        Client client = clientList.get(tblClients.getSelectedRow());
 
         new AddWorkoutRecordDialog(this, true, trainer, client, null).show();
-        cmbClient.setSelectedIndex(cmbClient.getSelectedIndex());
+        refreshWorkoutRecordTable();
     }//GEN-LAST:event_btnAddRecordActionPerformed
 
-    private void cmbClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClientActionPerformed
-        //ucitati recorde za izabranog klijenta
-        if (cmbClient.getSelectedIndex() == -1) {
-            return;
-        }
-        try {
-            Client client = clientList.get(cmbClient.getSelectedIndex());
-            recordsOfSelectedClient = ClientController.getInstance().getWorkoutRecordsForClient(client);
-            fillRecordTable(recordsOfSelectedClient);
-            System.out.println("fetched records:");
-            for(WorkoutRecord wr : recordsOfSelectedClient){
-                System.out.println(wr);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            e.printStackTrace();
-        }
-
-
-    }//GEN-LAST:event_cmbClientActionPerformed
-
     private void btnRecordDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecordDetailsActionPerformed
-        if(((WorkoutRecordTableModel)tableWorkoutRecords.getModel()).getList().isEmpty()){
+        if (((ClientWorkoutRecordTableModel) tableWorkoutRecords.getModel()).getList().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Lista je prazna");
             return;
         }
-        if(tableWorkoutRecords.getSelectedRow()!=-1){
-            (new AddWorkoutRecordDialog(this, true, trainer, clientList.get(cmbClient.getSelectedIndex()), ((WorkoutRecordTableModel)tableWorkoutRecords.getModel()).getList().get(tableWorkoutRecords.getSelectedRow()))).setVisible(true);
-//            cmbGym.setSelectedIndex(0);
-            cmbClient.setSelectedIndex(cmbClient.getSelectedIndex());
-            
-        }
-        else
+        if (tableWorkoutRecords.getSelectedRow() != -1) {
+            (new AddWorkoutRecordDialog(this, true, trainer, clientList.get(tblClients.getSelectedRow()), ((ClientWorkoutRecordTableModel) tableWorkoutRecords.getModel()).getList()
+                    .get(tableWorkoutRecords.getSelectedRow()))).setVisible(true);
+            refreshWorkoutRecordTable();
+
+        } else
             JOptionPane.showMessageDialog(this, "Izaberite trening iz tabele.");
     }//GEN-LAST:event_btnRecordDetailsActionPerformed
 
-    private void cmbGymActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGymActionPerformed
-        if (!(tableWorkoutRecords.getModel() instanceof WorkoutRecordTableModel)) {
+    private void rbMaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbMaleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbMaleActionPerformed
+
+    private void btnSearchClientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchClientsActionPerformed
+        Client c = new Client();
+        if (!txtName.getText().isBlank()) {
+            c.setName(txtName.getText());
+        }
+        if (!txtLastName.getText().isBlank()) {
+            c.setLastName(txtLastName.getText());
+        }
+        if (rbMale.isSelected()) {
+            c.setGender(Gender.MALE);
+        }
+        if (rbFemale.isSelected()) {
+            c.setGender(Gender.FEMALE);
+        }
+        if (cmbGymSearchClient.getSelectedIndex() != 0) {
+            c.setGym(gymList.get(cmbGymSearchClient.getSelectedIndex()));
+        }
+
+        searchClients(c);
+
+
+    }//GEN-LAST:event_btnSearchClientsActionPerformed
+
+    private void searchClients(Client c) throws HeadlessException {
+        try {
+            clientList = ClientController.getInstance().searchClients(c);
+            ((ClientTableModel) tblClients.getModel()).clear();
+//            txtName.setText("");
+//            txtLastName.setText("");
+//            rbFemale.setSelected(false);
+//            rbMale.setSelected(false);
+//            cmbGymSearchClient.setSelectedIndex(0);
+            for (Client cl : clientList) {
+                ((ClientTableModel) tblClients.getModel()).add(cl);
+            }
+            ((ClientWorkoutRecordTableModel) tableWorkoutRecords.getModel()).clear();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
+
+    private void btnResetClientSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetClientSearchActionPerformed
+        txtName.setText("");
+        txtLastName.setText("");
+        rbFemale.setSelected(false);
+        rbMale.setSelected(false);
+        cmbGymSearchClient.setSelectedIndex(0);
+        searchClients(new Client());
+
+    }//GEN-LAST:event_btnResetClientSearchActionPerformed
+
+    private void btnDeleteClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteClientActionPerformed
+        if (tblClients.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Izaberite klijenta iz tabele");
             return;
         }
-//        if(cmbClient.getSelectedIndex()!=-1) 
-            fillClientComboBox(gymList.get(cmbGym.getSelectedIndex()));
-        ((WorkoutRecordTableModel) tableWorkoutRecords.getModel()).clear();
 
+        int choice = JOptionPane.showConfirmDialog(this, "Da li ste sigurni?\nOvo ce obrisati i svaku evidenciju treninga za izabranog klijenta.", "Potvrda", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION) {
+            try {
+                //obrisi klijenta
+                if (ClientController.getInstance().deleteClient(clientList.get(tblClients.getSelectedRow()))) {
+                    JOptionPane.showMessageDialog(this, "Uspesno brisanje klijenta.\nSve povezane evidencije su obrisane.");
+                    btnSearchClients.doClick();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Greska pri brisanju klijenta");
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Greska: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnDeleteClientActionPerformed
 
-    }//GEN-LAST:event_cmbGymActionPerformed
+    private void btnDeleteClient1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteClient1ActionPerformed
+        AddClientDialog acd = new AddClientDialog(this, true, null);
+        acd.setVisible(true);
+        acd.setLocationRelativeTo(null);
+        btnSearchClients.doClick();
+    }//GEN-LAST:event_btnDeleteClient1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -417,21 +592,33 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu MenuAccount;
     private javax.swing.JButton btnAddRecord;
     private javax.swing.JButton btnClientDetails;
+    private javax.swing.JButton btnDeleteClient;
+    private javax.swing.JButton btnDeleteClient1;
     private javax.swing.JButton btnDeleteRecord;
     private javax.swing.JButton btnRecordDetails;
+    private javax.swing.JButton btnResetClientSearch;
+    private javax.swing.JButton btnSearchClients;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox checkBoxOnlyMyRecords;
-    private javax.swing.JComboBox<String> cmbClient;
-    private javax.swing.JComboBox<String> cmbGym;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> cmbGymSearchClient;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JRadioButton rbFemale;
+    private javax.swing.JRadioButton rbMale;
     private javax.swing.JTable tableWorkoutRecords;
+    private javax.swing.JTable tblClients;
+    private javax.swing.JTextField txtLastName;
+    private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
 
     private void resizeFrame() {
@@ -464,7 +651,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
 
-    private void fillGymComboBox() {
+    private void fillGymComboBox(JComboBox<String> cmbGym) {
         try {
             gymList = ClientController.getInstance().getAllGym(new Gym(), "1");
             gymList.addFirst(null);
@@ -483,25 +670,49 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
 
-    private void fillClientComboBox(Gym gym) {
-        try {
-            clientList = ClientController.getInstance().getAllClient(new Client(), gym == null ? "1" : "idGym=" + gym.getIdGym());
-            DefaultComboBoxModel<String> cbm = new DefaultComboBoxModel<>();
-            for (Client c : clientList) {
-                cbm.addElement(c.getName() + " " + c.getLastName());
-            }
-            cmbClient.setModel(cbm);
-            cmbClient.setSelectedIndex(-1);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-    }
-
     private void fillRecordTable(LinkedList<WorkoutRecord> list) {
-        ((WorkoutRecordTableModel) tableWorkoutRecords.getModel()).clear();
+        ((ClientWorkoutRecordTableModel) tableWorkoutRecords.getModel()).clear();
         for (WorkoutRecord wr : list) {
-            ((WorkoutRecordTableModel) tableWorkoutRecords.getModel()).add(wr);
+            ((ClientWorkoutRecordTableModel) tableWorkoutRecords.getModel()).add(wr);
         }
 
     }
+
+    private void fillClientTable() {
+        try {
+            clientList = ClientController.getInstance().getAllClient(new Client(), "1");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        for (Client c : clientList) {
+            ((ClientTableModel) tblClients.getModel()).add(c);
+        }
+    }
+
+    private void setClientTableListSelectionListener() {
+        tblClients.getSelectionModel().addListSelectionListener(e -> {
+            refreshWorkoutRecordTable();
+        });
+    }
+
+    private void refreshWorkoutRecordTable() throws HeadlessException {
+        //ucitati recorde za izabranog klijenta
+        if (tblClients.getSelectedRow() == -1) {
+            return;
+        }
+        try {
+            Client client = clientList.get(tblClients.getSelectedRow());
+            recordsOfSelectedClient = ClientController.getInstance().getWorkoutRecordsForClient(client);
+            fillRecordTable(recordsOfSelectedClient);
+            System.out.println("fetched records:");
+            for (WorkoutRecord wr : recordsOfSelectedClient) {
+                System.out.println(wr);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
 }

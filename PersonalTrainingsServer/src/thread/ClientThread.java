@@ -15,6 +15,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logic.ServerController;
 import so.trainer.SOUpdateTrainer;
 
@@ -51,6 +53,7 @@ public class ClientThread extends Thread {
                     trainer = (Trainer) r.getArgument();
                     trainer = ServerController.getInstance().login(trainer);
                     response.setResult(trainer);
+                    this.trainer = trainer;
                     break;
                 case Operation.LOGOUT:
                     trainer = (Trainer) r.getArgument();
@@ -112,6 +115,36 @@ public class ClientThread extends Thread {
                             = ServerController.getInstance().searchWorkoutRecords((WorkoutRecordCriteria) r.getArgument());
                     response.setResult(wrList);
                     break;
+
+                case Operation.DELETE_WORKOUT_RECORD:
+                    success = ServerController.getInstance()
+                            .deleteWorkoutRecord((WorkoutRecord) r.getArgument());
+                    response.setResult(success);
+                    break;
+                case Operation.UPDATE_CLIENT:
+                    success = ServerController.getInstance().updateClient((Client) r.getArgument());
+                    response.setResult(success);
+                    break;
+
+                case Operation.SEARCH_CLIENT:
+                    LinkedList<Client> found
+                            = ServerController.getInstance().searchClient((Client) r.getArgument());
+                    response.setResult(found);
+                    break;
+                case Operation.DELETE_CLIENT:
+                    success = ServerController.getInstance().deleteClient((Client) r.getArgument());
+                    response.setResult(success);
+                    break;
+                case Operation.INSERT_ACTIVITY:
+                    success = ServerController.getInstance().addActivity((Activity) r.getArgument());
+                    response.setResult(success);
+                    break;
+
+                case Operation.UPDATE_ACTIVITY:
+                    success = ServerController.getInstance().updateActivity((Activity) r.getArgument());
+                    response.setResult(success);
+                    break;
+
                 default:
                     return null;
 

@@ -9,8 +9,6 @@ import enums.Category;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -106,11 +104,10 @@ public class Activity extends DefaultDomainObject {
         LinkedList<DefaultDomainObject> list = new LinkedList<>();
         while (rs.next()) {
             Activity a = new Activity();
-            a.setIdActivity(rs.getInt("idActivity"));
-            a.setCategory(Category.fromSerbianName(rs.getString("category")));
-            a.setName(rs.getString("name"));
+            a.setAttributes(rs); // popunjava idActivity, category, name
             list.add(a);
         }
+        rs.close();
         return list;
     }
 

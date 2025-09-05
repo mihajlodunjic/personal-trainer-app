@@ -66,7 +66,17 @@ public class ClientController {
         client.setSearchCondition(criteria);
         return (LinkedList<Client>) sendRequest(Operation.GET_ALL_CLIENT, client);
     }
-
+    
+    public LinkedList<Client> searchClients(Client client) throws Exception{
+        return (LinkedList<Client>)sendRequest(Operation.SEARCH_CLIENT, client);
+    }
+    
+    public boolean updateClient(Client client)throws Exception{
+        return (Boolean)sendRequest(Operation.UPDATE_CLIENT, client);
+    }
+    public boolean deleteClient(Client client)throws Exception{
+        return (Boolean)sendRequest(Operation.DELETE_CLIENT, client);
+    }
     //gym operations
     public LinkedList<Gym> getAllGym(Gym gym, String criteria) throws Exception {
         gym.setSearchCondition(criteria);
@@ -82,6 +92,10 @@ public class ClientController {
         activity.setSearchCondition(criteria);
         return (LinkedList<Activity>) sendRequest(Operation.GET_ALL_ACTIVITY, activity);
     }
+    
+    public boolean addActivity(Activity activity)throws Exception{
+        return (Boolean)sendRequest(Operation.INSERT_ACTIVITY, activity);
+    }
     //workout record operaitons
 
     public boolean addWorkoutRecord(WorkoutRecord wr) throws Exception {
@@ -96,6 +110,10 @@ public class ClientController {
 
     public boolean updateWorkoutRecord(WorkoutRecord wr) throws Exception {
         return (Boolean) sendRequest(Operation.UPDATE_WORKOUT_RECORD, wr);
+    }
+
+    public boolean deleteWorkoutRecord(WorkoutRecord wr) throws Exception {
+        return (Boolean) sendRequest(Operation.DELETE_WORKOUT_RECORD, wr);
     }
 
     //workout items operations

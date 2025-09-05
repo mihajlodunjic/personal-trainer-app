@@ -33,6 +33,8 @@ public class SOGetAllClient extends AbstractSO{
         list=(LinkedList<Client>)(LinkedList<?>)DatabaseBroker.select(client);
         for(Client c : list){
             Gym gym;
+            c.getGym().setSearchCondition("idGym=" + c.getGym().getIdGym());
+
             if(!DatabaseBroker.findRowAndReturn(c.getGym()))
                 throw new Exception("Neuspesno ucitavanje teretane u instancu klijenta.");
         }

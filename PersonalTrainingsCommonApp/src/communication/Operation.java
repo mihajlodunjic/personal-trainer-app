@@ -19,6 +19,7 @@ public enum Operation {
     INSERT_CLIENT,
     DELETE_CLIENT,
     UPDATE_CLIENT,
+    SEARCH_CLIENT,
     
     GET_ALL_GYM,
     INSERT_GYM,
@@ -28,7 +29,9 @@ public enum Operation {
     INSERT_WORKOUT_RECORD,
     UPDATE_WORKOUT_RECORD,
     SEARCH_WORKOUT_RECORDS,
-
+    DELETE_WORKOUT_RECORD,
+    
+    
     GET_WORKOUT_ITEMS_FOR_RECORD,
     
     DELETE, CHANGE, READ, READ_ALL

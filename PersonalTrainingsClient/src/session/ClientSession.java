@@ -19,16 +19,18 @@ public class ClientSession {
     private Sender sender;
     private Receiver receiver;
     private static ClientSession instance;
-    private ClientSession(){
+    private ClientSession()throws Exception{
         try {
             socket=new Socket("127.0.0.1",9000);
             sender = new Sender(socket);
             receiver = new Receiver(socket);
         } catch (Exception e) {
+            
             e.printStackTrace();
+            throw new Exception("Greska pri povezivanju sa serverom");
         }
     }
-    public static ClientSession getInstance(){
+    public static ClientSession getInstance()throws Exception{
         if(instance ==null) instance = new ClientSession();
         return instance;
     }

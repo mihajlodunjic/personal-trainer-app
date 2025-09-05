@@ -298,21 +298,12 @@ public class AddClientDialog extends javax.swing.JDialog {
 
     private void addNewClient() throws HeadlessException {
         Client c=new Client();
-        c.setName(txtName.getText());
-        c.setLastName(txtLastName.getText());
-        c.setBirthday(dpBirthday.getDate().toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate());
-        c.setGym(gyms.get(cmbGym.getSelectedIndex()));
-        c.setMobilePhone(txtMobilePhone.getText());
-        System.out.println();
-        if(rbFemale.isSelected())
-            c.setGender(Gender.FEMALE);
-        else
-            c.setGender(Gender.MALE);
+        setAttributes(c);
         try {
-            ClientController.getInstance().addClient(c);
-            JOptionPane.showMessageDialog(null, "Uspesno dodavanje klijenta!","Uspesno",JOptionPane.INFORMATION_MESSAGE);
+            if(ClientController.getInstance().addClient(c))
+                JOptionPane.showMessageDialog(null, "Uspesno dodavanje klijenta!","Uspesno",JOptionPane.INFORMATION_MESSAGE);
+            else
+                JOptionPane.showMessageDialog(this, "Neuspesno dodavanje klijenta.");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(),"Greska",JOptionPane.ERROR_MESSAGE);
             
@@ -320,6 +311,20 @@ public class AddClientDialog extends javax.swing.JDialog {
         finally{
             emptyFields();
         }
+    }
+
+    private void setAttributes(Client c) {
+        c.setName(txtName.getText());
+        c.setLastName(txtLastName.getText());
+        c.setBirthday(dpBirthday.getDate().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate());
+        c.setGym(gyms.get(cmbGym.getSelectedIndex()));
+        c.setMobilePhone(txtMobilePhone.getText());
+        if(rbFemale.isSelected())
+            c.setGender(Gender.FEMALE);
+        else
+            c.setGender(Gender.MALE);
     }
 
     private void btnEnableEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnableEditActionPerformed
@@ -409,6 +414,18 @@ public class AddClientDialog extends javax.swing.JDialog {
     }
 
     private void updateClient() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            setAttributes(client);
+            if(ClientController.getInstance().updateClient(client)){
+                JOptionPane.showMessageDialog(this, "Uspesna izmena klijenta.");
+                
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Greska pri promeni klijenta");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Greska: "+ex.getMessage());
+        }
     }
 }

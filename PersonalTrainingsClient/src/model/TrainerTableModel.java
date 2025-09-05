@@ -4,7 +4,8 @@
  */
 package model;
 
-import domain.WorkoutRecord;
+import domain.Client;
+import domain.Trainer;
 import java.util.LinkedList;
 import javax.swing.table.AbstractTableModel;
 
@@ -12,10 +13,9 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author pc
  */
-public class WorkoutRecordTableModel extends AbstractTableModel {
-
-    private LinkedList<WorkoutRecord> list = new LinkedList<>();
-    private String columns[] = {"Datum", "Vreme pocetka", "Vreme zavrsetka", "Trajanje", "Intenzitet"};
+public class TrainerTableModel extends AbstractTableModel{
+     private LinkedList<Trainer> list = new LinkedList<>();
+    private String[] columns = {"Ime", "Prezime"};
 
     @Override
     public String getColumnName(int column) {
@@ -34,34 +34,24 @@ public class WorkoutRecordTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        WorkoutRecord wr = list.get(rowIndex);
+        Trainer t = list.get(rowIndex);
         return switch (columnIndex) {
             case 0 ->
-                wr.getWorkoutDate();
+                t.getName();
             case 1 ->
-                wr.getStartTime();
-            case 2 ->
-                wr.getEndTime();
-            case 3 ->
-                wr.getDuration();
-            case 4 ->
-                wr.getAvgIntensity().getSerbianName();
+                t.getLastName();
+            
             default ->
                 "";
         };
     }
-
-    public void removeAt(int row) {
-        list.remove(row);
-        fireTableRowsDeleted(row, row);
-    }
-
-    public void add(WorkoutRecord wr) {
-        int idx = list.size();
-        list.add(wr);
+    
+    public void add(Trainer t){
+        int idx=list.size();
+        list.add(t);
         fireTableRowsInserted(idx, idx);
     }
-
+    
     public void clear() {
         int size = list.size();
         if (size > 0) {
@@ -69,16 +59,14 @@ public class WorkoutRecordTableModel extends AbstractTableModel {
             fireTableRowsDeleted(0, size - 1);
         }
     }
-
-    public void setList(LinkedList<WorkoutRecord> list) {
-        this.list = list;
-        fireTableDataChanged();
-        
-    }
-
-    public LinkedList<WorkoutRecord> getList() {
+    
+    public LinkedList<Trainer> getItems(){
         return list;
     }
     
+    public void removeAt(int row){
+        list.remove(row);
+        fireTableRowsDeleted(row, row);
+    }
     
 }

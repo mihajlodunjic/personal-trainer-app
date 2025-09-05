@@ -7,9 +7,14 @@ package logic;
 import domain.*;
 import dto.WorkoutRecordCriteria;
 import java.util.LinkedList;
+import so.activity.SOAddActivity;
 import so.activity.SOGetAllActivity;
+import so.activity.SOUpdateActivity;
 import so.client.SOAddClient;
+import so.client.SODeleteClient;
 import so.client.SOGetAllClient;
+import so.client.SOSearchClient;
+import so.client.SOUpdateClient;
 import so.gym.SOAddGym;
 import so.gym.SOGetAllGym;
 import so.login.SOLogin;
@@ -18,6 +23,7 @@ import so.register.SORegister;
 import so.trainer.SOGetAllTrainer;
 import so.trainer.SOUpdateTrainer;
 import so.workoutrecord.SOAddWorkoutRecord;
+import so.workoutrecord.SODeleteWorkoutRecord;
 import so.workoutrecord.SOSearchWorkoutRecords;
 import so.workoutrecord.SOUpdateWorkoutRecord;
 
@@ -88,6 +94,24 @@ public class ServerController {
         return so.getList();
     }
 
+    public Boolean updateClient(Client client) throws Exception {
+        SOUpdateClient so = new SOUpdateClient();
+        so.executeSO(client);
+        return so.isSuccess();
+    }
+
+    public LinkedList<Client> searchClient(Client criteria) throws Exception {
+        SOSearchClient so = new SOSearchClient();
+        so.executeSO(criteria);
+        return so.getList();
+    }
+
+    public Boolean deleteClient(Client client) throws Exception {
+        SODeleteClient so = new SODeleteClient();
+        so.executeSO(client);
+        return so.isSuccess();
+    }
+
     //gym operations
     public Boolean addGym(Gym gym) throws Exception {
         SOAddGym so = new SOAddGym();
@@ -108,6 +132,18 @@ public class ServerController {
         return so.getList();
     }
 
+    public Boolean addActivity(Activity a) throws Exception {
+        SOAddActivity so = new SOAddActivity();
+        so.executeSO(a);
+        return so.isSuccess();
+    }
+
+    public Boolean updateActivity(Activity a) throws Exception {
+        SOUpdateActivity so = new SOUpdateActivity();
+        so.executeSO(a);
+        return so.isSuccess();
+    }
+
     //workout record operations
     public Boolean addWorkoutRecord(WorkoutRecord wr) throws Exception {
         SOAddWorkoutRecord so = new SOAddWorkoutRecord();
@@ -125,6 +161,12 @@ public class ServerController {
         SOSearchWorkoutRecords so = new SOSearchWorkoutRecords();
         so.executeSO(c);
         return so.getList();
+    }
+
+    public Boolean deleteWorkoutRecord(WorkoutRecord wr) throws Exception {
+        SODeleteWorkoutRecord so = new SODeleteWorkoutRecord();
+        so.executeSO(wr);
+        return so.isSuccess();
     }
 
     //workoutitems operations

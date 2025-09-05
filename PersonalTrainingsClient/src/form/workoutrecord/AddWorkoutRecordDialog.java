@@ -11,6 +11,7 @@ import domain.WorkoutItem;
 import domain.WorkoutRecord;
 import enums.Category;
 import enums.Measurement;
+import form.activity.AddActivityDialog;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -54,11 +55,11 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         configureSpinFields();
         if (workoutRecord == null) {
             txtTrainer.setVisible(false);
+            lblTrainer.setVisible(false);
             btnEnableEditing.setVisible(false);
         } else {
             toggleEditing(false);
             fillWorkoutRecordInfo();
-            //loadItemsForRecord();
         }
     }
 
@@ -113,7 +114,7 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         btnSave = new javax.swing.JButton();
         btnEnableEditing = new javax.swing.JButton();
         txtTrainer = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
+        lblTrainer = new javax.swing.JLabel();
 
         jLabel15.setText("jLabel15");
 
@@ -160,6 +161,11 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblItems);
 
         btnCreateNewActivity.setText("Kreiraj novu aktivnost");
+        btnCreateNewActivity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateNewActivityActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("Broj serija");
 
@@ -385,7 +391,7 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
             }
         });
 
-        jLabel16.setText("Trener");
+        lblTrainer.setText("Trener");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -399,7 +405,7 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtClientName, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTrainer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTrainer, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
@@ -424,7 +430,7 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(txtClientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTrainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16))
+                    .addComponent(lblTrainer))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -555,6 +561,11 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         toggleEditing(true);
     }//GEN-LAST:event_btnEnableEditingActionPerformed
 
+    private void btnCreateNewActivityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateNewActivityActionPerformed
+        (new AddActivityDialog(null, true)).setVisible(true);
+        cmbCategory.setSelectedIndex(0);
+    }//GEN-LAST:event_btnCreateNewActivityActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddItem;
@@ -574,7 +585,6 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -587,6 +597,7 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblTrainer;
     private javax.swing.JRadioButton radioHigh;
     private javax.swing.JRadioButton radioLow;
     private javax.swing.JRadioButton radioMedium;

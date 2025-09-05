@@ -113,7 +113,9 @@ public class Client extends DefaultDomainObject{
     @Override
     public String setAttrValues() {
         Date date=Date.valueOf(birthday);
-        return "c_name='"+name+",c_lastName='"+lastName+"',gender='"+gender.getSerbianName()+"',birthday='"+date.toString()+"',c_mobilePhone='"+mobilePhone+"',idGym="+gym.getIdGym();
+        return "c_name='"+name+"', c_lastName='"+lastName+"', gender='"+gender.getSerbianName()+
+       "', birthday='"+date+"', c_mobilePhone='"+mobilePhone+"', idGym="+gym.getIdGym();
+
     }
 
     @Override
