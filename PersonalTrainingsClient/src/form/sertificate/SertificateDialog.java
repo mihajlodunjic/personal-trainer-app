@@ -5,11 +5,14 @@
 package form.sertificate;
 
 import domain.Client;
+import domain.Sertificate;
 import domain.Trainer;
 import domain.TrainerSertificate;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import logic.ClientController;
 import model.TrainerSertificateTableModel;
 
@@ -18,7 +21,10 @@ import model.TrainerSertificateTableModel;
  * @author pc
  */
 public class SertificateDialog extends javax.swing.JDialog {
-    private LinkedList<TrainerSertificate> list=new LinkedList<>();
+    private LinkedList<TrainerSertificate> mySertificates=new LinkedList<>();
+    private LinkedList<Sertificate> mySertificatesList=new LinkedList<>();
+    private LinkedList<Sertificate> allSertificates=new LinkedList<>();
+    private LinkedList<Sertificate> sertificatesTrainerDoesNotHave=new LinkedList<>();
     Trainer trainer;
     /**
      * Creates new form SertificateDialog
@@ -29,7 +35,9 @@ public class SertificateDialog extends javax.swing.JDialog {
         this.trainer=trainer;
         tblMySertificates.setModel(new TrainerSertificateTableModel());
         fetchMySertificates();
-        fetchNonHavingSertificates();
+        fetchAllSertificates();
+        fillSertificateTable();
+        fillComboBoxWithSertificatesTrainerDoesNotHave();
         
     }
 
@@ -44,14 +52,14 @@ public class SertificateDialog extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMySertificates = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        cmbSertificate = new javax.swing.JComboBox<>();
+        btnCreateNewSertificate = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtPublisher = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -69,7 +77,12 @@ public class SertificateDialog extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblMySertificates);
 
-        jButton1.setText("Dodaj");
+        btnAdd.setText("Dodaj");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnBack.setText("Nazad");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -78,9 +91,14 @@ public class SertificateDialog extends javax.swing.JDialog {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbSertificate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton2.setText("Ubaci novi");
+        btnCreateNewSertificate.setText("Ubaci novi");
+        btnCreateNewSertificate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateNewSertificateActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Naziv");
 
@@ -97,7 +115,7 @@ public class SertificateDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 11, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCreateNewSertificate, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(7, 7, 7)
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -106,8 +124,8 @@ public class SertificateDialog extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE))
+                                    .addComponent(cmbSertificate, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -115,8 +133,8 @@ public class SertificateDialog extends javax.swing.JDialog {
                                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1)
-                                    .addComponent(jTextField2))))))
+                                    .addComponent(txtPublisher)
+                                    .addComponent(txtName))))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -131,21 +149,21 @@ public class SertificateDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbSertificate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(btnAdd)
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
-                    .addComponent(jButton2))
+                    .addComponent(btnCreateNewSertificate))
                 .addGap(38, 38, 38))
         );
 
@@ -156,35 +174,108 @@ public class SertificateDialog extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        //ubaci u bazu, refresuj combobox, dodaj u tabelu
+        if(sertificatesTrainerDoesNotHave.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Vec imate sve sertifikate koji se nalaze u sistemu.\nMozete dodati novi.","Prazna lista",JOptionPane.INFORMATION_MESSAGE);
+            
+            return;
+        }
+        
+        Sertificate s=sertificatesTrainerDoesNotHave.get(cmbSertificate.getSelectedIndex());
+        TrainerSertificate ts=new TrainerSertificate(trainer, s);
+        
+        try {
+            if(ClientController.getInstance().addTrainerSertificate(ts)){
+                JOptionPane.showMessageDialog(this, "Uspesno dodavanje sertifikata na vas nalog.");
+                mySertificates.add(ts);
+                mySertificatesList.add(s);
+                fillSertificateTable();
+                fillComboBoxWithSertificatesTrainerDoesNotHave();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(SertificateDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnCreateNewSertificateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateNewSertificateActionPerformed
+        if(txtName.getText().isBlank() || txtPublisher.getText().isBlank()){
+            JOptionPane.showMessageDialog(this, "Popinite sva polja.");
+            return;
+        }
+        Sertificate s=new Sertificate();
+        s.setName(txtName.getText());
+        s.setPublisher(txtPublisher.getText());
+        try {
+            if(ClientController.getInstance().addSertificate(s)){
+                JOptionPane.showMessageDialog(this, "Uspesno ste dodali novi sertifikat u sistem.");
+                fetchAllSertificates();
+                fillComboBoxWithSertificatesTrainerDoesNotHave();
+                
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+        
+        
+    }//GEN-LAST:event_btnCreateNewSertificateActionPerformed
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnCreateNewSertificate;
+    private javax.swing.JComboBox<String> cmbSertificate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tblMySertificates;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPublisher;
     // End of variables declaration//GEN-END:variables
 
     private void fetchMySertificates() {
         try {
-            list=ClientController.getInstance().getTrainerSertificateForTrainer(trainer);
+            mySertificates=ClientController.getInstance().getTrainerSertificateForTrainer(trainer);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         
-        for (TrainerSertificate ts : list){
-            ((TrainerSertificateTableModel)tblMySertificates.getModel()).add(ts);
-        }
+        
         
     }
 
-    private void fetchNonHavingSertificates() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private void fetchAllSertificates() {
+        try {
+            allSertificates=ClientController.getInstance().getAllSertificate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
+
+    private void fillComboBoxWithSertificatesTrainerDoesNotHave() {
+        DefaultComboBoxModel<String> cbm=new DefaultComboBoxModel<>();
+        sertificatesTrainerDoesNotHave.clear();
+        for(Sertificate s : allSertificates)
+            if(!mySertificatesList.contains(s)){
+                sertificatesTrainerDoesNotHave.add(s);
+                cbm.addElement(s.getName()+" "+s.getPublisher());
+            }
+        cmbSertificate.setModel(cbm);
+        
+    }
+    
+    private void fillSertificateTable(){
+        ((TrainerSertificateTableModel)tblMySertificates.getModel()).clear();
+        
+        for (TrainerSertificate ts : mySertificates){
+            ((TrainerSertificateTableModel)tblMySertificates.getModel()).add(ts);
+            mySertificatesList.add(ts.getSertificate());
+        }
+    }
+
+    
 }

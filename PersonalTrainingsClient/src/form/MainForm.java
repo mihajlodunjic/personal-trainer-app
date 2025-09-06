@@ -11,6 +11,7 @@ import domain.WorkoutItem;
 import domain.WorkoutRecord;
 import enums.Gender;
 import form.client.AddClientDialog;
+import form.sertificate.SertificateDialog;
 import form.trainer.TrainerDetailsForm;
 import form.workoutrecord.AddWorkoutRecordDialog;
 import java.awt.GraphicsEnvironment;
@@ -100,7 +101,7 @@ public class MainForm extends javax.swing.JFrame {
         AddClientMenuItem = new javax.swing.JMenuItem();
         MenuAccount = new javax.swing.JMenu();
         AccountDetailsMenuItem = new javax.swing.JMenuItem();
-        MySertificatesMenuItem = new javax.swing.JMenuItem();
+        mySertificatesMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -322,8 +323,13 @@ public class MainForm extends javax.swing.JFrame {
         });
         MenuAccount.add(AccountDetailsMenuItem);
 
-        MySertificatesMenuItem.setText("Moji sertifikati");
-        MenuAccount.add(MySertificatesMenuItem);
+        mySertificatesMenuItem.setText("Moji sertifikati");
+        mySertificatesMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mySertificatesMenuItemActionPerformed(evt);
+            }
+        });
+        MenuAccount.add(mySertificatesMenuItem);
 
         jMenuBar1.add(MenuAccount);
 
@@ -345,13 +351,12 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(94, 94, 94)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAddClient, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDeleteClient, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDeleteClient, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(checkBoxOnlyMyRecords)
@@ -587,12 +592,15 @@ public class MainForm extends javax.swing.JFrame {
         btnSearchClients.doClick();
     }//GEN-LAST:event_btnAddClientActionPerformed
 
+    private void mySertificatesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mySertificatesMenuItemActionPerformed
+        new SertificateDialog(this, true, trainer).setVisible(true);
+    }//GEN-LAST:event_mySertificatesMenuItemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AccountDetailsMenuItem;
     private javax.swing.JMenuItem AddClientMenuItem;
     private javax.swing.JMenu MenuAccount;
-    private javax.swing.JMenuItem MySertificatesMenuItem;
     private javax.swing.JButton btnAddClient;
     private javax.swing.JButton btnAddRecord;
     private javax.swing.JButton btnClientDetails;
@@ -616,6 +624,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JMenuItem mySertificatesMenuItem;
     private javax.swing.JRadioButton rbFemale;
     private javax.swing.JRadioButton rbMale;
     private javax.swing.JTable tableWorkoutRecords;
