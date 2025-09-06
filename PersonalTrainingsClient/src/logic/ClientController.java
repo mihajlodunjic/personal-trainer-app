@@ -5,14 +5,10 @@
 package logic;
 
 import communication.Operation;
-import communication.Receiver;
 import communication.Request;
 import communication.Response;
-import communication.Sender;
 import domain.*;
 import dto.WorkoutRecordCriteria;
-import java.io.IOException;
-import java.net.Socket;
 import java.util.LinkedList;
 import session.ClientSession;
 
@@ -109,6 +105,12 @@ public class ClientController {
         wrc.setClientId(client.getIdClient());
         return (LinkedList<WorkoutRecord>) sendRequest(Operation.SEARCH_WORKOUT_RECORDS, wrc);
     }
+    
+    public WorkoutRecord getWorkoutRecordByID(WorkoutRecord workoutRecord)throws Exception{
+        WorkoutRecordCriteria wrc=new WorkoutRecordCriteria();
+        wrc.setWorkoutRecordId(workoutRecord.getIdWorkoutRecord());
+        return ((LinkedList<WorkoutRecord>)sendRequest(Operation.SEARCH_WORKOUT_RECORDS, wrc)).peekFirst();
+    }
 
     public boolean updateWorkoutRecord(WorkoutRecord wr) throws Exception {
         return (Boolean) sendRequest(Operation.UPDATE_WORKOUT_RECORD, wr);
@@ -118,10 +120,7 @@ public class ClientController {
         return (Boolean) sendRequest(Operation.DELETE_WORKOUT_RECORD, wr);
     }
 
-    //workout items operations
-    public LinkedList<WorkoutItem> getItemsForWorkoutRecord(WorkoutRecord wr) throws Exception {
-        return (LinkedList<WorkoutItem>) sendRequest(Operation.GET_WORKOUT_ITEMS_FOR_RECORD, wr);
-    }
+    
     //sertificate operations
 
     public boolean addSertificate(Sertificate sertificate) throws Exception {

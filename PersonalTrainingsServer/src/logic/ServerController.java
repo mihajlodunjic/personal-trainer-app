@@ -174,12 +174,6 @@ public class ServerController {
         return so.isSuccess();
     }
 
-    //workoutitems operations
-    public LinkedList<WorkoutItem> getWorkoutItemsForRecord(WorkoutRecord wr) throws Exception {
-        var so = new so.workoutitem.SOGetWorkoutItemsByRecord();
-        so.executeSO(wr);
-        return so.getList();
-    }
 
     //sertificate operations
     public Boolean addSertificate(Sertificate s) throws Exception {

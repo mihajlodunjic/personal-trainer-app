@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.text.html.HTML;
 import logic.ClientController;
 import model.WorkoutItemTableModel;
@@ -36,7 +37,7 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
     private LinkedList<Activity> activities;
     private WorkoutRecord workoutRecord = null;
 
-    int itemId = 1;
+    int nextItemSN = 1;
 
     /**
      * Creates new form AddWorkoutRecordDialog
@@ -51,8 +52,11 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         cmbActivity.setModel(new DefaultComboBoxModel<String>());
         txtClientName.setText(client.getName() + " " + client.getLastName());
         tblItems.setModel(new WorkoutItemTableModel());
+        tblItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         txtTrainer.setEditable(false);
         configureSpinFields();
+        setItemsTableListener();
+        btnRemoveSelection.setEnabled(false);
         if (workoutRecord == null) {
             txtTrainer.setVisible(false);
             lblTrainer.setVisible(false);
@@ -97,6 +101,7 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         radioHigh = new javax.swing.JRadioButton();
         jLabel14 = new javax.swing.JLabel();
         btnDeleteItem = new javax.swing.JButton();
+        btnRemoveSelection = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         calendar = new com.toedter.calendar.JCalendar();
         jLabel4 = new javax.swing.JLabel();
@@ -186,11 +191,6 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
 
         buttonGroup1.add(radioHigh);
         radioHigh.setText("Visok");
-        radioHigh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioHighActionPerformed(evt);
-            }
-        });
 
         jLabel14.setText("Intenzitet");
 
@@ -198,6 +198,13 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         btnDeleteItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteItemActionPerformed(evt);
+            }
+        });
+
+        btnRemoveSelection.setText("Ukloni selekciju");
+        btnRemoveSelection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveSelectionActionPerformed(evt);
             }
         });
 
@@ -218,9 +225,10 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
                             .addComponent(cmbActivity, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cmbCategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCreateNewActivity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(sfWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,9 +248,12 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnDeleteItem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAddItem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnRemoveSelection, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnDeleteItem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnAddItem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))))
                         .addGap(30, 30, 30))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -287,7 +298,8 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
                 .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreateNewActivity)
-                    .addComponent(btnDeleteItem))
+                    .addComponent(btnDeleteItem)
+                    .addComponent(btnRemoveSelection))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -471,37 +483,32 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
             System.out.println("nije validan unos");
             return;
         }
-//        WorkoutRecord wr = new WorkoutRecord();
-//        setAttributes(wr);
+
         try {
             if (workoutRecord != null) {
                 setAttributes(workoutRecord);
                 if (ClientController.getInstance().updateWorkoutRecord(workoutRecord)) {
-                    JOptionPane.showMessageDialog(this, "Uspesna izmena treninga.");
-                    
+                    JOptionPane.showMessageDialog(this, "Sistem je zapamtio evidenciju treninga");
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti evidenciju treninga");
                 }
-                else
-                    JOptionPane.showMessageDialog(this, "Greska pri izmeni treninga");
-                
-                
+
                 return;
             }
             WorkoutRecord wr = new WorkoutRecord();
             setAttributes(wr);
             if (ClientController.getInstance().addWorkoutRecord(wr)) {
-                
-                JOptionPane.showMessageDialog(this, "Uspesno ste dodali trening!");
+
+                JOptionPane.showMessageDialog(this, "Sistem je zapamtio evidenciju treninga");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti evidenciju treninga", "Greska!", JOptionPane.ERROR);
+            //JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR);
 
         }
 
     }//GEN-LAST:event_btnSaveActionPerformed
-
-    private void radioHighActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioHighActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_radioHighActionPerformed
 
     private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemActionPerformed
         boolean valid = validateWorkoutItemEntry();
@@ -509,7 +516,23 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Vezba mora biti izabrana i broj serija mora biti veci od nula.");
             return;
         }
+        if (tblItems.getSelectedRow() == -1) {
+            addNewItem();
+            return;
+        }
+        updateItemInTable();
+        btnRemoveSelection.doClick();
+
+    }//GEN-LAST:event_btnAddItemActionPerformed
+
+    private void addNewItem() {
         WorkoutItem wi = new WorkoutItem();
+        fillItemInfo(wi);
+        wi.setItemSN(nextItemSN++);
+        ((WorkoutItemTableModel) tblItems.getModel()).add(wi);
+    }
+
+    private void fillItemInfo(WorkoutItem wi) {
         wi.setActivity(activities.get(cmbActivity.getSelectedIndex()));
         wi.setMass(sfWeight.getValue());
         wi.setComment(txtComment.getText());
@@ -523,41 +546,29 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         }
         wi.setIntensity(measurement);
         wi.setNumOfSeries(sfNumOfSeries.getValue());
-        wi.setItemSN(itemId++);
 
-        ((WorkoutItemTableModel) tblItems.getModel()).add(wi);
-    }//GEN-LAST:event_btnAddItemActionPerformed
+    }
 
     private void btnDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteItemActionPerformed
-        if (((WorkoutItemTableModel) tblItems.getModel()).getItems().isEmpty()) {
+        WorkoutItemTableModel model = (WorkoutItemTableModel) tblItems.getModel();
+        if (model.getItems().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nema stavki.");
+            return;
         }
-        if (tblItems.getSelectedRow() != -1) {
-            LinkedList<WorkoutItem> list=((WorkoutItemTableModel) tblItems.getModel()).getItems();
-            int tmp=list.get(tblItems.getSelectedRow()).getItemSN();
-            
-            ((WorkoutItemTableModel) tblItems.getModel()).removeAt(tblItems.getSelectedRow());
-            //1 2 3 4 5 6
-            //1   3 4 5 6
-            //1 2 3 4 5
-            //npr obrisan je broj 2
-            //treba svim sledecim smanjiti id za 1
-            
-            for(int i = tmp-1; i<((WorkoutItemTableModel) tblItems.getModel()).getItems().size();i++){
-                list.get(i).setItemSN(list.get(i).getItemSN()-1);
-            }
-            
-            itemId--;
-            
-        } else
+        int row = tblItems.getSelectedRow();
+        if (row == -1) {
             JOptionPane.showMessageDialog(this, "Izaberite stavku za brisanje.");
+            return;
+        }
+
+        model.removeAt(row);
     }//GEN-LAST:event_btnDeleteItemActionPerformed
 
     private void btnEnableEditingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnableEditingActionPerformed
-        if(workoutRecord.getTrainer().getIdTrаiner()!=trainer.getIdTrаiner()){
+        if (workoutRecord.getTrainer().getIdTrаiner() != trainer.getIdTrаiner()) {
             JOptionPane.showMessageDialog(this, "Ne mozete izmeniti treninge koji nisu odrzani kod Vas.");
         }
-        
+
         toggleEditing(true);
     }//GEN-LAST:event_btnEnableEditingActionPerformed
 
@@ -566,6 +577,12 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         cmbCategory.setSelectedIndex(0);
     }//GEN-LAST:event_btnCreateNewActivityActionPerformed
 
+    private void btnRemoveSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveSelectionActionPerformed
+        tblItems.clearSelection();
+        btnAddItem.setText("Dodaj stavku");
+        btnRemoveSelection.setEnabled(false);
+    }//GEN-LAST:event_btnRemoveSelectionActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddItem;
@@ -573,6 +590,7 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnCreateNewActivity;
     private javax.swing.JButton btnDeleteItem;
     private javax.swing.JButton btnEnableEditing;
+    private javax.swing.JButton btnRemoveSelection;
     private javax.swing.JButton btnSave;
     private javax.swing.ButtonGroup buttonGroup1;
     private com.toedter.calendar.JCalendar calendar;
@@ -701,6 +719,7 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         btnCreateNewActivity.setEnabled(toggle);
         btnSave.setEnabled(toggle);
         calendar.setEnabled(toggle);
+        
 
     }
 
@@ -725,18 +744,21 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
 
     private void fillWorkoutRecordInfo() {
         try {
-            txtTrainer.setText(workoutRecord.getTrainer().getName()+ " "+ workoutRecord.getTrainer().getLastName());
+
+            txtTrainer.setText(workoutRecord.getTrainer().getName() + " " + workoutRecord.getTrainer().getLastName());
             calendar.setDate(Date.from(workoutRecord.getWorkoutDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             sfStartHour.setValue(workoutRecord.getStartTime().getHour());
             sfEndHour.setValue(workoutRecord.getEndTime().getHour());
             sfStartMinute.setValue(workoutRecord.getStartTime().getMinute());
             sfEndMinute.setValue(workoutRecord.getEndTime().getMinute());
 
-            LinkedList<WorkoutItem> itemList = ClientController.getInstance().getItemsForWorkoutRecord(workoutRecord);
+            LinkedList<WorkoutItem> itemList = workoutRecord.getItems();
             for (WorkoutItem wi : itemList) {
                 ((WorkoutItemTableModel) tblItems.getModel()).add(wi);
             }
-            itemId=itemList.getLast().getItemSN()+1;
+
+            //uzimamo najveci redni broj workoutitem-a
+            nextItemSN = itemList.stream().mapToInt(WorkoutItem::getItemSN).max().orElse(0) + 1;
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
             ex.printStackTrace();
@@ -752,6 +774,56 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         }
 
         return true;
+    }
+
+    private void setItemsTableListener() {
+        addTableSelectionListener();
+    }
+
+    private void addTableSelectionListener() {
+        tblItems.getSelectionModel().addListSelectionListener(e -> {
+            if (tblItems.getSelectedRow() == -1) {
+                return;
+            }
+            btnRemoveSelection.setEnabled(true);
+
+            WorkoutItem wi = ((WorkoutItemTableModel) tblItems.getModel()).getItems().get(tblItems.getSelectedRow());
+            for (Category c : Category.values()) {
+                if (c == wi.getActivity().getCategory()) {
+                    cmbCategory.setSelectedIndex(c.ordinal());
+                }
+            }
+            for (int i = 0; i < cmbActivity.getItemCount(); i++) {
+                if (cmbActivity.getItemAt(i).equals(wi.getActivity().getName())) {
+                    cmbActivity.setSelectedIndex(i);
+                }
+            }
+            txtComment.setText(wi.getComment());
+            switch (wi.getIntensity()) {
+                case LOW:
+                    radioLow.setSelected(true);
+                    break;
+                case MODERATE:
+                    radioMedium.setSelected(true);
+                    break;
+                case HIGH:
+                    radioHigh.setSelected(true);
+                    break;
+                default:
+                    break;
+            }
+            sfWeight.setValue((int) wi.getMass());
+            sfNumOfSeries.setValue(wi.getNumOfSeries());
+            btnAddItem.setText("Azuriraj");
+        });
+    }
+
+    
+
+    private void updateItemInTable() {
+        WorkoutItem wi = ((WorkoutItemTableModel) tblItems.getModel()).getItems().get(tblItems.getSelectedRow());
+        fillItemInfo(wi);
+        ((WorkoutItemTableModel) tblItems.getModel()).refreshData();
     }
 
 }

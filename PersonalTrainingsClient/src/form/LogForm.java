@@ -75,11 +75,6 @@ public class LogForm extends javax.swing.JFrame {
 
         txtPassword.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         txtPassword.setMinimumSize(new java.awt.Dimension(5, 20));
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel5.setText("Korisnicko ime");
@@ -172,16 +167,12 @@ public class LogForm extends javax.swing.JFrame {
             return;
         }
         System.out.println(trainer);
-        
+        JOptionPane.showMessageDialog(this, "Sistem je nasao trenera po zadatim kriterijumima");
         MainForm mainForm=new MainForm(trainer);
         mainForm.setLocationRelativeTo(null);
         this.dispose();
         mainForm.setVisible(true);
     }//GEN-LAST:event_btnLoginActionPerformed
-
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
 
    
 

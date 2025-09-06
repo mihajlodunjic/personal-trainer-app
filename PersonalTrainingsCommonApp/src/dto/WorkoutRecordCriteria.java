@@ -13,7 +13,16 @@ public class WorkoutRecordCriteria extends DefaultDomainObject {
     private Integer trainerId;  
     private Integer clientId;   
     private Integer activityId;  
+    private Integer workoutRecordId;
     private Measurement avgIntensity; 
+
+    public Integer getWorkoutRecordId() {
+        return workoutRecordId;
+    }
+
+    public void setWorkoutRecordId(Integer workoutRecordId) {
+        this.workoutRecordId = workoutRecordId;
+    }
 
     public LocalDate getDateFrom() { return dateFrom; }
     public void setDateFrom(LocalDate dateFrom) { this.dateFrom = dateFrom; }

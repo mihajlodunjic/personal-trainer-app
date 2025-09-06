@@ -60,4 +60,8 @@ public class WorkoutItemTableModel extends AbstractTableModel{
         fireTableRowsDeleted(row, row);
     }
     
+    public void refreshData(){
+        fireTableDataChanged();
+    }
+    
 }

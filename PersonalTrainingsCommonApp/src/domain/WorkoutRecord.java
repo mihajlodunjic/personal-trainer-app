@@ -30,14 +30,14 @@ public class WorkoutRecord extends DefaultDomainObject {
     private Measurement avgIntensity;
     private Trainer trainer;
     private Client client;
-    private List<WorkoutItem> items;
+    private LinkedList<WorkoutItem> items;
     private String joinClause = "";
 
-    public List<WorkoutItem> getItems() {
+    public LinkedList<WorkoutItem> getItems() {
         return items;
     }
 
-    public void setItems(List<WorkoutItem> items) {
+    public void setItems(LinkedList<WorkoutItem> items) {
         this.items = items;
         calculateAvgIntensity();
     }

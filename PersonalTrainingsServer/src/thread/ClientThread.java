@@ -105,11 +105,6 @@ public class ClientThread extends Thread {
                     response.setResult(success);
                     break;
 
-                case Operation.GET_WORKOUT_ITEMS_FOR_RECORD:
-                    LinkedList<WorkoutItem> items
-                            = ServerController.getInstance().getWorkoutItemsForRecord((WorkoutRecord) r.getArgument());
-                    response.setResult(items);
-                    break;
                 case Operation.SEARCH_WORKOUT_RECORDS:
                     LinkedList<WorkoutRecord> wrList
                             = ServerController.getInstance().searchWorkoutRecords((WorkoutRecordCriteria) r.getArgument());

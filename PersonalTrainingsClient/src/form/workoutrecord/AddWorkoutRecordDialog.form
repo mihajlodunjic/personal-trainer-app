@@ -128,9 +128,10 @@
                               <Component id="cmbCategory" alignment="0" max="32767" attributes="0"/>
                               <Component id="btnCreateNewActivity" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="sfWeight" min="-2" pref="133" max="-2" attributes="0"/>
@@ -157,9 +158,13 @@
                                       <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="btnDeleteItem" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="btnAddItem" alignment="1" pref="143" max="32767" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="btnRemoveSelection" min="-2" pref="143" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="btnDeleteItem" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="btnAddItem" alignment="1" pref="143" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
@@ -223,6 +228,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnCreateNewActivity" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnDeleteItem" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnRemoveSelection" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="188" max="-2" attributes="0"/>
@@ -370,9 +376,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Visok"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioHighActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel14">
           <Properties>
@@ -385,6 +388,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteItemActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnRemoveSelection">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ukloni selekciju"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoveSelectionActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -1,14 +1,11 @@
 package database;
 
-import domain.Trainer;
 import abstractClass.DefaultDomainObject;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
 import java.util.Properties;
 
 /**
@@ -21,18 +18,30 @@ public class DatabaseBroker {
     private static Statement st = null;
 
     public static void connect() {
-        Properties properties = new Properties();
-        properties.put("user", "root");
-        properties.put("password", "");
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/personal_trainings", properties);
-            System.out.println("conn succesful");
-            connection.setAutoCommit(false);
-        } catch (SQLException e) {
-            System.out.println("conn unsuccesful");
-            throw new RuntimeException(e);
-        }
+    Properties properties = new Properties();
+    try (InputStream input = new FileInputStream("src/config/db.properties")) {
+        
+        properties.load(input);
+
+        String user = properties.getProperty("db.user");
+        String password = properties.getProperty("db.password");
+        String port = properties.getProperty("db.port");
+        String host = properties.getProperty("db.host");
+        String dbName = properties.getProperty("db.name");
+
+        
+        String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+        connection = DriverManager.getConnection(url, user, password);
+
+        System.out.println("conn succesful");
+        connection.setAutoCommit(false);
+    } catch (SQLException e) {
+        System.out.println("conn unsuccesful");
+        throw new RuntimeException(e);
+    } catch (IOException e) {
+        throw new RuntimeException("Problem sa učitavanjem property fajla", e);
     }
+}
 
     public static Connection getConnection() {
         return connection;
@@ -117,8 +126,6 @@ public class DatabaseBroker {
 
     public static boolean findRowAndReturn(DefaultDomainObject ddo) {
         ResultSet rs;
-        String nameOfConObj;
-        int numOfItems;
         String query;
         try {
             st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -166,12 +173,4 @@ public class DatabaseBroker {
         }
     }
 
-//    public static void main(String[] args) {
-//        try {
-//            connect();
-//            System.out.println(select(new Trainer()));
-//        } catch (Exception ex) {
-//            Logger.getLogger(DatabaseBroker.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
 }
