@@ -17,6 +17,7 @@ import so.client.SOSearchClient;
 import so.client.SOUpdateClient;
 import so.gym.SOAddGym;
 import so.gym.SOGetAllGym;
+import so.gym.SOUpdateGym;
 import so.login.SOLogin;
 import so.login.SOLogout;
 import so.register.SORegister;
@@ -130,6 +131,12 @@ public class ServerController {
         return so.getList();
     }
 
+    public Boolean updateGym(Gym g) throws Exception {
+        SOUpdateGym so = new SOUpdateGym();
+        so.executeSO(g);
+        return so.isSuccess();
+    }
+
     //activity operations
     public LinkedList<Activity> getAllActivity(Activity a) throws Exception {
         SOGetAllActivity so = new SOGetAllActivity();
@@ -173,7 +180,6 @@ public class ServerController {
         so.executeSO(wr);
         return so.isSuccess();
     }
-
 
     //sertificate operations
     public Boolean addSertificate(Sertificate s) throws Exception {

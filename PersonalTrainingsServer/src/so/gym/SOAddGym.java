@@ -1,44 +1,55 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package so.gym;
 
 import abstractClass.DefaultDomainObject;
 import database.DatabaseBroker;
 import domain.Gym;
-import java.util.LinkedList;
 import so.abstractso.AbstractSO;
 
-/**
- *
- * @author pc
- */
-public class SOAddGym extends AbstractSO{
-    private boolean success=false;
-    public boolean isSuccess(){
-        return success;
-    }
+public class SOAddGym extends AbstractSO {
+    private boolean success = false;
+    public boolean isSuccess() { return success; }
+
     @Override
     protected void validate(DefaultDomainObject ddo) throws Exception {
-        if(!(ddo instanceof Gym))
-            throw new Exception("Prosledjeni objekat nije instanca klase Gym.");
-        Gym gym=(Gym)ddo;
-        ddo.setSearchCondition("1");
-        LinkedList<Gym> list=(LinkedList<Gym>)(LinkedList<?>)DatabaseBroker.select(ddo);
-        for (Gym g : list){
-            if(g.getAddress().equals(gym.getAddress()) && g.getName().equals(gym.getName()))
-                throw new Exception("Uneta teretana vec postoji u sistemu.");
-        }
+        if (!(ddo instanceof Gym))
+            throw new Exception("Prosleđeni objekat nije instanca klase Gym.");
+
+        Gym gym = (Gym) ddo;
+
+        if (gym.getName() == null || gym.getName().trim().isEmpty())
+            throw new Exception("Naziv teretane je obavezan.");
+        if (gym.getAddress() == null || gym.getAddress().trim().isEmpty())
+            throw new Exception("Adresa teretane je obavezna.");
+        if (gym.getEquipmentLevel() == null)
+            throw new Exception("Nivo opremljenosti je obavezan.");
+        if (gym.getMobilePhone() == null || gym.getMobilePhone().trim().isEmpty())
+            throw new Exception("Broj telefona teretane je obavezan.");
+
         
+
+        String nameNorm = esc(gym.getName().trim());
+        String addrNorm = esc(gym.getAddress().trim());
+
+        Gym probe = new Gym();
+        probe.setSearchCondition(
+            "LOWER(TRIM(g_name)) = LOWER(TRIM('" + nameNorm + "')) " +
+            "AND LOWER(TRIM(address)) = LOWER(TRIM('" + addrNorm + "'))"
+        );
+        if (DatabaseBroker.doesExist(probe))
+            throw new Exception("Uneta teretana već postoji u sistemu (naziv i adresa).");
     }
 
     @Override
     protected void execute(DefaultDomainObject ddo) throws Exception {
-        Gym gym=(Gym)ddo;
-        if(!(DatabaseBroker.insertRow(gym)))
-            throw new Exception("Greska pri ubacivanju u bazu");
-        success=true;
+        Gym gym = (Gym) ddo;
+
+        if (!DatabaseBroker.insertRow(gym))
+            throw new Exception("Greška pri ubacivanju teretane u bazu.");
+
+        success = true;
     }
-    
+
+    private static String esc(String s) {
+        return s == null ? null : s.replace("'", "''");
+    }
 }

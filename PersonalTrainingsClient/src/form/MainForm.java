@@ -70,15 +70,13 @@ public class MainForm extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableWorkoutRecords = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        checkBoxOnlyMyRecords = new javax.swing.JCheckBox();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        btnDeleteRecord = new javax.swing.JButton();
-        btnAddRecord = new javax.swing.JButton();
-        btnRecordDetails = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        btnAddClient = new javax.swing.JButton();
+        btnClientDetails = new javax.swing.JButton();
+        btnDeleteClient = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblClients = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
@@ -91,26 +89,55 @@ public class MainForm extends javax.swing.JFrame {
         cmbGymSearchClient = new javax.swing.JComboBox<>();
         btnSearchClients = new javax.swing.JButton();
         btnResetClientSearch = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblClients = new javax.swing.JTable();
-        btnClientDetails = new javax.swing.JButton();
-        btnDeleteClient = new javax.swing.JButton();
-        btnAddClient = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableWorkoutRecords = new javax.swing.JTable();
+        checkBoxOnlyMyRecords = new javax.swing.JCheckBox();
+        btnAddRecord = new javax.swing.JButton();
+        btnDeleteRecord = new javax.swing.JButton();
+        btnRecordDetails = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         AddClientMenuItem = new javax.swing.JMenuItem();
         MenuAccount = new javax.swing.JMenu();
         AccountDetailsMenuItem = new javax.swing.JMenuItem();
         mySertificatesMenuItem = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tableWorkoutRecords.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        tableWorkoutRecords.setModel(new javax.swing.table.DefaultTableModel(
+        btnAddClient.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnAddClient.setText("Dodaj klijenta");
+        btnAddClient.setMaximumSize(new java.awt.Dimension(150, 30));
+        btnAddClient.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnAddClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddClientActionPerformed(evt);
+            }
+        });
+
+        btnClientDetails.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnClientDetails.setText("Detalji o klijentu");
+        btnClientDetails.setMaximumSize(new java.awt.Dimension(150, 30));
+        btnClientDetails.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnClientDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientDetailsActionPerformed(evt);
+            }
+        });
+
+        btnDeleteClient.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnDeleteClient.setText("Obrisi klijenta");
+        btnDeleteClient.setMaximumSize(new java.awt.Dimension(150, 30));
+        btnDeleteClient.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnDeleteClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteClientActionPerformed(evt);
+            }
+        });
+
+        tblClients.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -121,52 +148,7 @@ public class MainForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tableWorkoutRecords);
-
-        checkBoxOnlyMyRecords.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        checkBoxOnlyMyRecords.setText("Treninzi odrzani samo kod vas");
-        checkBoxOnlyMyRecords.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkBoxOnlyMyRecordsActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel3.setText("Odrzani treninzi:");
-
-        jLabel5.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("EVIDENCIJA TRENINGA");
-
-        btnDeleteRecord.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        btnDeleteRecord.setText("Obrisi trening");
-        btnDeleteRecord.setMaximumSize(new java.awt.Dimension(150, 30));
-        btnDeleteRecord.setMinimumSize(new java.awt.Dimension(150, 30));
-        btnDeleteRecord.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteRecordActionPerformed(evt);
-            }
-        });
-
-        btnAddRecord.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        btnAddRecord.setText("Unesi trening");
-        btnAddRecord.setMaximumSize(new java.awt.Dimension(150, 30));
-        btnAddRecord.setMinimumSize(new java.awt.Dimension(150, 30));
-        btnAddRecord.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddRecordActionPerformed(evt);
-            }
-        });
-
-        btnRecordDetails.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        btnRecordDetails.setText("Detalji o treningu");
-        btnRecordDetails.setMaximumSize(new java.awt.Dimension(150, 30));
-        btnRecordDetails.setMinimumSize(new java.awt.Dimension(150, 30));
-        btnRecordDetails.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRecordDetailsActionPerformed(evt);
-            }
-        });
+        jScrollPane2.setViewportView(tblClients);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -253,7 +235,14 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        tblClients.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel1.setText("Pretraga klijenata");
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel3.setText("Odrzani treninzi:");
+
+        tableWorkoutRecords.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tableWorkoutRecords.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -264,40 +253,116 @@ public class MainForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(tblClients);
+        jScrollPane1.setViewportView(tableWorkoutRecords);
 
-        btnClientDetails.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        btnClientDetails.setText("Detalji o klijentu");
-        btnClientDetails.setMaximumSize(new java.awt.Dimension(150, 30));
-        btnClientDetails.setMinimumSize(new java.awt.Dimension(150, 30));
-        btnClientDetails.addActionListener(new java.awt.event.ActionListener() {
+        checkBoxOnlyMyRecords.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        checkBoxOnlyMyRecords.setText("Treninzi odrzani samo kod vas");
+        checkBoxOnlyMyRecords.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClientDetailsActionPerformed(evt);
+                checkBoxOnlyMyRecordsActionPerformed(evt);
             }
         });
 
-        btnDeleteClient.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        btnDeleteClient.setText("Obrisi klijenta");
-        btnDeleteClient.setMaximumSize(new java.awt.Dimension(150, 30));
-        btnDeleteClient.setMinimumSize(new java.awt.Dimension(150, 30));
-        btnDeleteClient.addActionListener(new java.awt.event.ActionListener() {
+        btnAddRecord.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnAddRecord.setText("Unesi trening");
+        btnAddRecord.setMaximumSize(new java.awt.Dimension(150, 30));
+        btnAddRecord.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnAddRecord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteClientActionPerformed(evt);
+                btnAddRecordActionPerformed(evt);
             }
         });
 
-        btnAddClient.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        btnAddClient.setText("Dodaj klijenta");
-        btnAddClient.setMaximumSize(new java.awt.Dimension(150, 30));
-        btnAddClient.setMinimumSize(new java.awt.Dimension(150, 30));
-        btnAddClient.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteRecord.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnDeleteRecord.setText("Obrisi trening");
+        btnDeleteRecord.setMaximumSize(new java.awt.Dimension(150, 30));
+        btnDeleteRecord.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnDeleteRecord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddClientActionPerformed(evt);
+                btnDeleteRecordActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel1.setText("Pretraga klijenata");
+        btnRecordDetails.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnRecordDetails.setText("Detalji o treningu");
+        btnRecordDetails.setMaximumSize(new java.awt.Dimension(150, 30));
+        btnRecordDetails.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnRecordDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecordDetailsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnAddClient, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                                    .addComponent(btnDeleteClient, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkBoxOnlyMyRecords)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDeleteRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAddRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRecordDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(24, 24, 24)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDeleteClient, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAddClient, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                                .addGap(37, 37, 37))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnAddRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnDeleteRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15)
+                                .addComponent(btnRecordDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(checkBoxOnlyMyRecords)))
+                .addContainerGap())
+        );
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("EVIDENCIJA TRENINGA");
 
         jMenuBar1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
@@ -335,17 +400,6 @@ public class MainForm extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuAccount);
 
-        jMenu2.setText("Sifarnici");
-        jMenu2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-
-        jMenuItem1.setText("Teretana");
-        jMenu2.add(jMenuItem1);
-
-        jMenuItem2.setText("Aktivnost");
-        jMenu2.add(jMenuItem2);
-
-        jMenuBar1.add(jMenu2);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -353,75 +407,29 @@ public class MainForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(212, 212, 212)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1806, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(297, 297, 297)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnAddClient, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDeleteClient, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(checkBoxOnlyMyRecords)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnDeleteRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAddRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRecordDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(445, 445, 445)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(1183, 1183, 1183)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel1)))
-                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDeleteClient, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAddClient, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(183, 183, 183)
+                        .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1)
-                                .addGap(37, 37, 37))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAddRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnDeleteRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnRecordDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(checkBoxOnlyMyRecords)))
-                .addContainerGap(494, Short.MAX_VALUE))
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel5)
+                        .addGap(37, 37, 37)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(437, Short.MAX_VALUE))
         );
 
         pack();
@@ -467,7 +475,9 @@ public class MainForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Izaberite klijenta.");
         }
         (new AddClientDialog(this, true, clientList.get(tblClients.getSelectedRow()))).setVisible(true);
-        tblClients.setRowSelectionInterval(tblClients.getSelectedRow(), tblClients.getSelectedRow());
+//        tblClients.setRowSelectionInterval(tblClients.getSelectedRow(), tblClients.getSelectedRow());
+        btnResetClientSearch.doClick();
+        fillGymComboBox(cmbGymSearchClient);
 
     }//GEN-LAST:event_btnClientDetailsActionPerformed
 
@@ -532,7 +542,8 @@ public class MainForm extends javax.swing.JFrame {
                 (new AddWorkoutRecordDialog(this, true, trainer, clientList.get(tblClients.getSelectedRow()), wr)).setVisible(true);
                 refreshWorkoutRecordTable();
             } catch (Exception ex) {
-                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+                ex.printStackTrace();
             }
 
         } else
@@ -558,7 +569,10 @@ public class MainForm extends javax.swing.JFrame {
         }
 
         searchClients(c);
-
+        if(!clientList.isEmpty())
+            JOptionPane.showMessageDialog(this, "Sistem je nasao klijente po zadatim kriterijumima");
+        else
+            JOptionPane.showMessageDialog(this, "Sistem nije uspeo da nadje klijente po zadatim kriterijumima");
 
     }//GEN-LAST:event_btnSearchClientsActionPerformed
 
@@ -566,11 +580,6 @@ public class MainForm extends javax.swing.JFrame {
         try {
             clientList = ClientController.getInstance().searchClients(c);
             ((ClientTableModel) tblClients.getModel()).clear();
-//            txtName.setText("");
-//            txtLastName.setText("");
-//            rbFemale.setSelected(false);
-//            rbMale.setSelected(false);
-//            cmbGymSearchClient.setSelectedIndex(0);
             for (Client cl : clientList) {
                 ((ClientTableModel) tblClients.getModel()).add(cl);
             }
@@ -583,8 +592,7 @@ public class MainForm extends javax.swing.JFrame {
     private void btnResetClientSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetClientSearchActionPerformed
         txtName.setText("");
         txtLastName.setText("");
-        rbFemale.setSelected(false);
-        rbMale.setSelected(false);
+        buttonGroup1.clearSelection();
         cmbGymSearchClient.setSelectedIndex(0);
         searchClients(new Client());
 
@@ -617,6 +625,7 @@ public class MainForm extends javax.swing.JFrame {
         AddClientDialog acd = new AddClientDialog(this, true, null);
         acd.setVisible(true);
         acd.setLocationRelativeTo(null);
+        fillGymComboBox(cmbGymSearchClient);
         btnSearchClients.doClick();
     }//GEN-LAST:event_btnAddClientActionPerformed
 
@@ -649,10 +658,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -736,6 +743,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void setClientTableListSelectionListener() {
         tblClients.getSelectionModel().addListSelectionListener(e -> {
+            checkBoxOnlyMyRecords.setSelected(false);
             refreshWorkoutRecordTable();
         });
     }

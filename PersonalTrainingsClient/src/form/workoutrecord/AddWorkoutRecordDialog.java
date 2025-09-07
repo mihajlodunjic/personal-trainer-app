@@ -61,6 +61,7 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
             txtTrainer.setVisible(false);
             lblTrainer.setVisible(false);
             btnEnableEditing.setVisible(false);
+            btnDeleteWorkoutRecord.setVisible(false);
         } else {
             toggleEditing(false);
             fillWorkoutRecordInfo();
@@ -120,6 +121,7 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         btnEnableEditing = new javax.swing.JButton();
         txtTrainer = new javax.swing.JTextField();
         lblTrainer = new javax.swing.JLabel();
+        btnDeleteWorkoutRecord = new javax.swing.JButton();
 
         jLabel15.setText("jLabel15");
 
@@ -405,6 +407,13 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
 
         lblTrainer.setText("Trener");
 
+        btnDeleteWorkoutRecord.setText("Obrisi evidenciju");
+        btnDeleteWorkoutRecord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteWorkoutRecordActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -429,10 +438,13 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
                         .addContainerGap(1, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnEnableEditing, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDeleteWorkoutRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -451,7 +463,8 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancel)
                     .addComponent(btnSave)
-                    .addComponent(btnEnableEditing))
+                    .addComponent(btnEnableEditing)
+                    .addComponent(btnDeleteWorkoutRecord))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -583,12 +596,35 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         btnRemoveSelection.setEnabled(false);
     }//GEN-LAST:event_btnRemoveSelectionActionPerformed
 
+    private void btnDeleteWorkoutRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteWorkoutRecordActionPerformed
+        if (workoutRecord.getTrainer().getIdTrаiner() != trainer.getIdTrаiner()) {
+            JOptionPane.showMessageDialog(this, "Ne mozete obrisati trening koji nije odrzan kod Vas.");
+            return;
+        }
+
+        if (JOptionPane.showConfirmDialog(this, "Da li ste sigurni?", "Potvrda", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            try {
+                if (ClientController.getInstance().deleteWorkoutRecord(workoutRecord)) {
+                    JOptionPane.showMessageDialog(this, "Uspesno brisanje treninga");
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Neuspesno brisanje treninga");
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+                ex.printStackTrace();
+            }
+
+        }
+    }//GEN-LAST:event_btnDeleteWorkoutRecordActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddItem;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnCreateNewActivity;
     private javax.swing.JButton btnDeleteItem;
+    private javax.swing.JButton btnDeleteWorkoutRecord;
     private javax.swing.JButton btnEnableEditing;
     private javax.swing.JButton btnRemoveSelection;
     private javax.swing.JButton btnSave;
@@ -665,10 +701,11 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
     }
 
     private boolean validateEntry() {
-        String message = String.valueOf("");
+        StringBuilder message = new StringBuilder();
         boolean success = true;
+
         if (((WorkoutItemTableModel) tblItems.getModel()).getItems().isEmpty()) {
-            message.concat("[unesite bar jednu stavku]\n");
+            message.append("[unesite bar jednu stavku]\n");
             success = false;
         }
 
@@ -680,23 +717,26 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         int startTotal = startHour * 60 + startMinute;
         int endTotal = endHour * 60 + endMinute;
 
+        
         if (startTotal == endTotal) {
-            message.concat("[vreme početka i kraja su isti]\n");
+            message.append("[vreme početka i kraja su isti]\n");
             success = false;
         } else if (startTotal > endTotal) {
-            message.concat("[vreme početka je posle kraja]\n");
+            message.append("[vreme početka je posle kraja]\n");
             success = false;
         }
+
         Date date = calendar.getDate();
         LocalDate localDate = date.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
         if (localDate.isAfter(LocalDate.now())) {
+            message.append("[datum mora biti danas ili ranije]\n");
             success = false;
-            message.concat("[datum mora biti danas ili ranije]");
         }
+
         if (!success) {
-            JOptionPane.showMessageDialog(this, message);
+            JOptionPane.showMessageDialog(this, message.toString());
         }
         return success;
     }
@@ -719,7 +759,6 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
         btnCreateNewActivity.setEnabled(toggle);
         btnSave.setEnabled(toggle);
         calendar.setEnabled(toggle);
-        
 
     }
 
@@ -817,8 +856,6 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
             btnAddItem.setText("Azuriraj");
         });
     }
-
-    
 
     private void updateItemInTable() {
         WorkoutItem wi = ((WorkoutItemTableModel) tblItems.getModel()).getItems().get(tblItems.getSelectedRow());

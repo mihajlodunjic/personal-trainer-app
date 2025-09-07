@@ -13,12 +13,14 @@ import java.util.LinkedList;
  *
  * @author pc
  */
-public class Gym extends DefaultDomainObject{
+public class Gym extends DefaultDomainObject {
+
     private int idGym;
     private String name;
     private String address;
     private Measurement equipmentLevel;
     private String mobilePhone;
+    private String email;
 
     public Gym() {
     }
@@ -30,8 +32,14 @@ public class Gym extends DefaultDomainObject{
         this.equipmentLevel = equipmentLevel;
         this.mobilePhone = mobilePhone;
     }
-    
-    
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public int getIdGym() {
         return idGym;
@@ -75,7 +83,8 @@ public class Gym extends DefaultDomainObject{
 
     @Override
     public String returnAttrValues() {
-        return "'"+name+"','"+address+"','"+equipmentLevel.getSerbianName()+"','"+mobilePhone+"'";
+        return "'" + name + "','" + address + "','" + equipmentLevel.getSerbianName()
+                + "','" + mobilePhone + "','" + email + "'";
     }
 
     @Override
@@ -85,28 +94,32 @@ public class Gym extends DefaultDomainObject{
 
     @Override
     public String setAttrValues() {
-        return "name='"+name+"',address='"+address+"',equipmentLeve='"+equipmentLevel.getSerbianName()+"',mobilePhone='"+mobilePhone+"'";
+        // Paziti na tačne nazive kolona iz SQL-a
+        return "g_name='" + name + "',address='" + address + "',"
+                + "equipmentLevel='" + equipmentLevel.getSerbianName() + "',"
+                + "g_mobilePhone='" + mobilePhone + "',"
+                + "email='" + email + "'";
     }
 
     @Override
     public String returnInsertColumns() {
-        return "(g_name,address,equipmentLevel,g_mobilePhone)";
+        return "(g_name,address,equipmentLevel,g_mobilePhone,email)";
     }
 
     @Override
     public boolean setAttributes(ResultSet rs) {
         try {
-            int idGym=rs.getInt("idGym");
-            String name=rs.getString("g_name");
-            String address=rs.getString("address");
-            Measurement equipmentLevel=Measurement.fromSerbianName(rs.getString("equipmentLevel"));
-            String mobilePhone=rs.getString("g_mobilePhone");
-            this.idGym=idGym;
-            this.name=name;
-            this.address=address;
-            this.equipmentLevel=equipmentLevel;
-            this.mobilePhone=mobilePhone;
-            
+            int idGym = rs.getInt("idGym");
+            String name = rs.getString("g_name");
+            String address = rs.getString("address");
+            Measurement equipmentLevel = Measurement.fromSerbianName(rs.getString("equipmentLevel"));
+            String mobilePhone = rs.getString("g_mobilePhone");
+            this.idGym = idGym;
+            this.name = name;
+            this.address = address;
+            this.equipmentLevel = equipmentLevel;
+            this.mobilePhone = mobilePhone;
+            this.email = rs.getString("email");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,15 +138,10 @@ public class Gym extends DefaultDomainObject{
     }
 
     @Override
-    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception{
-        LinkedList<DefaultDomainObject> list=new LinkedList<>();
-        while(rs.next()){
-            Gym gym=new Gym();
-//            gym.setIdGym(rs.getInt("idGym"));
-//            gym.setName(rs.getString("g_name"));
-//            gym.setAddress(rs.getString("address"));
-//            gym.setEquipmentLevel(Measurement.fromSerbianName(rs.getString("equipmentLevel")));
-//            gym.setMobilePhone(rs.getString("g_mobilePhone"));
+    public LinkedList<DefaultDomainObject> returnList(ResultSet rs) throws Exception {
+        LinkedList<DefaultDomainObject> list = new LinkedList<>();
+        while (rs.next()) {
+            Gym gym = new Gym();
             gym.setAttributes(rs);
             list.add(gym);
         }

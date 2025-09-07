@@ -84,6 +84,10 @@ public class ClientController {
     public boolean addGym(Gym gym) throws Exception {
         return (Boolean) sendRequest(Operation.INSERT_GYM, gym);
     }
+    
+    public boolean updateGym(Gym gym) throws Exception{
+        return (Boolean)sendRequest(Operation.UPDATE_GYM, gym);
+    }
 
     //activity operations
     public LinkedList<Activity> getAllActivity(Activity activity, String criteria) throws Exception {

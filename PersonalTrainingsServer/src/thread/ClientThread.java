@@ -91,6 +91,12 @@ public class ClientThread extends Thread {
                     LinkedList<Gym> gymList = ServerController.getInstance().getAllGym((Gym) r.getArgument());
                     response.setResult(gymList);
                     break;
+                case Operation.UPDATE_GYM:
+                    success = ServerController.getInstance().updateGym((Gym) r.getArgument());
+                    response.setResult(success);
+                    break;
+                    
+                    
                 case Operation.GET_ALL_ACTIVITY:
                     LinkedList<Activity> activities = ServerController.getInstance().getAllActivity((Activity) r.getArgument());
                     response.setResult(activities);
