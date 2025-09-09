@@ -38,7 +38,7 @@ public class SertificateDialog extends javax.swing.JDialog {
         fetchAllSertificates();
         fillSertificateTable();
         fillComboBoxWithSertificatesTrainerDoesNotHave();
-        
+        this.setTitle("Sertifikati");
     }
 
     /**
@@ -210,7 +210,7 @@ public class SertificateDialog extends javax.swing.JDialog {
         s.setPublisher(txtPublisher.getText());
         try {
             if(ClientController.getInstance().addSertificate(s)){
-                JOptionPane.showMessageDialog(this, "Uspesno ste dodali novi sertifikat u sistem.");
+                JOptionPane.showMessageDialog(this, "Sistem je zapamtio sertifikat");
                 fetchAllSertificates();
                 fillComboBoxWithSertificatesTrainerDoesNotHave();
                 

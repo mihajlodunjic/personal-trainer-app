@@ -31,6 +31,8 @@ public class WorkoutRecord extends DefaultDomainObject {
     private Trainer trainer;
     private Client client;
     private LinkedList<WorkoutItem> items;
+    
+    
     private String joinClause = "";
 
     public LinkedList<WorkoutItem> getItems() {

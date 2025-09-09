@@ -38,7 +38,7 @@ public class SOUpdateGym extends AbstractSO {
                 " AND LOWER(TRIM(g_name)) = LOWER(TRIM('" + esc(g.getName().trim()) + "'))" +
                 " AND LOWER(TRIM(address)) = LOWER(TRIM('" + esc(g.getAddress().trim()) + "'))"
         );
-        if (DatabaseBroker.doesExist(probe1))
+        if (DatabaseBroker.getInstance().doesExist(probe1))
             throw new Exception("Teretana sa istim nazivom i adresom već postoji.");
 
         
@@ -50,7 +50,7 @@ public class SOUpdateGym extends AbstractSO {
 
         g.setSearchCondition("idGym=" + g.getIdGym());
 
-        if (!DatabaseBroker.updateRow(g))
+        if (!DatabaseBroker.getInstance().updateRow(g))
             throw new Exception("Neuspešna izmena teretane.");
 
         success = true;

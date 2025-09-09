@@ -39,7 +39,7 @@ public class SOUpdateTrainer extends AbstractSO{
     protected void execute(DefaultDomainObject ddo) throws Exception {
         Trainer updatedTrainer=(Trainer) ddo;
         updatedTrainer.setSearchCondition("idTrainer="+updatedTrainer.getIdTrаiner());
-        success=DatabaseBroker.updateRow(updatedTrainer);
+        success=DatabaseBroker.getInstance().updateRow(updatedTrainer);
         System.out.println(success);
     }
     

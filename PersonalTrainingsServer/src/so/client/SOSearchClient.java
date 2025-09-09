@@ -45,11 +45,11 @@ public class SOSearchClient extends AbstractSO {
         crit.setSearchCondition(where.toString());
 
         @SuppressWarnings("unchecked")
-        LinkedList<Client> result = (LinkedList<Client>)(LinkedList<?>) DatabaseBroker.select(crit);
+        LinkedList<Client> result = (LinkedList<Client>)(LinkedList<?>) DatabaseBroker.getInstance().select(crit);
 
         for (Client c : result) {
             c.getGym().setSearchCondition("idGym=" + c.getGym().getIdGym());
-            if (!DatabaseBroker.findRowAndReturn(c.getGym()))
+            if (!DatabaseBroker.getInstance().findRowAndReturn(c.getGym()))
                 throw new Exception("Neuspešno učitavanje teretane za klijenta id=" + c.getIdClient());
         }
 

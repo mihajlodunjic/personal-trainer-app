@@ -26,6 +26,7 @@ public class RegDialog extends javax.swing.JDialog {
         initComponents();
         scaleImage();
         setResizable(false);
+        this.setTitle("Registracija");
     }
 
     /**

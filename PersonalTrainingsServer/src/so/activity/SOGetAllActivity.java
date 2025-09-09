@@ -27,7 +27,7 @@ public class SOGetAllActivity extends AbstractSO{
     protected void execute(DefaultDomainObject ddo) throws Exception {
         Activity a = (Activity) ddo;
 //        a.setSearchCondition("1");
-        list = (LinkedList<Activity>)(LinkedList<?>) DatabaseBroker.select(a);
+        list = (LinkedList<Activity>)(LinkedList<?>) DatabaseBroker.getInstance().select(a);
     }
     
 }

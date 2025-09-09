@@ -25,6 +25,7 @@ public class LogForm extends javax.swing.JFrame {
     public LogForm() {
         initComponents();
         scaleImage();
+        this.setTitle("Prijava na sistem");
     }
 
     /**
@@ -167,7 +168,7 @@ public class LogForm extends javax.swing.JFrame {
             return;
         }
         System.out.println(trainer);
-        JOptionPane.showMessageDialog(this, "Sistem je nasao trenera po zadatim kriterijumima");
+        JOptionPane.showMessageDialog(this, "Korisničko ime i šifra su ispravni");
         MainForm mainForm=new MainForm(trainer);
         mainForm.setLocationRelativeTo(null);
         this.dispose();

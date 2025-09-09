@@ -26,6 +26,7 @@ public class TrainerDetailsForm extends javax.swing.JDialog {
         fillFields();
         setDocumentListeners();
         btnSave.setEnabled(false);
+        this.setTitle("Detalji naloga");
     }
 
     /**

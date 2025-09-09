@@ -38,14 +38,14 @@ public class SOAddWorkoutRecord extends AbstractSO {
     protected void execute(DefaultDomainObject ddo) throws Exception {
         WorkoutRecord wr = (WorkoutRecord) ddo;
 
-        //upis zaglavlja i dohvatanje ID-a
-        int newId = DatabaseBroker.insertRowReturnKey(wr);
+ 
+        int newId = DatabaseBroker.getInstance().insertRowReturnKey(wr);
         wr.setIdWorkoutRecord(newId);
 
         //upis stavki
         for (WorkoutItem it : wr.getItems()) {
             it.setWorkoutRecord(wr);
-            if (!DatabaseBroker.insertRow(it))
+            if (!DatabaseBroker.getInstance().insertRow(it))
                 throw new Exception("Greška pri ubacivanju stavke #" + it.getItemSN());
         }
         success = true;

@@ -17,7 +17,7 @@ import java.util.LinkedList;
 public class WorkoutItem extends DefaultDomainObject {
 
     private WorkoutRecord workoutRecord;
-    private int itemSN; //sequence number
+    private int itemSN; 
     private Measurement intensity;
     private int numOfSeries;
     private double mass;

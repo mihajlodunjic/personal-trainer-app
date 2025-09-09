@@ -23,7 +23,7 @@ public class SOUpdateActivity extends AbstractSO {
         
         Activity probe = new Activity();
         probe.setSearchCondition("idActivity <> " + a.getIdActivity());
-        LinkedList<Activity> all = (LinkedList<Activity>)(LinkedList<?>) DatabaseBroker.select(probe);
+        LinkedList<Activity> all = (LinkedList<Activity>)(LinkedList<?>) DatabaseBroker.getInstance().select(probe);
         for (Activity x : all) {
             if (x.getCategory() == a.getCategory()
                 && x.getName().equalsIgnoreCase(a.getName())) {
@@ -36,7 +36,7 @@ public class SOUpdateActivity extends AbstractSO {
     protected void execute(DefaultDomainObject ddo) throws Exception {
         Activity a = (Activity) ddo;
         a.setSearchCondition("idActivity=" + a.getIdActivity());
-        if (!DatabaseBroker.updateRow(a))
+        if (!DatabaseBroker.getInstance().updateRow(a))
             throw new Exception("Neuspešna izmena aktivnosti.");
         success = true;
     }

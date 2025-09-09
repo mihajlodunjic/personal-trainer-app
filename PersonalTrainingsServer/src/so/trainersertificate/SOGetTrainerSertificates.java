@@ -27,7 +27,7 @@ public class SOGetTrainerSertificates extends AbstractSO {
         probe.setSearchCondition(where);
 
         LinkedList<TrainerSertificate> res =
-            (LinkedList<TrainerSertificate>)(LinkedList<?>) DatabaseBroker.select(probe);
+            (LinkedList<TrainerSertificate>)(LinkedList<?>) DatabaseBroker.getInstance().select(probe);
         list = res;
     }
 }

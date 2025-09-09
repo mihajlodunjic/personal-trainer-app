@@ -22,10 +22,10 @@ public abstract class AbstractSO {
     }
 
     public void commit() throws SQLException {
-        DatabaseBroker.getConnection().commit();
+        DatabaseBroker.getInstance().getConnection().commit();
     }
 
     public void rollback() throws SQLException {
-        DatabaseBroker.getConnection().rollback();
+        DatabaseBroker.getInstance().getConnection().rollback();
     }
 }

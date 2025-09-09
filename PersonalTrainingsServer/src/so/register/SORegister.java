@@ -21,7 +21,7 @@ public class SORegister extends AbstractSO{
             throw new Exception("Objekat nije instanca Trainer-a");
         Trainer trainer=(Trainer)ddo;
         trainer.setSearchCondition("userName='"+trainer.getUserName()+"'");
-        if(DatabaseBroker.doesExist(trainer))
+        if(DatabaseBroker.getInstance().doesExist(trainer))
             throw new Exception("Trener sa tim korisnickim imenom vec postoji u sistemu");
         
     }
@@ -29,7 +29,7 @@ public class SORegister extends AbstractSO{
     @Override
     protected void execute(DefaultDomainObject ddo) throws Exception {
         Trainer trainer=(Trainer)ddo;
-        if(!(DatabaseBroker.insertRow(trainer)))
+        if(!(DatabaseBroker.getInstance().insertRow(trainer)))
             throw new Exception("Greska pri ubacivanju u bazu.");
         success=true;
     }

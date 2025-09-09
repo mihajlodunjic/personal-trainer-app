@@ -75,24 +75,24 @@ public class SOSearchWorkoutRecords extends AbstractSO {
         probe.setSearchCondition(cond.toString());
         probe.setJoinClause(join.toString());
 
-        list = (LinkedList<WorkoutRecord>) (LinkedList<?>) DatabaseBroker.select(probe);
+        list = (LinkedList<WorkoutRecord>) (LinkedList<?>) DatabaseBroker.getInstance().select(probe);
 
         for (WorkoutRecord wr : list) {
             Trainer trainer = new Trainer();
             trainer.setIdTrаiner(wr.getTrainer().getIdTrаiner());
             trainer.setSearchCondition("idTrainer=" + trainer.getIdTrаiner());
-            DatabaseBroker.findRowAndReturn(trainer);
+            DatabaseBroker.getInstance().findRowAndReturn(trainer);
             wr.setTrainer(trainer);
 
             Client client = new Client();
             client.setIdClient(wr.getClient().getIdClient());
             client.setSearchCondition("idClient=" + client.getIdClient());
-            DatabaseBroker.findRowAndReturn(client);
+            DatabaseBroker.getInstance().findRowAndReturn(client);
             wr.setClient(client);
 
             WorkoutItem wi = new WorkoutItem();
             wi.setSearchCondition("wi.idWorkoutRecord=" + wr.getIdWorkoutRecord());
-            LinkedList<WorkoutItem> itemList = (LinkedList<WorkoutItem>) (LinkedList<?>) DatabaseBroker.select(wi);
+            LinkedList<WorkoutItem> itemList = (LinkedList<WorkoutItem>) (LinkedList<?>) DatabaseBroker.getInstance().select(wi);
             for (WorkoutItem it : itemList) {
                 System.out.println(it.getActivity().getName());
                 it.setWorkoutRecord(wr);

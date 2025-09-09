@@ -24,8 +24,7 @@ public class SOUpdateSertificate extends AbstractSO {
 
         Sertificate probe = new Sertificate();
         probe.setSearchCondition("idSertificate <> " + s.getIdSertificate());
-        @SuppressWarnings("unchecked")
-        LinkedList<Sertificate> all = (LinkedList<Sertificate>)(LinkedList<?>) DatabaseBroker.select(probe);
+        LinkedList<Sertificate> all = (LinkedList<Sertificate>)(LinkedList<?>) DatabaseBroker.getInstance().select(probe);
         for (Sertificate x : all) {
             if (x.getName().equalsIgnoreCase(s.getName())
              && x.getPublisher().equalsIgnoreCase(s.getPublisher()))
@@ -37,7 +36,7 @@ public class SOUpdateSertificate extends AbstractSO {
     protected void execute(DefaultDomainObject ddo) throws Exception {
         Sertificate s = (Sertificate) ddo;
         s.setSearchCondition("idSertificate=" + s.getIdSertificate());
-        if (!DatabaseBroker.updateRow(s))
+        if (!DatabaseBroker.getInstance().updateRow(s))
             throw new Exception("Neuspešna izmena sertifikata.");
         success = true;
     }

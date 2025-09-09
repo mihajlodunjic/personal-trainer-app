@@ -50,6 +50,7 @@ public class AddClientDialog extends javax.swing.JDialog {
             toggleEdit(false);
             
         }
+        this.setTitle("Dodaj klijenta");
     }
 
     private void fillGymComboBox() throws HeadlessException {
@@ -226,8 +227,8 @@ public class AddClientDialog extends javax.swing.JDialog {
                                     .addComponent(cmbGym, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtMobilePhone)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(98, 98, 98)
-                                .addComponent(btnAddClient, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnAddClient, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -334,11 +335,11 @@ public class AddClientDialog extends javax.swing.JDialog {
         setAttributes(c);
         try {
             if(ClientController.getInstance().addClient(c))
-                JOptionPane.showMessageDialog(null, "Uspesno dodavanje klijenta!","Uspesno",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Sistem je zapamtio klijenta","Uspesno",JOptionPane.INFORMATION_MESSAGE);
             else
-                JOptionPane.showMessageDialog(this, "Neuspesno dodavanje klijenta.");
+                JOptionPane.showMessageDialog(this, "Sistem ne može da zamapti klijenta");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Greska",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Sistem ne može da zamapti klijenta","Greska",JOptionPane.ERROR_MESSAGE);
             
         }
         finally{
@@ -384,7 +385,7 @@ public class AddClientDialog extends javax.swing.JDialog {
             try {
                 //obrisi klijenta
                 if (ClientController.getInstance().deleteClient(client)) {
-                    JOptionPane.showMessageDialog(this, "Uspesno brisanje klijenta.\nSve povezane evidencije su obrisane.");
+                    JOptionPane.showMessageDialog(this, "Sistem je obrisao klijenta");
                     
                 } else {
                     JOptionPane.showMessageDialog(this, "Greska pri brisanju klijenta");
@@ -479,15 +480,15 @@ public class AddClientDialog extends javax.swing.JDialog {
         try {
             setAttributes(client);
             if(ClientController.getInstance().updateClient(client)){
-                JOptionPane.showMessageDialog(this, "Uspesna izmena klijenta.");
+                JOptionPane.showMessageDialog(this, "Sistem je zamaptio klijenta");
                 
             }
             else{
-                JOptionPane.showMessageDialog(this, "Greska pri promeni klijenta");
+                JOptionPane.showMessageDialog(this, "Sistem ne može da zamapti klijenta");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Greska: "+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Sistem ne može da zamapti klijenta");
         }
     }
 }

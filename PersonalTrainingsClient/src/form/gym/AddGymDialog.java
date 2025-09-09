@@ -39,6 +39,7 @@ public class AddGymDialog extends javax.swing.JDialog {
         if (gym != null) {
             fillGymInfo();
         }
+        this.setTitle("Dodaj teretanu");
     }
 
     /**

@@ -16,8 +16,17 @@ public class DatabaseBroker {
 
     private static Connection connection = null;
     private static Statement st = null;
-
-    public static void connect() {
+    private static DatabaseBroker instance;
+    
+    private DatabaseBroker(){
+        
+    }
+    public static DatabaseBroker getInstance(){
+        if(instance==null)
+            instance = new DatabaseBroker();
+        return instance;
+    }
+    public void connect() {
     Properties properties = new Properties();
     try (InputStream input = new FileInputStream("src/config/db.properties")) {
         
@@ -43,11 +52,11 @@ public class DatabaseBroker {
     }
 }
 
-    public static Connection getConnection() {
+    public Connection getConnection() {
         return connection;
     }
 
-    public static boolean insertRow(DefaultDomainObject ddo) {
+    public boolean insertRow(DefaultDomainObject ddo) {
         String query;
         try {
             st = connection.createStatement();
@@ -61,7 +70,7 @@ public class DatabaseBroker {
         return true;
     }
 
-    public static int insertRowReturnKey(DefaultDomainObject ddo) throws SQLException {
+    public int insertRowReturnKey(DefaultDomainObject ddo) throws SQLException {
         String sql = "INSERT INTO " + ddo.returnClassName() + " "
                 + ddo.returnInsertColumns() + " VALUES(" + ddo.returnAttrValues() + ")";
         try (Statement st = connection.createStatement(
@@ -76,7 +85,7 @@ public class DatabaseBroker {
         }
     }
 
-    public static boolean deleteRow(DefaultDomainObject ddo) {
+    public boolean deleteRow(DefaultDomainObject ddo) {
         String query = "DELETE FROM " + ddo.returnClassName()
                 + " WHERE " + ddo.returnSearchCondition();
         try (Statement st = connection.createStatement()) {
@@ -88,7 +97,7 @@ public class DatabaseBroker {
         }
     }
 
-    public static boolean updateRow(DefaultDomainObject ddo) {
+    public boolean updateRow(DefaultDomainObject ddo) {
         String query;
         try {
             st = connection.createStatement();
@@ -105,7 +114,7 @@ public class DatabaseBroker {
         return true;
     }
 
-    public static boolean doesExist(DefaultDomainObject ddo) {
+    public boolean doesExist(DefaultDomainObject ddo) {
         String query;
         ResultSet rows;
         try {
@@ -124,7 +133,7 @@ public class DatabaseBroker {
         }
     }
 
-    public static boolean findRowAndReturn(DefaultDomainObject ddo) {
+    public boolean findRowAndReturn(DefaultDomainObject ddo) {
         ResultSet rs;
         String query;
         try {
@@ -159,7 +168,7 @@ public class DatabaseBroker {
 
     }
 
-    public static LinkedList<DefaultDomainObject> select(DefaultDomainObject ddo) throws Exception {
+    public LinkedList<DefaultDomainObject> select(DefaultDomainObject ddo) throws Exception {
         String query = "SELECT " + ddo.columns() + " "
                 + "FROM " + ddo.returnClassName() + " " + ddo.alias() + " "
                 + ddo.join()

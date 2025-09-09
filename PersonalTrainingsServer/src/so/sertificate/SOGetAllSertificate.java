@@ -20,6 +20,6 @@ public class SOGetAllSertificate extends AbstractSO {
     protected void execute(DefaultDomainObject ddo) throws Exception {
         Sertificate s = (Sertificate) ddo;
         s.setSearchCondition("1");
-        list = (LinkedList<Sertificate>)(LinkedList<?>) DatabaseBroker.select(s);
+        list = (LinkedList<Sertificate>)(LinkedList<?>) DatabaseBroker.getInstance().select(s);
     }
 }

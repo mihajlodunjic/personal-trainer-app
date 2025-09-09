@@ -20,7 +20,7 @@ public class SOAddActivity extends AbstractSO {
 
         Activity probe = new Activity();
         probe.setSearchCondition("1");
-        LinkedList<Activity> all = (LinkedList<Activity>)(LinkedList<?>) DatabaseBroker.select(probe);
+        LinkedList<Activity> all = (LinkedList<Activity>)(LinkedList<?>) DatabaseBroker.getInstance().select(probe);
         for (Activity x : all) {
             if (x.getCategory() == a.getCategory()
                 && x.getName().equalsIgnoreCase(a.getName())) {
@@ -31,7 +31,7 @@ public class SOAddActivity extends AbstractSO {
 
     @Override
     protected void execute(DefaultDomainObject ddo) throws Exception {
-        if (!DatabaseBroker.insertRow(ddo))
+        if (!DatabaseBroker.getInstance().insertRow(ddo))
             throw new Exception("Neuspešno kreiranje aktivnosti.");
         success = true;
     }

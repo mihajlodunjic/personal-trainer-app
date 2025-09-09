@@ -7,10 +7,7 @@ package communication;
 import java.io.Serializable;
 
 public class Request implements Serializable{
-    //operacija
     private Operation operation;
-    
-    //podacia kao argument
     private Object argument;
 
     public Request(Operation operation, Object argument) {

@@ -29,7 +29,6 @@ public class ClientThread extends Thread {
     private Socket socket;
     private Sender sender;
     private Receiver receiver;
-    private Trainer trainer;
 
     public ClientThread(Socket socket) {
         this.socket = socket;
@@ -53,7 +52,6 @@ public class ClientThread extends Thread {
                     trainer = (Trainer) r.getArgument();
                     trainer = ServerController.getInstance().login(trainer);
                     response.setResult(trainer);
-                    this.trainer = trainer;
                     break;
                 case Operation.LOGOUT:
                     trainer = (Trainer) r.getArgument();

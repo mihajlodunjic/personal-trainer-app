@@ -32,12 +32,12 @@ public class SOLogin extends AbstractSO{
     @Override
     protected void execute(DefaultDomainObject ddo) throws Exception {
         Trainer trainer=(Trainer) ddo;
-        if (DatabaseBroker.findRowAndReturn(trainer)) {
+        if (DatabaseBroker.getInstance().findRowAndReturn(trainer)) {
             loggedIn = trainer;
             ServerController.getInstance().getLoggedInTrainers().add(trainer);
             return;
         }
-        throw new Exception("Ne postoji trener sa zadatim vrednostima.");
+        throw new Exception("Korisničko ime i šifra nisu ispravni");
     }
     public Trainer getLoggedIn(){
         return loggedIn;

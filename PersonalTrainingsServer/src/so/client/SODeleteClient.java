@@ -29,17 +29,17 @@ public class SODeleteClient extends AbstractSO {
         WorkoutItem wiProbe = new WorkoutItem();
         wiProbe.setSearchCondition("idWorkoutRecord IN (SELECT idWorkoutRecord FROM workoutrecord WHERE idClient=" + clientId + ")");
         //moze se desiti da klijent nema ni jednu stavku na svim treninzima (ili nema treninge) pa ne proveravamo da li metoda vraca false
-        DatabaseBroker.deleteRow(wiProbe);
+        DatabaseBroker.getInstance().deleteRow(wiProbe);
 
         //sledece brisemo sve evidencije 
         WorkoutRecord wrProbe = new WorkoutRecord();
         wrProbe.setSearchCondition("idClient=" + clientId);
         //isto moze biti 0 treninga
-        DatabaseBroker.deleteRow(wrProbe);
+        DatabaseBroker.getInstance().deleteRow(wrProbe);
 
         //brisanje samog klijenta
         c.setSearchCondition("idClient=" + clientId);
-        boolean clientDeleted = DatabaseBroker.deleteRow(c);
+        boolean clientDeleted = DatabaseBroker.getInstance().deleteRow(c);
         if (!clientDeleted)
             throw new Exception("Brisanje klijenta nije uspelo (ne postoji ili je već obrisan).");
 

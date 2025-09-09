@@ -21,7 +21,7 @@ public class SOUpdateClient extends AbstractSO {
 
         Client probe = new Client();
         probe.setSearchCondition("idClient <> " + updated.getIdClient());
-        LinkedList<Client> all = (LinkedList<Client>)(LinkedList<?>) DatabaseBroker.select(probe);
+        LinkedList<Client> all = (LinkedList<Client>)(LinkedList<?>) DatabaseBroker.getInstance().select(probe);
         for (Client c : all) {
             if (c.getMobilePhone().equals(updated.getMobilePhone()))
                 throw new Exception("Klijent sa tim brojem telefona već postoji.");
@@ -32,7 +32,7 @@ public class SOUpdateClient extends AbstractSO {
     protected void execute(DefaultDomainObject ddo) throws Exception {
         Client updated = (Client) ddo;
         updated.setSearchCondition("idClient=" + updated.getIdClient());
-        if (!DatabaseBroker.updateRow(updated))
+        if (!DatabaseBroker.getInstance().updateRow(updated))
             throw new Exception("Neuspešna izmena klijenta.");
         success = true;
     }

@@ -66,6 +66,7 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
             toggleEditing(false);
             fillWorkoutRecordInfo();
         }
+        this.setTitle("Dodaj novi trening");
     }
 
     /**

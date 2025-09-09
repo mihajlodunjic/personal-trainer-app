@@ -11,7 +11,7 @@ public class ServerThread extends Thread{
     
     public ServerThread(){
         try {
-            DatabaseBroker.connect();
+            DatabaseBroker.getInstance().connect();
             serverSocket=new ServerSocket(9000);
         } catch (Exception e) {
             e.printStackTrace();

@@ -29,7 +29,7 @@ public class SOGetAllGym extends AbstractSO{
     @Override
     protected void execute(DefaultDomainObject ddo) throws Exception {
         Gym gym=(Gym)ddo;
-        list=(LinkedList<Gym>)(LinkedList<?>)DatabaseBroker.select(gym);
+        list=(LinkedList<Gym>)(LinkedList<?>)DatabaseBroker.getInstance().select(gym);
     }
     
 }

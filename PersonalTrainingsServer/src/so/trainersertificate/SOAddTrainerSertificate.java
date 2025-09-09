@@ -25,13 +25,13 @@ public class SOAddTrainerSertificate extends AbstractSO {
         TrainerSertificate probe = new TrainerSertificate(ts.getTrainer(), ts.getSertificate());
         probe.setSearchCondition("idTrainer=" + ts.getTrainer().getIdTrаiner() +
                                  " AND idSertificate=" + ts.getSertificate().getIdSertificate());
-        if (DatabaseBroker.doesExist(probe))
+        if (DatabaseBroker.getInstance().doesExist(probe))
             throw new Exception("Taj sertifikat je već dodeljen treneru.");
     }
 
     @Override
     protected void execute(DefaultDomainObject ddo) throws Exception {
-        if (!DatabaseBroker.insertRow(ddo))
+        if (!DatabaseBroker.getInstance().insertRow(ddo))
             throw new Exception("Neuspešno dodeljivanje sertifikata treneru.");
         success = true;
     }

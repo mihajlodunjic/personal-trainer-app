@@ -53,6 +53,7 @@ public class MainForm extends javax.swing.JFrame {
         tblClients.setModel(new ClientTableModel());
         fillClientTable();
         setClientTableListSelectionListener();
+        this.setTitle("Glavna forma");
 
     }
 
@@ -99,11 +100,10 @@ public class MainForm extends javax.swing.JFrame {
         btnRecordDetails = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        AddClientMenuItem = new javax.swing.JMenuItem();
         MenuAccount = new javax.swing.JMenu();
         AccountDetailsMenuItem = new javax.swing.JMenuItem();
         mySertificatesMenuItem = new javax.swing.JMenuItem();
+        logoutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -366,19 +366,6 @@ public class MainForm extends javax.swing.JFrame {
 
         jMenuBar1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
-        jMenu1.setText("Klijent");
-        jMenu1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-
-        AddClientMenuItem.setText("Dodaj");
-        AddClientMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddClientMenuItemActionPerformed(evt);
-            }
-        });
-        jMenu1.add(AddClientMenuItem);
-
-        jMenuBar1.add(jMenu1);
-
         MenuAccount.setText("Nalog");
         MenuAccount.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
@@ -398,6 +385,14 @@ public class MainForm extends javax.swing.JFrame {
         });
         MenuAccount.add(mySertificatesMenuItem);
 
+        logoutMenuItem.setText("Odjava");
+        logoutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutMenuItemActionPerformed(evt);
+            }
+        });
+        MenuAccount.add(logoutMenuItem);
+
         jMenuBar1.add(MenuAccount);
 
         setJMenuBar(jMenuBar1);
@@ -407,14 +402,15 @@ public class MainForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(212, 212, 212)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(445, 445, 445)
+                        .addGap(212, 212, 212)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1183, 1183, 1183)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(512, 512, 512)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(1183, 1183, 1183)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -441,12 +437,6 @@ public class MainForm extends javax.swing.JFrame {
         tdf.setLocationRelativeTo(null);
     }//GEN-LAST:event_AccountDetailsMenuItemActionPerformed
 
-    private void AddClientMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddClientMenuItemActionPerformed
-        AddClientDialog acd = new AddClientDialog(this, true, null);
-        acd.setVisible(true);
-        acd.setLocationRelativeTo(null);
-        btnSearchClients.doClick();
-    }//GEN-LAST:event_AddClientMenuItemActionPerformed
     private void checkBoxOnlyMyRecordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxOnlyMyRecordsActionPerformed
         if (!(tableWorkoutRecords.getModel() instanceof ClientWorkoutRecordTableModel)) {
             return;
@@ -474,6 +464,8 @@ public class MainForm extends javax.swing.JFrame {
         if (tblClients.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Izaberite klijenta.");
         }
+        
+        JOptionPane.showMessageDialog(this, "Sistem je našao klijenta");
         (new AddClientDialog(this, true, clientList.get(tblClients.getSelectedRow()))).setVisible(true);
 //        tblClients.setRowSelectionInterval(tblClients.getSelectedRow(), tblClients.getSelectedRow());
         btnResetClientSearch.doClick();
@@ -539,6 +531,7 @@ public class MainForm extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje evidenciju treninga");
                     return;
                 }
+                JOptionPane.showMessageDialog(this, "Sistem je našao evidenciju treninga");
                 (new AddWorkoutRecordDialog(this, true, trainer, clientList.get(tblClients.getSelectedRow()), wr)).setVisible(true);
                 refreshWorkoutRecordTable();
             } catch (Exception ex) {
@@ -609,7 +602,7 @@ public class MainForm extends javax.swing.JFrame {
             try {
                 //obrisi klijenta
                 if (ClientController.getInstance().deleteClient(clientList.get(tblClients.getSelectedRow()))) {
-                    JOptionPane.showMessageDialog(this, "Uspesno brisanje klijenta.\nSve povezane evidencije su obrisane.");
+                    JOptionPane.showMessageDialog(this, "Sistem je obrisao klijenta");
                     btnResetClientSearch.doClick();
                 } else {
                     JOptionPane.showMessageDialog(this, "Greska pri brisanju klijenta");
@@ -633,10 +626,19 @@ public class MainForm extends javax.swing.JFrame {
         new SertificateDialog(this, true, trainer).setVisible(true);
     }//GEN-LAST:event_mySertificatesMenuItemActionPerformed
 
+    private void logoutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuItemActionPerformed
+        try {
+            ClientController.getInstance().logout(trainer);
+            JOptionPane.showMessageDialog(this, "Dovidjenja!");
+            System.exit(0);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Neuspesno odjavljivanje sa sistema.");
+        }
+    }//GEN-LAST:event_logoutMenuItemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AccountDetailsMenuItem;
-    private javax.swing.JMenuItem AddClientMenuItem;
     private javax.swing.JMenu MenuAccount;
     private javax.swing.JButton btnAddClient;
     private javax.swing.JButton btnAddRecord;
@@ -657,12 +659,12 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JMenuItem logoutMenuItem;
     private javax.swing.JMenuItem mySertificatesMenuItem;
     private javax.swing.JRadioButton rbFemale;
     private javax.swing.JRadioButton rbMale;
@@ -762,9 +764,9 @@ public class MainForm extends javax.swing.JFrame {
                 System.out.println(wr);
             }
             if(!recordsOfSelectedClient.isEmpty())
-                JOptionPane.showMessageDialog(this, "Sistem je nasao evidenciju/e treninga");
+                JOptionPane.showMessageDialog(this, "Sistem je našao evidencije treninga");
             else
-                JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje evidencije treninga po zadatim kriterijumima");
+                JOptionPane.showMessageDialog(this, "Sistem ne može da nadje evidencije treninga po zadatim kriterijumima");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
             ex.printStackTrace();

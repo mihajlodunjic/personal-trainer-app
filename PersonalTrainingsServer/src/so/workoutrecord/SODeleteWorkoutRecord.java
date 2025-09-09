@@ -25,10 +25,10 @@ public class SODeleteWorkoutRecord extends AbstractSO {
 
         WorkoutItem itemProbe = new WorkoutItem();
         itemProbe.setSearchCondition("idWorkoutRecord=" + wr.getIdWorkoutRecord());
-        boolean itemsDeleted = DatabaseBroker.deleteRow(itemProbe);
+        boolean itemsDeleted = DatabaseBroker.getInstance().deleteRow(itemProbe);
 
         wr.setSearchCondition("idWorkoutRecord=" + wr.getIdWorkoutRecord());
-        boolean recordDeleted = DatabaseBroker.deleteRow(wr);
+        boolean recordDeleted = DatabaseBroker.getInstance().deleteRow(wr);
 
         if (!(itemsDeleted && recordDeleted))
             throw new Exception("Brisanje evidencije nije uspelo.");

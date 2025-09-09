@@ -25,6 +25,7 @@ public class AddActivityDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         fillCategories();
+        this.setTitle("Dodaj aktivnost");
     }
 
     /**

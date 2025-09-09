@@ -46,42 +46,42 @@ public class SOUpdateWorkoutRecord extends AbstractSO {
 
         // 1) UPDATE header
         wr.setSearchCondition("idWorkoutRecord=" + wr.getIdWorkoutRecord());
-        if (!DatabaseBroker.updateRow(wr))
+        if (!DatabaseBroker.getInstance().updateRow(wr))
             throw new Exception("Neuspešan update zaglavlja evidencije.");
 
         // 2) Ucitaj postojece stavke iz baze
         WorkoutItem probe = new WorkoutItem();
         probe.setSearchCondition("wi.idWorkoutRecord=" + wr.getIdWorkoutRecord()); 
         LinkedList<WorkoutItem> existingList =
-                (LinkedList<WorkoutItem>)(LinkedList<?>) DatabaseBroker.select(probe);
+                (LinkedList<WorkoutItem>)(LinkedList<?>) DatabaseBroker.getInstance().select(probe);
 
-        // Mapiraj po itemSN
+        //Mapiraj po itemSN
         Map<Integer, WorkoutItem> existingBySn = new HashMap<>();
         for (WorkoutItem it : existingList) existingBySn.put(it.getItemSN(), it);
 
         Map<Integer, WorkoutItem> incomingBySn = new HashMap<>();
         for (WorkoutItem it : wr.getItems()) incomingBySn.put(it.getItemSN(), it);
 
-        // 3) DELETE: stavke koje postoje u bazi a nema ih u novom setu
+        //DELETE: stavke koje postoje u bazi a nema ih u novom setu
         for (Integer oldSn : existingBySn.keySet()) {
             if (!incomingBySn.containsKey(oldSn)) {
                 WorkoutItem del = new WorkoutItem();
                 del.setSearchCondition("idWorkoutRecord=" + wr.getIdWorkoutRecord() +
                                        " AND itemSN=" + oldSn); // DELETE/UPDATE ne koriste alias
-                if (!DatabaseBroker.deleteRow(del))
+                if (!DatabaseBroker.getInstance().deleteRow(del))
                     throw new Exception("Brisanje stavke itemSN=" + oldSn + " nije uspelo.");
             }
         }
 
-        // 4) INSERT ili UPDATE za presek/novi
+        //INSERT ili UPDATE za presek/novi
         for (Map.Entry<Integer, WorkoutItem> e : incomingBySn.entrySet()) {
             int sn = e.getKey();
             WorkoutItem incoming = e.getValue();
-            incoming.setWorkoutRecord(wr); // treba za insert i za update (setAttrValues ima idActivity itd.)
+            incoming.setWorkoutRecord(wr);
 
             if (!existingBySn.containsKey(sn)) {
                 // INSERT nova stavka
-                if (!DatabaseBroker.insertRow(incoming))
+                if (!DatabaseBroker.getInstance().insertRow(incoming))
                     throw new Exception("Greška pri ubacivanju stavke itemSN=" + sn);
             } else {
                 // UPDATE ako ima promena
@@ -89,7 +89,7 @@ public class SOUpdateWorkoutRecord extends AbstractSO {
                 if (changed(old, incoming)) {
                     incoming.setSearchCondition("idWorkoutRecord=" + wr.getIdWorkoutRecord() +
                                                 " AND itemSN=" + sn);
-                    if (!DatabaseBroker.updateRow(incoming))
+                    if (!DatabaseBroker.getInstance().updateRow(incoming))
                         throw new Exception("Neuspešan update stavke itemSN=" + sn);
                 }
             }

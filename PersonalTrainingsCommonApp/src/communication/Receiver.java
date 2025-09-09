@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class Receiver {
     private final Socket socket;
-    ObjectInputStream in;
+    private ObjectInputStream in;
 
     public Receiver(Socket socket) throws Exception {
         this.socket = socket;

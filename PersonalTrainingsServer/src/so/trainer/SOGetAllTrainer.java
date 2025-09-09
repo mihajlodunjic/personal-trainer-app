@@ -28,7 +28,7 @@ public class SOGetAllTrainer extends AbstractSO{
 
     @Override
     protected void execute(DefaultDomainObject ddo) throws Exception {
-        LinkedList<DefaultDomainObject> trainers= DatabaseBroker.select(ddo);
+        LinkedList<DefaultDomainObject> trainers= DatabaseBroker.getInstance().select(ddo);
         list=(LinkedList<Trainer>) (LinkedList<?>) trainers;
     }
 }

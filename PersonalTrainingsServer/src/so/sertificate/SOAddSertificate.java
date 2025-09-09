@@ -22,7 +22,7 @@ public class SOAddSertificate extends AbstractSO {
 
         Sertificate probe = new Sertificate();
         probe.setSearchCondition("1");
-        LinkedList<Sertificate> all = (LinkedList<Sertificate>)(LinkedList<?>) DatabaseBroker.select(probe);
+        LinkedList<Sertificate> all = (LinkedList<Sertificate>)(LinkedList<?>) DatabaseBroker.getInstance().select(probe);
         for (Sertificate x : all) {
             if (x.getName().equalsIgnoreCase(s.getName())
              && x.getPublisher().equalsIgnoreCase(s.getPublisher()))
@@ -32,7 +32,7 @@ public class SOAddSertificate extends AbstractSO {
 
     @Override
     protected void execute(DefaultDomainObject ddo) throws Exception {
-        if (!DatabaseBroker.insertRow(ddo))
+        if (!DatabaseBroker.getInstance().insertRow(ddo))
             throw new Exception("Neuspešno dodavanje sertifikata.");
         success = true;
     }

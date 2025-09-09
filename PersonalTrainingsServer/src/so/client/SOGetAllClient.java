@@ -30,12 +30,12 @@ public class SOGetAllClient extends AbstractSO{
     @Override
     protected void execute(DefaultDomainObject ddo) throws Exception {
         Client client=(Client)ddo;
-        list=(LinkedList<Client>)(LinkedList<?>)DatabaseBroker.select(client);
+        list=(LinkedList<Client>)(LinkedList<?>)DatabaseBroker.getInstance().select(client);
         for(Client c : list){
             Gym gym;
             c.getGym().setSearchCondition("idGym=" + c.getGym().getIdGym());
 
-            if(!DatabaseBroker.findRowAndReturn(c.getGym()))
+            if(!DatabaseBroker.getInstance().findRowAndReturn(c.getGym()))
                 throw new Exception("Neuspesno ucitavanje teretane u instancu klijenta.");
         }
     }

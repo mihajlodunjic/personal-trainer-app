@@ -35,7 +35,7 @@ public class SOAddGym extends AbstractSO {
             "LOWER(TRIM(g_name)) = LOWER(TRIM('" + nameNorm + "')) " +
             "AND LOWER(TRIM(address)) = LOWER(TRIM('" + addrNorm + "'))"
         );
-        if (DatabaseBroker.doesExist(probe))
+        if (DatabaseBroker.getInstance().doesExist(probe))
             throw new Exception("Uneta teretana već postoji u sistemu (naziv i adresa).");
     }
 
@@ -43,7 +43,7 @@ public class SOAddGym extends AbstractSO {
     protected void execute(DefaultDomainObject ddo) throws Exception {
         Gym gym = (Gym) ddo;
 
-        if (!DatabaseBroker.insertRow(gym))
+        if (!DatabaseBroker.getInstance().insertRow(gym))
             throw new Exception("Greška pri ubacivanju teretane u bazu.");
 
         success = true;
