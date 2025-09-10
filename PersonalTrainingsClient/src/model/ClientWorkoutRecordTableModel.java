@@ -15,7 +15,7 @@ import javax.swing.table.AbstractTableModel;
 public class ClientWorkoutRecordTableModel extends AbstractTableModel {
 
     private LinkedList<WorkoutRecord> list = new LinkedList<>();
-    private String columns[] = {"Trener", "Datum", "Vreme pocetka", "Vreme zavrsetka", "Trajanje", "Intenzitet"};
+    private String columns[] = {"Trener", "Datum", "Vreme pocčetka", "Vreme završetka", "Trajanje", "Intenzitet"};
 
     @Override
     public String getColumnName(int column) {

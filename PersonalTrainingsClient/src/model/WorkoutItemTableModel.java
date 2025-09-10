@@ -14,7 +14,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class WorkoutItemTableModel extends AbstractTableModel{
     private LinkedList<WorkoutItem> list=new LinkedList<>();
-    private String[] columns={"Naziv","Kategorija","Broj serija","Kilaza","Intenzitet"};
+    private String[] columns={"Naziv","Kategorija","Broj serija","Kilaža","Intenzitet"};
     
     
     @Override

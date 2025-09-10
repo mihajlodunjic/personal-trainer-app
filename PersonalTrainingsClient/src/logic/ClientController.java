@@ -76,8 +76,8 @@ public class ClientController {
     }
 
     //gym operations
-    public LinkedList<Gym> getAllGym(Gym gym, String criteria) throws Exception {
-        gym.setSearchCondition(criteria);
+    public LinkedList<Gym> getAllGym(Gym gym) throws Exception {
+//        gym.setSearchCondition(criteria);
         return (LinkedList<Gym>) sendRequest(Operation.GET_ALL_GYM, gym);
     }
 

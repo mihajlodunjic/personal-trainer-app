@@ -196,7 +196,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Datum rodjenja"/>
+            <Property name="text" type="java.lang.String" value="Datum ro&#x111;enja"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
@@ -259,7 +259,7 @@
         </Container>
         <Component class="javax.swing.JButton" name="btnAddClient">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Sacuvaj"/>
+            <Property name="text" type="java.lang.String" value="Sa&#x10d;uvaj"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddClientActionPerformed"/>
@@ -267,7 +267,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnCancel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Otkazi"/>
+            <Property name="text" type="java.lang.String" value="Nazad"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelActionPerformed"/>
@@ -300,7 +300,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnEnableEdit">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Omoguci izmene"/>
+            <Property name="text" type="java.lang.String" value="Omogu&#x107;i izmene"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEnableEditActionPerformed"/>
@@ -316,7 +316,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnDeleteClient">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Obrisi klijenta"/>
+            <Property name="text" type="java.lang.String" value="Obri&#x161;i klijenta"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteClientActionPerformed"/>

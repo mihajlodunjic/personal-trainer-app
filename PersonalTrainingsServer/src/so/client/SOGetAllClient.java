@@ -32,7 +32,6 @@ public class SOGetAllClient extends AbstractSO{
         Client client=(Client)ddo;
         list=(LinkedList<Client>)(LinkedList<?>)DatabaseBroker.getInstance().select(client);
         for(Client c : list){
-            Gym gym;
             c.getGym().setSearchCondition("idGym=" + c.getGym().getIdGym());
 
             if(!DatabaseBroker.getInstance().findRowAndReturn(c.getGym()))

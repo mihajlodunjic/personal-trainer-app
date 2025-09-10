@@ -164,7 +164,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Izdavac"/>
+        <Property name="text" type="java.lang.String" value="Izdava&#x10d;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPublisher">

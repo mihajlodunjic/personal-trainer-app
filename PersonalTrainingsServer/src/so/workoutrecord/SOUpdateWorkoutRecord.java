@@ -44,12 +44,11 @@ public class SOUpdateWorkoutRecord extends AbstractSO {
     protected void execute(DefaultDomainObject ddo) throws Exception {
         WorkoutRecord wr = (WorkoutRecord) ddo;
 
-        // 1) UPDATE header
         wr.setSearchCondition("idWorkoutRecord=" + wr.getIdWorkoutRecord());
         if (!DatabaseBroker.getInstance().updateRow(wr))
             throw new Exception("Neuspešan update zaglavlja evidencije.");
 
-        // 2) Ucitaj postojece stavke iz baze
+        //ucitaj postojece stavke iz baze
         WorkoutItem probe = new WorkoutItem();
         probe.setSearchCondition("wi.idWorkoutRecord=" + wr.getIdWorkoutRecord()); 
         LinkedList<WorkoutItem> existingList =
@@ -62,7 +61,7 @@ public class SOUpdateWorkoutRecord extends AbstractSO {
         Map<Integer, WorkoutItem> incomingBySn = new HashMap<>();
         for (WorkoutItem it : wr.getItems()) incomingBySn.put(it.getItemSN(), it);
 
-        //DELETE: stavke koje postoje u bazi a nema ih u novom setu
+        //obrisi stavke koje postoje u bazi a nema ih u novom setu
         for (Integer oldSn : existingBySn.keySet()) {
             if (!incomingBySn.containsKey(oldSn)) {
                 WorkoutItem del = new WorkoutItem();
@@ -98,7 +97,6 @@ public class SOUpdateWorkoutRecord extends AbstractSO {
         success = true;
     }
 
-    // Uporedi relevantna polja stavke
     private boolean changed(WorkoutItem oldIt, WorkoutItem newIt) {
         boolean diffIntensity = !safeEq(oldIt.getIntensity(), newIt.getIntensity());
         boolean diffNumSer    = oldIt.getNumOfSeries() != newIt.getNumOfSeries();

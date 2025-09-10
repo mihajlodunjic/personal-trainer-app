@@ -388,7 +388,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnDeleteItem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Obrisi stavku"/>
+            <Property name="text" type="java.lang.String" value="Obri&#x161;i stavku"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteItemActionPerformed"/>
@@ -498,12 +498,12 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Vreme pocetka"/>
+            <Property name="text" type="java.lang.String" value="Vreme po&#x10d;etka"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Vreme zavrsetka"/>
+            <Property name="text" type="java.lang.String" value="Vreme zavr&#x161;etka"/>
           </Properties>
         </Component>
         <Component class="com.toedter.components.JSpinField" name="sfStartHour">
@@ -538,7 +538,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="btnCancel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Otkazi"/>
+        <Property name="text" type="java.lang.String" value="Nazad"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelActionPerformed"/>
@@ -546,7 +546,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnSave">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Sacuvaj"/>
+        <Property name="text" type="java.lang.String" value="Sa&#x10d;uvaj"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
@@ -554,7 +554,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnEnableEditing">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Omoguci izmene"/>
+        <Property name="text" type="java.lang.String" value="Omogu&#x107;i izmene"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEnableEditingActionPerformed"/>
@@ -569,7 +569,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnDeleteWorkoutRecord">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Obrisi evidenciju"/>
+        <Property name="text" type="java.lang.String" value="Obri&#x161;i evidenciju"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteWorkoutRecordActionPerformed"/>

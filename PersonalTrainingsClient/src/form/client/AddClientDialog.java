@@ -55,7 +55,7 @@ public class AddClientDialog extends javax.swing.JDialog {
 
     private void fillGymComboBox() throws HeadlessException {
         try {
-            gyms=ClientController.getInstance().getAllGym((new Gym()), "1 ORDER BY g_name");
+            gyms=ClientController.getInstance().getAllGym((new Gym()));
             for(Gym g : gyms){
                 System.out.println(g.getIdGym());
             }
@@ -115,7 +115,7 @@ public class AddClientDialog extends javax.swing.JDialog {
         jLabel5.setText("Broj telefona");
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel7.setText("Datum rodjenja");
+        jLabel7.setText("Datum rođenja");
 
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel8.setText("Pol");
@@ -155,14 +155,14 @@ public class AddClientDialog extends javax.swing.JDialog {
                 .addGap(0, 7, Short.MAX_VALUE))
         );
 
-        btnAddClient.setText("Sacuvaj");
+        btnAddClient.setText("Sačuvaj");
         btnAddClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddClientActionPerformed(evt);
             }
         });
 
-        btnCancel.setText("Otkazi");
+        btnCancel.setText("Nazad");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelActionPerformed(evt);
@@ -174,7 +174,7 @@ public class AddClientDialog extends javax.swing.JDialog {
 
         cmbGym.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btnEnableEdit.setText("Omoguci izmene");
+        btnEnableEdit.setText("Omogući izmene");
         btnEnableEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEnableEditActionPerformed(evt);
@@ -188,7 +188,7 @@ public class AddClientDialog extends javax.swing.JDialog {
             }
         });
 
-        btnDeleteClient.setText("Obrisi klijenta");
+        btnDeleteClient.setText("Obriši klijenta");
         btnDeleteClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteClientActionPerformed(evt);

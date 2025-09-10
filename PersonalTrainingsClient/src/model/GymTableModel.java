@@ -4,7 +4,7 @@
  */
 package model;
 
-import domain.TrainerSertificate;
+import domain.Gym;
 import java.util.LinkedList;
 import javax.swing.table.AbstractTableModel;
 
@@ -12,10 +12,9 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author pc
  */
-public class TrainerSertificateTableModel extends AbstractTableModel{
-     private LinkedList<TrainerSertificate> list = new LinkedList<>();
-    private String[] columns = {"Naziv", "Izdavač"};
-
+public class GymTableModel extends AbstractTableModel{
+    private LinkedList<Gym> list=new LinkedList<>();
+    private String[] columns={"Naziv", "Adresa","Opremljenost"};
     @Override
     public String getColumnName(int column) {
         return columns[column];
@@ -33,21 +32,22 @@ public class TrainerSertificateTableModel extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        TrainerSertificate t = list.get(rowIndex);
+        Gym g = list.get(rowIndex);
         return switch (columnIndex) {
-            case 0 -> t.getSertificate().getName();
-            case 1 -> t.getSertificate().getPublisher();
+            case 0-> g.getName();
+            case 1->g.getAddress();
+            case 2->g.getEquipmentLevel().getSerbianName();
             default ->
                 "";
         };
     }
-
-    public void add(TrainerSertificate t) {
-        int idx = list.size();
-        list.add(t);
+    
+    public void add(Gym g){
+        int idx=list.size();
+        list.add(g);
         fireTableRowsInserted(idx, idx);
     }
-
+    
     public void clear() {
         int size = list.size();
         if (size > 0) {
@@ -55,13 +55,14 @@ public class TrainerSertificateTableModel extends AbstractTableModel{
             fireTableRowsDeleted(0, size - 1);
         }
     }
-
-    public LinkedList<TrainerSertificate> getItems() {
+    
+    public LinkedList<Gym> getItems(){
         return list;
     }
-
-    public void removeAt(int row) {
+    
+    public void removeAt(int row){
         list.remove(row);
         fireTableRowsDeleted(row, row);
     }
+    
 }

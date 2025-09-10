@@ -11,6 +11,7 @@ import domain.WorkoutItem;
 import domain.WorkoutRecord;
 import enums.Gender;
 import form.client.AddClientDialog;
+import form.gym.ShowAllGymForm;
 import form.sertificate.SertificateDialog;
 import form.trainer.TrainerDetailsForm;
 import form.workoutrecord.AddWorkoutRecordDialog;
@@ -104,6 +105,8 @@ public class MainForm extends javax.swing.JFrame {
         AccountDetailsMenuItem = new javax.swing.JMenuItem();
         mySertificatesMenuItem = new javax.swing.JMenuItem();
         logoutMenuItem = new javax.swing.JMenuItem();
+        menuGym = new javax.swing.JMenu();
+        showGymMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,7 +131,7 @@ public class MainForm extends javax.swing.JFrame {
         });
 
         btnDeleteClient.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        btnDeleteClient.setText("Obrisi klijenta");
+        btnDeleteClient.setText("Obriši klijenta");
         btnDeleteClient.setMaximumSize(new java.awt.Dimension(150, 30));
         btnDeleteClient.setMinimumSize(new java.awt.Dimension(150, 30));
         btnDeleteClient.addActionListener(new java.awt.event.ActionListener() {
@@ -157,10 +160,10 @@ public class MainForm extends javax.swing.JFrame {
         jLabel7.setText("Prezime");
 
         buttonGroup1.add(rbMale);
-        rbMale.setText("Musko");
+        rbMale.setText("Muško");
 
         buttonGroup1.add(rbFemale);
-        rbFemale.setText("Zensko");
+        rbFemale.setText("Žensko");
 
         jLabel8.setText("Pol");
 
@@ -168,7 +171,7 @@ public class MainForm extends javax.swing.JFrame {
 
         cmbGymSearchClient.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btnSearchClients.setText("Pretrazi");
+        btnSearchClients.setText("Pretraži");
         btnSearchClients.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchClientsActionPerformed(evt);
@@ -206,7 +209,7 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(txtName)
                     .addComponent(txtLastName)
                     .addComponent(cmbGymSearchClient, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,7 +242,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel1.setText("Pretraga klijenata");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel3.setText("Odrzani treninzi:");
+        jLabel3.setText("Održani treninzi:");
 
         tableWorkoutRecords.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         tableWorkoutRecords.setModel(new javax.swing.table.DefaultTableModel(
@@ -274,7 +277,7 @@ public class MainForm extends javax.swing.JFrame {
         });
 
         btnDeleteRecord.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        btnDeleteRecord.setText("Obrisi trening");
+        btnDeleteRecord.setText("Obriši trening");
         btnDeleteRecord.setMaximumSize(new java.awt.Dimension(150, 30));
         btnDeleteRecord.setMinimumSize(new java.awt.Dimension(150, 30));
         btnDeleteRecord.addActionListener(new java.awt.event.ActionListener() {
@@ -302,15 +305,14 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnAddClient, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                                    .addComponent(btnDeleteClient, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(btnDeleteClient, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAddClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,6 +396,18 @@ public class MainForm extends javax.swing.JFrame {
         MenuAccount.add(logoutMenuItem);
 
         jMenuBar1.add(MenuAccount);
+
+        menuGym.setText("Teretane");
+
+        showGymMenuItem.setText("Pregled");
+        showGymMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showGymMenuItemActionPerformed(evt);
+            }
+        });
+        menuGym.add(showGymMenuItem);
+
+        jMenuBar1.add(menuGym);
 
         setJMenuBar(jMenuBar1);
 
@@ -636,6 +650,11 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_logoutMenuItemActionPerformed
 
+    private void showGymMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showGymMenuItemActionPerformed
+        (new ShowAllGymForm(this, true)).setVisible(true);
+        
+    }//GEN-LAST:event_showGymMenuItemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AccountDetailsMenuItem;
@@ -665,9 +684,11 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem logoutMenuItem;
+    private javax.swing.JMenu menuGym;
     private javax.swing.JMenuItem mySertificatesMenuItem;
     private javax.swing.JRadioButton rbFemale;
     private javax.swing.JRadioButton rbMale;
+    private javax.swing.JMenuItem showGymMenuItem;
     private javax.swing.JTable tableWorkoutRecords;
     private javax.swing.JTable tblClients;
     private javax.swing.JTextField txtLastName;
@@ -706,7 +727,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void fillGymComboBox(JComboBox<String> cmbGym) {
         try {
-            gymList = ClientController.getInstance().getAllGym(new Gym(), "1");
+            gymList = ClientController.getInstance().getAllGym(new Gym());
             gymList.addFirst(null);
             DefaultComboBoxModel<String> cbm = new DefaultComboBoxModel<>();
             for (Gym g : gymList) {

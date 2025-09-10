@@ -21,7 +21,7 @@ public class SOAddTrainerSertificate extends AbstractSO {
         if (ts.getSertificate() == null || ts.getSertificate().getIdSertificate() <= 0)
             throw new Exception("Nedostaje ispravan id sertifikata.");
 
-        //proveri duplikat veze (idTrainer, idSertificate)
+        //proveri duplikat
         TrainerSertificate probe = new TrainerSertificate(ts.getTrainer(), ts.getSertificate());
         probe.setSearchCondition("idTrainer=" + ts.getTrainer().getIdTrаiner() +
                                  " AND idSertificate=" + ts.getSertificate().getIdSertificate());

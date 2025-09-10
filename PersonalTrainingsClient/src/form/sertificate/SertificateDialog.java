@@ -102,7 +102,7 @@ public class SertificateDialog extends javax.swing.JDialog {
 
         jLabel1.setText("Naziv");
 
-        jLabel2.setText("Izdavac");
+        jLabel2.setText("Izdavač");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel3.setText("Moji sertifikati");

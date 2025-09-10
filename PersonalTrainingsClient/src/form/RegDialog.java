@@ -77,7 +77,7 @@ public class RegDialog extends javax.swing.JDialog {
         });
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel5.setText("Korisnicko ime");
+        jLabel5.setText("Korisničko ime");
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel6.setText("Lozinka");

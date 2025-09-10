@@ -197,7 +197,7 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
 
         jLabel14.setText("Intenzitet");
 
-        btnDeleteItem.setText("Obrisi stavku");
+        btnDeleteItem.setText("Obriši stavku");
         btnDeleteItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteItemActionPerformed(evt);
@@ -312,9 +312,9 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
 
         jLabel4.setText("Datum treninga");
 
-        jLabel5.setText("Vreme pocetka");
+        jLabel5.setText("Vreme početka");
 
-        jLabel6.setText("Vreme zavrsetka");
+        jLabel6.setText("Vreme završetka");
 
         jLabel7.setText("h");
 
@@ -385,21 +385,21 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        btnCancel.setText("Otkazi");
+        btnCancel.setText("Nazad");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelActionPerformed(evt);
             }
         });
 
-        btnSave.setText("Sacuvaj");
+        btnSave.setText("Sačuvaj");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
             }
         });
 
-        btnEnableEditing.setText("Omoguci izmene");
+        btnEnableEditing.setText("Omogući izmene");
         btnEnableEditing.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEnableEditingActionPerformed(evt);
@@ -408,7 +408,7 @@ public class AddWorkoutRecordDialog extends javax.swing.JDialog {
 
         lblTrainer.setText("Trener");
 
-        btnDeleteWorkoutRecord.setText("Obrisi evidenciju");
+        btnDeleteWorkoutRecord.setText("Obriši evidenciju");
         btnDeleteWorkoutRecord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteWorkoutRecordActionPerformed(evt);

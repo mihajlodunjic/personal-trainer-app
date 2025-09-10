@@ -58,7 +58,7 @@ public class TrainerDetailsForm extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel1.setText("Detalji naloga");
 
-        jLabel2.setText("Korisnicko ime");
+        jLabel2.setText("Korisničko ime");
 
         jLabel3.setText("Ime");
 
@@ -70,9 +70,9 @@ public class TrainerDetailsForm extends javax.swing.JDialog {
             }
         });
 
-        jLabel5.setText("Stara sifra");
+        jLabel5.setText("Stara šifra");
 
-        jLabel6.setText("Nova sifra");
+        jLabel6.setText("Nova šifra");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -121,7 +121,7 @@ public class TrainerDetailsForm extends javax.swing.JDialog {
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
-        btnSave.setText("Sacuvaj");
+        btnSave.setText("Sačuvaj");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);

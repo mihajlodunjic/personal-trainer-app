@@ -34,11 +34,9 @@ public class SOSearchClient extends AbstractSO {
         if (crit.getGender() != null)
             where.append(" AND gender='").append(crit.getGender().getSerbianName()).append("'");
 
-        // pretraga po datumu
         if (crit.getBirthday() != null)
             where.append(" AND birthday='").append(Date.valueOf(crit.getBirthday())).append("'");
 
-        // po teretani
         if (crit.getGym() != null && crit.getGym().getIdGym() > 0)
             where.append(" AND idGym=").append(crit.getGym().getIdGym());
 
